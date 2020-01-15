@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # set -x
 # set -e
@@ -74,10 +74,10 @@ function setup_links_in_subdir(){
 			echo "Using override $WS_OVERRIDE/$confdir for $confdir"
 			local src_root=$(realpath $WS_OVERRIDE)
 		else
-			local src_root=$(realpath $src_dir)
+			local src_root=$(realpath $confdir_name)
 		fi
 		
-		create_link ${src_root}/${confdir_name}  $target_dir/$link_name
+		create_link ${src_root}  $target_dir/$link_name
 	done				
 }
 
@@ -132,6 +132,6 @@ done
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # all files flat in directory
-setup_dot_links $SCRIPT_DIR /tmp/foo
+setup_dot_links $SCRIPT_DIR $HOME
 # Setup sub folder directories
-setup_links_in_subdir dot.config /tmp/foo
+setup_links_in_subdir dot.config $HOME
