@@ -178,7 +178,7 @@ bindsym XF86AudioMute exec amixer set Master toggle
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	font pango: Liberation Mono 10
+    font pango: Liberation Mono 10
     status_command i3status
 }
 
@@ -209,12 +209,8 @@ for_window [class="DigitalRooster"] floating enable
 exec --no-startup-id dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
 exec --no-startup-id /usr/local/bin/keepassxc  /home/ruschi/ownCloud/keepassxc.kdbx
 
-# exec --no-startup-id dex /home/ruschi/.config/autostart/ownCloud.desktop
-# exec --no-startup-id /usr/bin/nextcloud
-# exec --no-startup-id dex /usr/share/applications/org.kde.klipper.desktop
-# exec --no-startup-id firefox
-# exec --no-startup-id kmail
-
-exec --no-startup-id /usr/bin/clipit
-exec --no-startup-id /home/me/bin/ledd
-exec --no-startup-id /usr/local/bin/tpm_server
+exec --no-startup-id dex /home/ruschi/.config/autostart/ownCloud.desktop
+exec --no-startup-id /usr/bin/nextcloud
+exec --no-startup-id dex /usr/share/applications/org.kde.klipper.desktop
+exec --no-startup-id firefox
+exec --no-startup-id kmail

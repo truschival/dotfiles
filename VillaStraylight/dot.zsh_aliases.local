@@ -1,0 +1,2 @@
+kermit-usb='CKERMIT_INI=~/ownCloud/Settings/HAL9000/other/kermrc-ttyUSB0@115200 kermit -c'
+emacs='emacs --no-window-system --quick'
