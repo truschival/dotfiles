@@ -1,0 +1,21 @@
+alias  emacs='emacs --no-window-system --quick'
+alias  ls='ls $LS_OPTIONS'
+alias  ll='ls -l $LS_OPTIONS'
+alias  la='ls -lah $LS_OPTIONS'
+alias  grep='grep --color=auto -n '
+
+alias p='cd ~/platform/'
+alias pp='cd ~/platform/firmware/packages'
+alias pl='cd ~/platform/firmware/.builds/festo_zynq_cpx-iot/linux/linux-build'
+alias fwd='firmware/.deploy/festo_zynq_cpx-iot/lpat/yafft.sh -i 192.168.0.145 -d firmware/.deploy/festo_zynq_cpx-iot/ffwu'
+
+#Typo fixups
+alias mkdri='mkdir' #note: could interfere with mkdir (a tool that I don't use)
+alias mkae='make'
+
+alias kermit-usb='CKERMIT_INI=~/ownCloud/Settings/HAL9000/other/kermrc-ttyUSB0@115200 kermit -c'
+
+alias rot_off='ledc force_switch 0 0'
+alias rot_onboard='ledc force_switch 0 1'
+alias rot_ro='ledc force_switch 0 3'
+alias rot_rw='ledc force_switch 0 7'

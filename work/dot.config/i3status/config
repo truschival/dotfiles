@@ -1,0 +1,38 @@
+general {
+	output_format = "i3bar"
+	colors = true
+	interval = 5
+}
+
+
+order += "ethernet enp0s3"
+order += "ethernet enp0s8"
+order += "load"
+order += "disk /"
+order += "tztime local"
+
+
+ethernet enp0s3 {
+# if you use %speed, i3status requires the cap_net_admin capability
+	format_up = "enp0s3 (uplink): %ip"
+	format_down = "enp0s3: down"
+}
+
+
+ethernet enp0s8 {
+# if you use %speed, i3status requires the cap_net_admin capability
+	format_up = "enp0s8 (local): %ip (%speed)"
+	format_down = "enp0s8: down"
+}
+
+tztime local {
+	format = "%Y-%m-%d %H:%M:%S"
+}
+
+load {
+	format = "%1min %5min"
+}
+
+disk "/" {
+	format = "%free"
+}

@@ -1,0 +1,8 @@
+alias p='cd ~/platform/'
+alias pp='cd ~/platform/firmware/packages'
+alias pl='cd ~/platform/firmware/.builds/festo_zynq_cpx-iot/linux/linux-build'
+alias fwd='firmware/.deploy/festo_zynq_cpx-iot/lpat/yafft.sh -i 192.168.0.145 -d firmware/.deploy/festo_zynq_cpx-iot/ffwu'
+alias rot_off='ledc force_switch 0 0'
+alias rot_onboard='ledc force_switch 0 1'
+alias rot_ro='ledc force_switch 0 3'
+alias rot_rw='ledc force_switch 0 7'

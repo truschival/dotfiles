@@ -1,0 +1,27 @@
+[http]
+	sslVerify = false
+[user]
+	name = Thomas Ruschival
+	email = thomas.ruschival@festo.com
+[alias]
+	llog = !git --no-pager log --name-only --abbrev-commit -n15 HEAD
+	st = status
+	co = checkout
+	ci = commit
+[gui]
+	editor = emacs --quick
+	historybrowser = gitk
+[cola]
+	blameviewer = git gui blame
+	tabwidth = 4
+[merge]
+	tool = kdiff3
+[diff]
+	tool = kdiff3
+[core]
+	excludesFile = /home/me/.gitignore.local
+	autocrlf = input
+	pager = less -FRSX
+	editor = /usr/bin/emacs -nw --quick
+[help]
+	autocorrect = 0

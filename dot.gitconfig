@@ -1,0 +1,30 @@
+[user]
+	name = Thomas Ruschival
+	email = thomas@ruschival.de
+	signingkey = 0A22736A4AB577ED
+[core]
+	autocrlf = input
+	pager = less -FRSX
+	editor = /usr/bin/emacs -nw --quick
+[push]
+	default = tracking
+[color]
+	ui = auto
+[alias]
+	st = status
+	co = checkout
+	ci = commit
+[apply]
+	whitespace = nowarn
+[diff]
+	tool = kdiff3
+[merge]
+	tool = kdiff3
+[cola]
+	spellcheck = true
+	tabwidth = 4
+	boldheaders = false
+[commit]
+	gpgsign = true
+[help]
+	autocorrect = 0

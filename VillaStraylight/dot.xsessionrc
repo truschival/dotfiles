@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$XDG_CURRENT_DESKTOP" = "i3" ] ;
+then
+	export QT_QPA_PLATFORMTHEME=qt5ct
+	echo "Running i3wm" > .xsession-errors 
+fi
+
+export PATH=$HOME/Tools/:$PATH:/usr/sbin:/sbin
