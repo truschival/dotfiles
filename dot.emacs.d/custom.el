@@ -11,15 +11,15 @@
  '(TeX-view-program-list (quote (("Okular" "okular --unique %o#src:%n%b"))))
  '(TeX-view-program-selection
    (quote
-	((output-pdf "Okular")
-	 ((output-dvi style-pstricks)
-	  "dvips and gv")
-	 (output-dvi "xdvi")
-	 (output-pdf "xpdf")
-	 (output-html "xdg-open"))))
+    ((output-pdf "Okular")
+     ((output-dvi style-pstricks)
+      "dvips and gv")
+     (output-dvi "xdvi")
+     (output-pdf "xpdf")
+     (output-html "xdg-open"))))
  '(a2ps-switches
    (quote
-	("-b" "-l 90" "-T 4" "-M A4" "--colums=1" "-R" "--line-numbers=1")) t)
+    ("-b" "-l 90" "-T 4" "-M A4" "--colums=1" "-R" "--line-numbers=1")) t)
  '(auto-image-file-mode t nil (image-file))
  '(c-echo-syntactic-information-p nil)
  '(c-report-syntactic-errors t)
@@ -30,7 +30,7 @@
  '(current-language-environment "German")
  '(custom-safe-themes
    (quote
-	("6cfe5b2f818c7b52723f3e121d1157cf9d95ed8923dbc1b47f392da80ef7495d" default)))
+    ("6cfe5b2f818c7b52723f3e121d1157cf9d95ed8923dbc1b47f392da80ef7495d" default)))
  '(default-frame-alist (quote ((menu-bar-lines . 1) (width . 132) (heigth . 55))))
  '(default-input-method "german-postfix")
  '(display-time-24hr-format t)
@@ -43,12 +43,12 @@
  '(normal-erase-is-backspace (quote maybe))
  '(package-archives
    (quote
-	(("Melpa" . "http://melpa.milkbox.net/packages/")
-	 ("gnu" . "https://elpa.gnu.org/packages/")
-	 ("marmalade" . "http://marmalade-repo.org/packages/"))))
+    (("Melpa" . "http://melpa.milkbox.net/packages/")
+     ("gnu" . "https://elpa.gnu.org/packages/")
+     ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(package-selected-packages
    (quote
-	(dts-mode groovy-mode indent-tools yaml-mode qml-mode writegood-mode rfringe matlab-mode markdown-preview-eww markdown-mode lua-mode irony idomenu highlight-symbol gnuplot gitignore-mode git-commit-mode fuzzy fill-column-indicator elpy cmake-ide auto-complete-c-headers ac-etags ac-c-headers)))
+    (dts-mode groovy-mode indent-tools yaml-mode qml-mode writegood-mode rfringe matlab-mode markdown-preview-eww markdown-mode lua-mode irony idomenu highlight-symbol gnuplot gitignore-mode git-commit-mode fuzzy fill-column-indicator elpy cmake-ide auto-complete-c-headers ac-etags ac-c-headers)))
  '(select-enable-clipboard t)
  '(show-paren-mode t)
  '(show-trailing-whitespace t)
@@ -63,7 +63,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "Black" :foreground "White" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "unknown" :family "Liberation Mono"))))
+ '(default ((t (:inherit nil :stipple nil :background "Black" :foreground "White" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 99 :width normal :foundry "1ASC" :family "Liberation Mono"))))
  '(cursor ((t (:background "khaki"))))
  '(font-lock-builtin-face ((((class color) (background dark)) (:foreground "Turquoise"))))
  '(font-lock-comment-face ((t (:foreground "wheat"))))
