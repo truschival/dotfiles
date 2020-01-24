@@ -48,7 +48,7 @@
      ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(package-selected-packages
    (quote
-    (dts-mode groovy-mode indent-tools yaml-mode qml-mode writegood-mode rfringe matlab-mode markdown-preview-eww markdown-mode lua-mode irony idomenu highlight-symbol gnuplot gitignore-mode git-commit-mode fuzzy fill-column-indicator elpy cmake-ide auto-complete-c-headers ac-etags ac-c-headers)))
+    (dts-mode indent-tools yaml-mode rfringe matlab-mode markdown-mode lua-mode irony gnuplot git-commit-mode fill-column-indicator elpy cmake-ide)))
  '(select-enable-clipboard t)
  '(show-paren-mode t)
  '(show-trailing-whitespace t)
