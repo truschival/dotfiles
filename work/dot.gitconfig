@@ -3,6 +3,9 @@
 [user]
 	name = Thomas Ruschival
 	email = thomas.ruschival@festo.com
+	signingkey = 0x8995DBA76AAA3B0C
+[commit]
+	gpgsign = true
 [alias]
 	llog = !git --no-pager log --name-only --abbrev-commit -n15 HEAD
 	st = status
