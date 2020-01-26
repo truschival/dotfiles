@@ -4,3 +4,5 @@ export TERM=xterm-256color
 export EDITOR="emacs --no-window-system"
 # export WINEARCH=win64
 
+# SSH Agent socket
+SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh

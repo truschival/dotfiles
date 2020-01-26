@@ -4,6 +4,11 @@
 # set -e
 
 
+sudo apt install -y wget gnupg2 gnupg-agent \
+     dirmngr cryptsetup scdaemon pcscd secure-delete \
+     hopenpgp-tools yubikey-personalization \
+     udiskie
+
 ##
 # Create a link and ask if link exists and call was not forced
 ##
@@ -20,7 +25,7 @@ function create_link(){
 		if [[ $REPLY =~ ^[Yy]$ ]]
 		then
 			ln -sf $target $link
-		fi	
+		fi
 	else
 		ln -s $FORCE_LINK $target $link
 	fi
@@ -35,7 +40,7 @@ function create_link(){
 function setup_dot_links(){
 	local src_dir=$1
 	local target_dir=$2
-	
+
 	for file in $(find $src_dir -maxdepth 1 -type f -name dot\* )
 	do
 		local dotfile=$(basename $file)
@@ -49,7 +54,7 @@ function setup_dot_links(){
 			local src_root=$(realpath $src_dir)
 		fi
 		create_link ${src_root}/${dotfile}  $target_dir/$link_name
-	done				
+	done
 }
 ################################################################################
 
@@ -60,7 +65,7 @@ function setup_dot_links(){
 function setup_links_in_subdir(){
 	local src_dir=$1
 	local target_dir=$2
-	
+
 	mkdir -p $target_dir
 
 	# only take subdirectories, not $src_dir
@@ -76,10 +81,28 @@ function setup_links_in_subdir(){
 		else
 			local src_root=$(realpath $confdir_name)
 		fi
-		
+
 		create_link ${src_root}  $target_dir/$link_name
-	done				
+	done
 }
+
+################################################################################
+
+function gnupg_setup(){
+    mkdir -p $HOME/.config/systemd/user/
+    cp /usr/share/doc/gnupg/examples/systemd-user/*  $HOME/.config/systemd/user/
+    # use the ssh-agent enabled gpg-agent.service file
+    cp $SCRIPT_DIR/dot.config/gpg-agent.service $HOME/.config/systemd/user/
+    # gnupg - copy conf-files ! no not link
+    mkdir -p $HOME/.gnupg
+    chmod 700 $HOME/.gnupg
+    cp -i dot.gnupg/* $HOME/.gnupg
+    # Setup systemd user config
+    systemctl --user enable gpg-agent.socket gpg-agent-ssh.socket
+    systemctl --user enable dirmngr.socket
+}
+
+
 
 ################################################################################
 
@@ -92,21 +115,21 @@ function print_help() {
 	cat <<EOF
 $0 creates symbolic links in \$HOME and respective sub directories to
 files provided by this repository.
-For this to work this script expects the configuration files to be in the 
+For this to work this script expects the configuration files to be in the
 same directory structure in the repository as they will be located in \$HOME.
 Any hidden files or directories are prefixed with 'dot.' e.g.
-$HOME/.zshrc will link to ./dot.zshrc 
-$HOME/.config/i3/config will link to ./dot.config/i3/config 
+$HOME/.zshrc will link to ./dot.zshrc
+$HOME/.config/i3/config will link to ./dot.config/i3/config
 
-Some configuration files are different on various machines. You can specify a 
-'work environment' for this. If you give a work environment (\$WE) and for a 
-given file in ./ a matching file in \$WE is found, the file in \$WE will be 
+Some configuration files are different on various machines. You can specify a
+'work environment' for this. If you give a work environment (\$WE) and for a
+given file in ./ a matching file in \$WE is found, the file in \$WE will be
 linked. E.g.:
-./dot.zshrc and \$WE/dot.zshrc exist  $HOME/.zshrc will link to \$WE/dot.zshrc 
- 
+./dot.zshrc and \$WE/dot.zshrc exist  $HOME/.zshrc will link to \$WE/dot.zshrc
+
 options:
 	-f force link creation !WARNING: overwrites your config file(s) in $HOME!
-	-w work environment refers to a folder with local overrides/extensions for 
+	-w work environment refers to a folder with local overrides/extensions for
 	   config
 	-h print this help
 EOF
@@ -135,3 +158,5 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 setup_dot_links $SCRIPT_DIR $HOME
 # Setup sub folder directories
 setup_links_in_subdir dot.config $HOME
+# Setup gnupg
+gnupg_setup
