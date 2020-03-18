@@ -20,18 +20,12 @@
 (add-to-list 'load-path settings-dir)
 (add-to-list 'load-path "~/.emacs.d/local")
 
-;;(load "~/.emacs.d/emacs_keybindings")
 (setq locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (setq file-name-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
-
-(set-background-color "Black")
-(set-foreground-color "White")
-(set-cursor-color "khaki")
-(set-mouse-color "khaki")
 
 (normal-erase-is-backspace-mode 0)
 (when (window-system)
@@ -57,12 +51,10 @@
 (transient-mark-mode t)				;; Highlight selection
 (delete-selection-mode 1)			;; delete seleted text when typing
 
-
 ;; Show matching parens (mixed style)
 (show-paren-mode t)
 (setq show-paren-delay 0.0)
 (setq show-paren-style 'parenthesis)
-
 
 ;;==============================================================================
 ;; Completion of buffer names in switching
@@ -76,7 +68,6 @@
 	   (not (string= name "*shell*"))))
 (setq ido-ignore-buffers '("\\` " ido-ignore-non-user-except-ielm))
 
-
 ;;==============================================================================
 ;; Magic parentesis and ""
 ;;==============================================================================
@@ -85,33 +76,16 @@
   "If at end of line, insert character pair without surrounding spaces.
 	Otherwise, just insert the typed character."
   (interactive)
-  (if (eolp) (let (parens-require-spaces) (insert-pair)) (self-insert-command 1)))
-
-
-;;==============================================================================
-;; MATLAB
-;;==============================================================================
-(autoload 'matlab-mode "matlab" "Matlab Editing Mode" t)
-(add-to-list
- 'auto-mode-alist
- '("\\.m$" . matlab-mode))
-(setq matlab-indent-function t)
-(setq matlab-shell-command "matlab")
-(setq matlab-shell-command-switches '("-nodesktop -nosplash"))
-
+  (if (eolp)
+	  (let (parens-require-spaces) (insert-pair))
+	(self-insert-command 1)
+ ))
 
 ;;==============================================================================
 ;; Line numbers
 ;;==============================================================================
 (global-linum-mode 1)
 (setq linum-format "%4d|")
-
-;; Whitespace-style
-(setq whitespace-style '(trailing lines space-before-tab
-								  indentation space-after-tab)
-	  whitespace-line-column 80)
-(global-whitespace-mode t)
-
 
 ;;==============================================================================
 ;; Fill column Indicator
@@ -132,15 +106,12 @@
 (setq ispell-program-name "aspell")
 (setq text-mode-hook '(lambda() (flyspell-mode t) ))
 
-
 ;;============
 ;; Ediff
 ;;============
 (setq ediff-split-window-function (if (> (frame-width) 150)
 									  'split-window-horizontally
 									'split-window-vertically))
-
-
 ;;============
 ;; Easy editing lisp
 ;; not polluting other sources with lisp auto-complete
@@ -154,8 +125,6 @@
 			   )
 )
 (add-hook 'emacs-lisp-mode-hook 'my-lisp-hook)
-
-
 
 ;;==============================================================================
 ;; Python
@@ -180,7 +149,7 @@
   (require 'rtags)
   (require 'company)
   (require 'flycheck)
-  (require 'flycheck-rtags)
+;;  (require 'flycheck-rtags)
 
   (setq rtags-completions-enabled t)
   (setq rtags-autostart-diagnostics t)
@@ -202,35 +171,35 @@
 ;; Flycheck + Company-mode autocomplete
 ;;==============================================================================
 
-(defun setup-flycheck-rtags ()
-  (interactive)
-  (flycheck-select-checker 'rtags)
-  ;; RTags creates more accurate overlays.
-  (setq-local flycheck-highlighting-mode nil)
-  (setq-local flycheck-check-syntax-automatically nil))
+;; (defun setup-flycheck-rtags ()
+;;   (interactive)
+;;   (flycheck-select-checker 'rtags)
+;;   ;; RTags creates more accurate overlays.
+;;   (setq-local flycheck-highlighting-mode nil)
+;;   (setq-local flycheck-check-syntax-automatically nil))
 
-;; only run this if rtags is installed
-(when (require 'rtags nil :noerror)
-  ;; make sure you have company-mode installed
-  (require 'company)
-  (define-key c-mode-base-map (kbd "M-.")
-	(function rtags-find-symbol-at-point))
-  (define-key c-mode-base-map (kbd "M-,")
-	(function rtags-find-references-at-point))
-  ;; install standard rtags keybindings. Do M-. on the symbol below to
-  ;; jump to definition and see the keybindings.
-  (rtags-enable-standard-keybindings)
-  ;; company completion setup
-  (setq rtags-autostart-diagnostics t)
-  (rtags-diagnostics)
-  (setq rtags-completions-enabled t)
-  (push 'company-rtags company-backends)
-  (global-company-mode)
-  (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
-  ;; use rtags flycheck mode -- clang warnings shown inline
-  (require 'flycheck-rtags)
-  ;; c-mode-common-hook is also called by c++-mode
-  (add-hook 'c-mode-common-hook #'setup-flycheck-rtags))
+;; ;; only run this if rtags is installed
+;; (when (require 'rtags nil :noerror)
+;;   ;; make sure you have company-mode installed
+;;   (require 'company)
+;;   (define-key c-mode-base-map (kbd "M-.")
+;; 	(function rtags-find-symbol-at-point))
+;;   (define-key c-mode-base-map (kbd "M-,")
+;; 	(function rtags-find-references-at-point))
+;;   ;; install standard rtags keybindings. Do M-. on the symbol below to
+;;   ;; jump to definition and see the keybindings.
+;;   (rtags-enable-standard-keybindings)
+;;   ;; company completion setup
+;;   (setq rtags-autostart-diagnostics t)
+;;   (rtags-diagnostics)
+;;   (setq rtags-completions-enabled t)
+;;   (push 'company-rtags company-backends)
+;;   (global-company-mode)
+;;   (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
+;;   ;; use rtags flycheck mode -- clang warnings shown inline
+;;   (require 'flycheck-rtags)
+;;   ;; c-mode-common-hook is also called by c++-mode
+;;   (add-hook 'c-mode-common-hook #'setup-flycheck-rtags))
 
 
 ;;============
@@ -244,31 +213,12 @@
    (format "ctags-exuberant -e -R %s"  (directory-file-name dir-name)))
   )
 
-
-;; enable highligh-symbols
-(require 'highlight-symbol)
 ;; Some minor helpers
 (require 'custom-lisp)
 ;; Map files to modes
 (require 'mode-mappings)
 ;; Load key-mappings
 (require 'key-mappings)
-
-
-
-
-;;;
-;; TeX configs
-;;;
-;;(require 'tex-site)
-;; ;(eval-after-load "tex"
-;;   '(add-to-list 'TeX-command-list
-;;                 '("make acronyms" "makeindex -s %s.ist  -o %s.acn %s.acr" TeX-run-command nil t) t))
-;; (eval-after-load "tex"
-;;   '(add-to-list 'TeX-command-list
-;;                 '("make glossary" "makeindex -s %s.ist  -o %s.gls %s.glo" TeX-run-command nil t) t)
-;; )
-
 
 
 ;; Pull in individual customizations for modes etc. each in a separate file
