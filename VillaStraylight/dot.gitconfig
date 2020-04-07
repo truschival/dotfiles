@@ -28,3 +28,5 @@
 	gpgsign = true
 [help]
 	autocorrect = 0
+[gui]
+	editor = emacs

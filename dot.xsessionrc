@@ -6,4 +6,5 @@ then
 	echo "Running i3wm" > .xsession-errors 
 fi
 
-export PATH=$HOME/bin:$HOME/Tools:$PATH:/usr/sbin:/sbin
+export PATH=$HOME/Tools:$PATH:/usr/sbin:/sbin:./bin
+systemctl --user set-environment DISPLAY=:0 

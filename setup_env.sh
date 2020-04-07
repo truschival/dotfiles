@@ -153,7 +153,8 @@ do
 done
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
+# link wallpapers
+ln -s  $SCRIPT_DIR/wallpapers $HOME/.wallpapers
 # all files flat in directory
 setup_dot_links $SCRIPT_DIR $HOME
 # Setup sub folder directories
