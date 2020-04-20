@@ -1,7 +1,7 @@
 python
 import sys, os.path
 sys.path.insert(0, os.path.expanduser('~/.gdb'))
-sys.path.insert(0, '/usr/share/gcc-9/python')
+sys.path.insert(0, '/usr/share/gcc-10/python')
 import qt5printers
 from libstdcxx.v6.printers import register_libstdcxx_printers
 register_libstdcxx_printers(None)
