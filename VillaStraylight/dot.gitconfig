@@ -30,3 +30,8 @@
 	autocorrect = 0
 [gui]
 	editor = emacs
+[sendemail]
+	smtpencryption = tls
+	smtpserver = mail.rolf-dv.de
+	smtpuser = thomas@ruschival.de
+	smtpserverport = 587
