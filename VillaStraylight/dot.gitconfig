@@ -35,3 +35,5 @@
 	smtpserver = mail.rolf-dv.de
 	smtpuser = thomas@ruschival.de
 	smtpserverport = 587
+[pull]
+	ff = only

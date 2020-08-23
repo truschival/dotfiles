@@ -1,4 +1,0 @@
-# local settings go here (or in the work environment specific .zshenv.local)
-
-export BR2_DL_DIR=/data/Downloads/BR_DL
-export LOCAL_WIFI_NET_CFG=/home/ruschi/Coding/canto_do_chimarrao.txt

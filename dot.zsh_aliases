@@ -7,4 +7,6 @@ alias lsa='ls -lah'
 alias mkae=make
 alias mkdri=mkdir
 
+alias errno='cat /usr/include/asm-generic/errno.h'
+
 grep='grep --color=auto -n '
