@@ -107,17 +107,25 @@ set $ws9 "9"
 set $ws10 "10"
 
 
+# class                 border  backgr. text    indicator child_border
+client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+client.focused_inactive #404050 #404050 #ffffff #484e50   #5f676a
+client.unfocused        #404050 #404050 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.background       #ffffff
+
 # Switch workspace and assing desktop wallpaper
 # https://faq.i3wm.org/question/5346/assigning-wallpaper-to-workspaces.1.html
 set $feh exec --no-startup-id feh --bg-max --image-bg black --no-fehbg
 
-bindsym $mod+1 workspace $ws1 ; $feh ~/.wallpapers/SGI-purple.jpg
-bindsym $mod+2 workspace $ws2 ; $feh ~/.wallpapers/Solaris.jpg
+bindsym $mod+1 workspace $ws1 ; $feh ~/.wallpapers/Solaris.jpg
+bindsym $mod+2 workspace $ws2 ; $feh ~/.wallpapers/SGI-purple.jpg
 bindsym $mod+3 workspace $ws3 ; $feh ~/.wallpapers/MacOS9.jpg
-bindsym $mod+4 workspace $ws4 ; $feh ~/.wallpapers/NEXTStep.jpg
-bindsym $mod+5 workspace $ws5 ; $feh ~/.wallpapers/IBM.jpg
+bindsym $mod+4 workspace $ws4 ; $feh ~/.wallpapers/Sun.png
+bindsym $mod+5 workspace $ws5 ; $feh ~/.wallpapers/NEXTStep.jpg
 bindsym $mod+6 workspace $ws6 ; $feh ~/.wallpapers/Windows95.jpg
-bindsym $mod+7 workspace $ws7 ; $feh ~/.wallpapers/Sun.png
+bindsym $mod+7 workspace $ws7 ; $feh ~/.wallpapers/IBM.jpg
 bindsym $mod+8 workspace $ws8 ; $feh ~/.wallpapers/WinNT4.jpg
 bindsym $mod+9 workspace $ws9 ; $feh ~/.wallpapers/9.jpg
 bindsym $mod+0 workspace $ws10 ; $feh ~/.wallpapers/10.jpg
@@ -171,21 +179,30 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-
-# music control
-bindsym XF86AudioNext exec mpc next
-bindsym XF86AudioPrev exec mpc prev
-bindsym XF86AudioPlay exec mpc toggle
-bindsym XF86AudioStop exec mpc stop
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
-bindsym XF86AudioLowerVolume exec amixer -q set Master 5%+
-bindsym XF86AudioMute exec amixer set Master toggle
+#-------------------------------------------------------------------------------
+# Hotkeys for programs
+#-------------------------------------------------------------------------------
+bindsym Print exec --no-startup-id spectacle
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    font pango: Liberation Mono 8
+    font pango: Liberation Mono 9
     status_command i3status
+
+    colors {
+        background #404050
+        statusline #eeeeee
+        separator  #666688
+        #                  border  backgr. text
+        focused_workspace  #555555 #285577 #ffffff
+        active_workspace   #555555 #5f676a #ffffff
+        inactive_workspace #555555 #404050 #888888
+        urgent_workspace   #2f343a #900000 #ffffff
+    }
 }
 
 # do not follow mouse (option yes|no)
@@ -193,37 +210,48 @@ focus_follows_mouse no
 # focus windows on activation (smart|urgent|focus|none)
 focus_on_window_activation focus
 force_display_urgency_hint 500 ms
+# switch to urgent window
+bindsym $mod+g [urgent=latest] focus
+
 # no bordes if only one window on workspace
 hide_edge_borders smart
 # selecting same workspace again will bring me back to the previous workspace
 # workspace_auto_back_and_forth yes
 
 # Firefox (class= Navigator, Firefox)
-for_window [class="Navigator"] move container to workspace $ws2
-for_window [class="kmail2"] move container to workspace $ws4
-for_window [class="keepassxc"] move container to workspace $ws9
-for_window [class="Eclipse.*|Java"  ] move container to workspace $ws3
-
+for_window [class="kmail2"] move container to workspace $ws5
+for_window [class="(keepassxc)|(KeePassXC)"] move container to workspace $ws10
+assign [class="^(keepassxc)|(KeePassXC)"] $ws10
 
 # KDE stuff / floating windows
 for_window [class="apt-listchanges*"] floating enable
-for_window [class="Dolphin" title="(Copying.*)|(Moving.*)|(Progress Dialog)"] floating enable
-for_window [class="pinentry"] floating enable
+for_window [class="[dD]olphin" title="(Copying.*)|(Moving.*)|(Progress Dialog)"] floating enable
+for_window [class="[pP]inentry"] floating enable
 for_window [title="Receiving file.*"] floating enable
 for_window [title="klipper"] floating enable border none
+for_window [class="^[pP]avucontrol"] floating enable border normal 2
 for_window [class="DigitalRooster"] floating enable
 
+# Steam config
+for_window [class="[sS]team" title="Steam - News.*"] floating enable
+for_window [class="[sS]team"] enable
+
 # -------------------------------------------------------------
+#initial wallpaper
+exec --no-startup-id $feh ~/.wallpapers/SGI-purple.jpg
 
 #KeepassXC serves also as freedesktop secret provider
 exec --no-startup-id /usr/local/bin/keepassxc  /home/ruschi/ownCloud/keepassxc.kdbx
 # Policy Kit authenticator (kwallet)
-exec --no-startup-id dex /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
+exec --no-startup-id dex /etc/xdg/autostart/pam_kwallet_init.desktop
+exec --no-startup-id dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
 
 # Klipper clipboard manager
+# exec --no-startup-id dex /usr/share/applications/org.kde.klipper.desktop
 exec --no-startup-id dex /usr/share/applications/clipit.desktop
 # USB volume notifier / automounter (-A = do not automount)
 exec --no-startup-id /usr/bin/udiskie -Ans
+
 
 # Kmail2
 # exec --no-startup-id dex /usr/share/applications/org.kde.kmail2.desktop
