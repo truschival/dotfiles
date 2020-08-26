@@ -220,8 +220,8 @@ hide_edge_borders smart
 
 # Firefox (class= Navigator, Firefox)
 for_window [class="kmail2"] move container to workspace $ws5
-for_window [class="(keepassxc)|(KeePassXC)"] move container to workspace $ws10
-assign [class="^(keepassxc)|(KeePassXC)"] $ws10
+# Matches main window but not floating dialog requesting access to credentials
+assign [class=".* - [Kk]ee[Pp]assXC$"] $ws10
 
 # KDE stuff / floating windows
 for_window [class="apt-listchanges*"] floating enable
@@ -239,6 +239,8 @@ for_window [class="[sS]team"] enable
 # -------------------------------------------------------------
 #initial wallpaper
 exec --no-startup-id $feh ~/.wallpapers/SGI-purple.jpg
+# Lock screen and go blank
+exec --no-startup-id xautolock -corners ++00 -locker 'i3lock -i ~/.wallpapers/lockscreen.png'
 
 #KeepassXC serves also as freedesktop secret provider
 exec --no-startup-id /usr/local/bin/keepassxc  /home/ruschi/ownCloud/keepassxc.kdbx
@@ -251,7 +253,6 @@ exec --no-startup-id dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.de
 exec --no-startup-id dex /usr/share/applications/clipit.desktop
 # USB volume notifier / automounter (-A = do not automount)
 exec --no-startup-id /usr/bin/udiskie -Ans
-
 
 # Kmail2
 # exec --no-startup-id dex /usr/share/applications/org.kde.kmail2.desktop
