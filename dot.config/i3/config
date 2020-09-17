@@ -240,7 +240,7 @@ for_window [class="[sS]team"] enable
 #initial wallpaper
 exec --no-startup-id $feh ~/.wallpapers/SGI-purple.jpg
 # Lock screen and go blank
-exec --no-startup-id xautolock -corners ++00 -locker 'i3lock -i ~/.wallpapers/lockscreen.png'
+exec --no-startup-id xautolock -corners ++00 -locker 'i3lock -i ~/.wallpapers/lockscreen-scaled.png'
 
 #KeepassXC serves also as freedesktop secret provider
 exec --no-startup-id /usr/local/bin/keepassxc  /home/ruschi/ownCloud/keepassxc.kdbx

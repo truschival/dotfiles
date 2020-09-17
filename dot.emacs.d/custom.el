@@ -48,7 +48,7 @@
  '(package-check-signature nil)
  '(package-selected-packages
    (quote
-	(json-mode json-reformat json-snatcher vlf jsonnet-mode ## json json-navigator dts-mode indent-tools yaml-mode rfringe matlab-mode markdown-mode lua-mode irony gnuplot git-commit-mode fill-column-indicator elpy cmake-ide)))
+	(go-errcheck gotest json-mode json-reformat json-snatcher vlf jsonnet-mode ## json json-navigator dts-mode indent-tools yaml-mode rfringe matlab-mode markdown-mode lua-mode irony gnuplot git-commit-mode fill-column-indicator elpy cmake-ide)))
  '(select-enable-clipboard t)
  '(show-paren-mode t)
  '(show-trailing-whitespace t)

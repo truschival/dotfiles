@@ -7,7 +7,8 @@
 sudo apt install -y wget gnupg2 gnupg-agent \
      dirmngr cryptsetup scdaemon pcscd secure-delete \
      hopenpgp-tools yubikey-personalization \
-     udiskie i3lock xautolock 
+     udiskie i3lock xautolock imagemagick x11-utils xdg-utils\
+	 git-flow zsh
 
 ##
 # Create a link and ask if link exists and call was not forced
@@ -103,10 +104,15 @@ function gnupg_setup(){
 }
 
 
+################################################################################
+function scale_lockscreen(){
+	screensize=$(xdpyinfo | awk '/dimensions/{print $2}')
+	convert -scale $screensize .wallpapers/lockscreen.png \
+		   .wallpapers/lockscreen-scaled.png
+
+}
 
 ################################################################################
-
-
 function i3_conf_fixup(){
 	echo fixup
 }
@@ -155,6 +161,7 @@ done
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # link wallpapers
 ln -s  $SCRIPT_DIR/wallpapers $HOME/.wallpapers
+scale_lockscreen
 # all files flat in directory
 setup_dot_links $SCRIPT_DIR $HOME
 # Create local overrides
