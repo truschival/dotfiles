@@ -103,8 +103,12 @@
 ;; Aspell
 ;;============
 ;;(add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
-(setq ispell-program-name "aspell")
+;; Use aspell if installed
+(when (executable-find "aspell")
+  (setq ispell-program-name "aspell")
+  (setq ispell-list-command "--list"))
 (setq text-mode-hook '(lambda() (flyspell-mode t) ))
+(setq flyspell-issue-message-flag nil)
 
 ;;============
 ;; Ediff

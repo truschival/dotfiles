@@ -8,7 +8,7 @@ sudo apt install -y wget gnupg2 gnupg-agent \
      dirmngr cryptsetup scdaemon pcscd secure-delete \
      hopenpgp-tools yubikey-personalization \
      udiskie i3lock xautolock imagemagick x11-utils xdg-utils\
-	 git-flow zsh
+     git-flow zsh
 
 ##
 # Create a link and ask if link exists and call was not forced
@@ -159,14 +159,21 @@ do
 done
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# install ohmyzsh https://github.com/ohmyzsh/ohmyzsh
+sh -c "$(wget -O- \
+   https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Create local overrides
+touch $HOME/.zshenv.local
+touch $HOME/.zsh_aliases.local
+# create config folder if not setup
+[ -d $HOME/.config ] || mkdir $HOME/.config
+
 # link wallpapers
 ln -s  $SCRIPT_DIR/wallpapers $HOME/.wallpapers
 scale_lockscreen
 # all files flat in directory
 setup_dot_links $SCRIPT_DIR $HOME
-# Create local overrides
-touch $HOME/.zshenv.local
-touch $HOME/.zshenv_aliases.local
 # Setup sub folder directories
 setup_links_in_subdir dot.config $HOME
 # Setup gnupg
