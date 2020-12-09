@@ -1,4 +1,8 @@
 dot.emacs.d/elpa/*
 dot.emacs.d/auto-save-list/*
 dot.emacs.d/ido.last
-dot.emacs.d/session.*dot.emacs.d/srecode-map.el
+dot.emacs.d/session.*
+dot.emacs.d/srecode-map.el
+dot.emacs.d/ac-comphist.dat
+wallpapers/lockscreen-scaled.png
+
