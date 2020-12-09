@@ -5,21 +5,19 @@
  ;; If there is more than one, they won't work right.
  '(TeX-PDF-mode t)
  '(TeX-brace-indent-level 4)
- '(TeX-source-correlate-method (quote synctex))
+ '(TeX-source-correlate-method 'synctex)
  '(TeX-source-correlate-mode t)
  '(TeX-source-correlate-start-server t)
- '(TeX-view-program-list (quote (("Okular" "okular --unique %o#src:%n%b"))))
+ '(TeX-view-program-list '(("Okular" "okular --unique %o#src:%n%b")))
  '(TeX-view-program-selection
-   (quote
-    ((output-pdf "Okular")
+   '((output-pdf "Okular")
      ((output-dvi style-pstricks)
       "dvips and gv")
      (output-dvi "xdvi")
      (output-pdf "xpdf")
-     (output-html "xdg-open"))))
+     (output-html "xdg-open")))
  '(a2ps-switches
-   (quote
-    ("-b" "-l 90" "-T 4" "-M A4" "--colums=1" "-R" "--line-numbers=1")) t)
+   '("-b" "-l 90" "-T 4" "-M A4" "--colums=1" "-R" "--line-numbers=1") t)
  '(auto-image-file-mode t nil (image-file))
  '(c-echo-syntactic-information-p nil)
  '(c-report-syntactic-errors t)
@@ -29,32 +27,28 @@
  '(column-number-mode t)
  '(current-language-environment "German")
  '(custom-safe-themes
-   (quote
-    ("6cfe5b2f818c7b52723f3e121d1157cf9d95ed8923dbc1b47f392da80ef7495d" default)))
- '(default-frame-alist (quote ((menu-bar-lines . 1) (width . 132) (heigth . 55))))
+   '("6cfe5b2f818c7b52723f3e121d1157cf9d95ed8923dbc1b47f392da80ef7495d" default))
+ '(default-frame-alist '((menu-bar-lines . 1) (width . 132) (heigth . 55)))
  '(default-input-method "german-postfix")
  '(display-time-24hr-format t)
  '(display-time-day-and-date t)
- '(ediff-window-setup-function (quote ediff-setup-windows-plain))
- '(frame-background-mode (quote dark))
+ '(frame-background-mode 'dark)
  '(global-font-lock-mode t nil (font-lock))
  '(isearch-allow-scroll t)
  '(mouse-wheel-mode t nil (mwheel))
- '(normal-erase-is-backspace (quote maybe))
+ '(normal-erase-is-backspace 'maybe)
  '(package-archives
-   (quote
-    (("melpa-stable" . "https://stable.melpa.org/packages/")
-     ("gnu" . "https://elpa.gnu.org/packages/"))))
+   '(("melpa-stable" . "https://stable.melpa.org/packages/")
+     ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-check-signature nil)
  '(package-selected-packages
-   (quote
-    (go-dlv go-mode json-mode json-reformat json-snatcher vlf jsonnet-mode ## json json-navigator dts-mode indent-tools yaml-mode rfringe matlab-mode markdown-mode lua-mode irony gnuplot git-commit-mode fill-column-indicator elpy cmake-ide)))
- '(ring-bell-function (quote ignore))
+   '(qml-mode go-dlv go-mode json-mode json-reformat json-snatcher vlf jsonnet-mode ## json json-navigator dts-mode indent-tools yaml-mode rfringe matlab-mode markdown-mode lua-mode irony gnuplot git-commit-mode fill-column-indicator elpy cmake-ide))
+ '(ring-bell-function 'ignore)
  '(select-enable-clipboard t)
  '(show-paren-mode t)
  '(show-trailing-whitespace t)
  '(tool-bar-mode nil)
- '(uniquify-buffer-name-style (quote forward) nil (uniquify))
+ '(uniquify-buffer-name-style 'forward nil (uniquify))
  '(uniquify-min-dir-content 1)
  '(user-mail-address "thomas@ruschival.de")
  '(words-include-escapes t))

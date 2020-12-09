@@ -123,7 +123,7 @@ bindsym $mod+1 workspace $ws1 ; $feh ~/.wallpapers/Solaris.jpg
 bindsym $mod+2 workspace $ws2 ; $feh ~/.wallpapers/SGI-purple.jpg
 bindsym $mod+3 workspace $ws3 ; $feh ~/.wallpapers/MacOS9.jpg
 bindsym $mod+4 workspace $ws4 ; $feh ~/.wallpapers/Sun.png
-bindsym $mod+5 workspace $ws5 ; $feh ~/.wallpapers/NEXTStep.jpg
+bindsym $mod+5 workspace $ws5 ; $feh ~/.wallpapers/C64.jpg
 bindsym $mod+6 workspace $ws6 ; $feh ~/.wallpapers/Windows95.jpg
 bindsym $mod+7 workspace $ws7 ; $feh ~/.wallpapers/IBM.jpg
 bindsym $mod+8 workspace $ws8 ; $feh ~/.wallpapers/WinNT4.jpg

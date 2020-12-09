@@ -9,7 +9,6 @@
 (setq settings-dir
 	  (expand-file-name "settings" user-emacs-directory))
 
-
 ;;==============================================================================
 ;; Other customizations
 ;;==============================================================================
@@ -114,21 +113,31 @@
 ;; Ediff
 ;;============
 (setq ediff-split-window-function (if (> (frame-width) 150)
-									  'split-window-horizontally
-									'split-window-vertically))
+				      'split-window-horizontally
+				    'split-window-vertically))
 ;;============
 ;; Easy editing lisp
 ;; not polluting other sources with lisp auto-complete
 ;;============
 (defun my-lisp-hook()
   (setq ac-sources '(ac-source-symbols
-							ac-source-variables
-							ac-source-functions
-							ac-source-features
-							)
-			   )
-)
+		     ac-source-variables
+		     ac-source-functions
+		     ac-source-features
+		     )
+	)
+  )
 (add-hook 'emacs-lisp-mode-hook 'my-lisp-hook)
+
+;;==============================================================================
+;; Golang mode
+;;==============================================================================
+(defun my-go-mode-hook ()
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (local-set-key (kbd "M-.") 'godef-jump)
+  (local-set-key (kbd "M-,") 'pop-tag-mark)
+)
+(add-hook 'go-mode-hook 'my-go-mode-hook)
 
 ;;==============================================================================
 ;; Python
@@ -149,19 +158,6 @@
 (defun my-c-hook()
   (load "clang-format.el")
   (global-set-key [C-M-f] 'clang-format-region)
-
-  (require 'rtags)
-  (require 'company)
-  (require 'flycheck)
-;;  (require 'flycheck-rtags)
-
-  (setq rtags-completions-enabled t)
-  (setq rtags-autostart-diagnostics t)
-  (rtags-enable-standard-keybindings)
-
-  ;; Staryt CMake-IDE
-  (cmake-ide-setup)
-
   (setq-default c-basic-offset 4
 				tab-width 4
 				indent-tabs-mode t)
@@ -169,41 +165,6 @@
   )
 (add-hook 'c-mode-hook 'my-c-hook)
 (add-hook 'c++-mode-hook 'my-c-hook)
-
-
-;;==============================================================================
-;; Flycheck + Company-mode autocomplete
-;;==============================================================================
-
-;; (defun setup-flycheck-rtags ()
-;;   (interactive)
-;;   (flycheck-select-checker 'rtags)
-;;   ;; RTags creates more accurate overlays.
-;;   (setq-local flycheck-highlighting-mode nil)
-;;   (setq-local flycheck-check-syntax-automatically nil))
-
-;; ;; only run this if rtags is installed
-;; (when (require 'rtags nil :noerror)
-;;   ;; make sure you have company-mode installed
-;;   (require 'company)
-;;   (define-key c-mode-base-map (kbd "M-.")
-;; 	(function rtags-find-symbol-at-point))
-;;   (define-key c-mode-base-map (kbd "M-,")
-;; 	(function rtags-find-references-at-point))
-;;   ;; install standard rtags keybindings. Do M-. on the symbol below to
-;;   ;; jump to definition and see the keybindings.
-;;   (rtags-enable-standard-keybindings)
-;;   ;; company completion setup
-;;   (setq rtags-autostart-diagnostics t)
-;;   (rtags-diagnostics)
-;;   (setq rtags-completions-enabled t)
-;;   (push 'company-rtags company-backends)
-;;   (global-company-mode)
-;;   (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
-;;   ;; use rtags flycheck mode -- clang warnings shown inline
-;;   (require 'flycheck-rtags)
-;;   ;; c-mode-common-hook is also called by c++-mode
-;;   (add-hook 'c-mode-common-hook #'setup-flycheck-rtags))
 
 
 ;;============
