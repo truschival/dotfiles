@@ -35,13 +35,18 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# Use variable for exec --no-startup-id which is used thousand times...
+set $execnsid exec --no-startup-id 
+# I3-lock used in lock and auto-lock
+set $screenlock i3lock -i ~/.wallpapers/lockscreen-scaled.png
+
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run -fn 'LiberationSansMono:bold:pixelsize=14' -nf '#707080' -sf '#fdf6e3' -sb '#FFAF00'
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 set $dmenu 'dmenu -i -fn LiberationSansMono:bold:pixelsize=14 -nf #707080 -sf #fdf6e3 -sb #FFAF00'
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu=$dmenu
+bindsym $mod+d $execnsid i3-dmenu-desktop --dmenu=$dmenu
 
 # change focus
 bindsym $mod+j focus left
@@ -106,7 +111,6 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-
 # class                 border  backgr. text    indicator child_border
 client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
 client.focused_inactive #404050 #404050 #ffffff #484e50   #5f676a
@@ -129,7 +133,8 @@ bindsym $mod+7 workspace $ws7 ; $feh ~/.wallpapers/IBM.jpg
 bindsym $mod+8 workspace $ws8 ; $feh ~/.wallpapers/WinNT4.jpg
 bindsym $mod+9 workspace $ws9 ; $feh ~/.wallpapers/9.jpg
 bindsym $mod+0 workspace $ws10 ; $feh ~/.wallpapers/10.jpg
-
+#initial wallpaper
+$execnsid $feh ~/.wallpapers/SGI-purple.jpg
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -149,8 +154,6 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Shift+Pause exec "i3-nagbar -m 'Exit?' -B 'Sleep' 'i3lock && systemctl suspend' -B 'Reboot' 'systemctl reboot' -B 'Poweroff' 'systemctl poweroff'"
-
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -176,21 +179,31 @@ mode "resize" {
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
 }
-
 bindsym $mod+r mode "resize"
+
+# Special Exit mode
+mode "exit: [l]ock, [s]leep, [r]eboot, [p]oweroff" {
+  bindsym l exec $screenlock
+  bindsym s exec $screenlock && systemctl suspend
+  bindsym r exec systemctl reboot
+  bindsym p exec systemctl shutdown
+  bindsym Escape mode "default"
+  bindsym Return mode "default"
+}
+bindsym $mod+p mode "exit: [l]ock, [s]leep, [r]eboot, [p]oweroff"
 
 #-------------------------------------------------------------------------------
 # Hotkeys for programs
 #-------------------------------------------------------------------------------
-bindsym Print exec --no-startup-id spectacle
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym Print $execnsid /usr/bin/spectacle
+bindsym XF86AudioRaiseVolume $execnsid pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume $execnsid pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute $execnsid pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    font pango: Liberation Mono 9
+    font pango: Liberation Mono 8
     status_command i3status
 
     colors {
@@ -237,24 +250,23 @@ for_window [class="[sS]team" title="Steam - News.*"] floating enable
 for_window [class="[sS]team"] enable
 
 # -------------------------------------------------------------
-#initial wallpaper
-exec --no-startup-id $feh ~/.wallpapers/SGI-purple.jpg
 # Lock screen and go blank
-exec --no-startup-id xautolock -corners ++00 -locker 'i3lock -i ~/.wallpapers/lockscreen-scaled.png'
+$execnsid xautolock -corners ++00 -locker $screenlock
 
 #KeepassXC serves also as freedesktop secret provider
-exec --no-startup-id /usr/local/bin/keepassxc  /home/ruschi/ownCloud/keepassxc.kdbx
+$execnsid /usr/bin/keepassxc  /home/ruschi/ownCloud/keepassxc.kdbx
 # Policy Kit authenticator (kwallet)
-exec --no-startup-id dex /etc/xdg/autostart/pam_kwallet_init.desktop
-exec --no-startup-id dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
+$execnsid dex /etc/xdg/autostart/pam_kwallet_init.desktop
+$execnsid dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
 
 # Klipper clipboard manager
-exec --no-startup-id dex /usr/share/applications/org.kde.klipper.desktop
+$execnsid /usr/bin/qlipper
 # USB volume notifier / automounter (-A = do not automount)
-exec --no-startup-id /usr/bin/udiskie -Ans
+$execnsid /usr/bin/udiskie -Ans
 
 # Kmail2
-# exec --no-startup-id dex /usr/share/applications/org.kde.kmail2.desktop
+# $execnsid dex /usr/share/applications/org.kde.kmail2.desktop
 
 # owncloud
-# exec --no-startup-id dex /home/ruschi/.config/autostart/ownCloud.desktop
+# $execnsid dex /home/ruschi/.config/autostart/ownCloud.desktop
+
