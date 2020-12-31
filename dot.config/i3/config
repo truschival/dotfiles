@@ -74,10 +74,8 @@ bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
 bindsym $mod+h split h
-
 # split in vertical orientation
 bindsym $mod+v split v
-
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
@@ -94,9 +92,8 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
-
 # focus the child container
-# bindsym $mod+d focus child
+bindsym $mod+z focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -195,7 +192,7 @@ bindsym $mod+p mode "exit: [l]ock, [s]leep, [r]eboot, [p]oweroff"
 #-------------------------------------------------------------------------------
 # Hotkeys for programs
 #-------------------------------------------------------------------------------
-bindsym Print $execnsid /usr/bin/spectacle
+bindsym $mod+Print $execnsid /usr/bin/spectacle
 bindsym XF86AudioRaiseVolume $execnsid pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume $execnsid pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute $execnsid pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -250,14 +247,17 @@ for_window [class="[sS]team" title="Steam - News.*"] floating enable
 for_window [class="[sS]team"] enable
 
 # -------------------------------------------------------------
-# Lock screen and go blank
-$execnsid xautolock -corners ++00 -locker $screenlock
+# Lock screen and go blank after 10 min
+$execnsid xautolock -corners ++00 -time 10 -locker ' $screenlock '
 
 #KeepassXC serves also as freedesktop secret provider
 $execnsid /usr/bin/keepassxc  /home/ruschi/ownCloud/keepassxc.kdbx
 # Policy Kit authenticator (kwallet)
 $execnsid dex /etc/xdg/autostart/pam_kwallet_init.desktop
 $execnsid dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
+
+# unclutter hides Mouse pointer after 5s
+$execnsid /usr/bin/unclutter --timeout 5 --jitter 2
 
 # Klipper clipboard manager
 $execnsid /usr/bin/qlipper
