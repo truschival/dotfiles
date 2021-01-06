@@ -91,6 +91,7 @@ setopt sharehistory
 set -o emacs
 
 #bindkey -e
+bindkey "^[l"	  down-case-word
 bindkey "^[[1;5A" up-line-or-history    # [CTRL] + Cursor up
 bindkey "^[[1;5B" down-line-or-history  # [CTRL] + Cursor down
 bindkey "${key[Up]}" up-line-or-local-history
@@ -110,8 +111,8 @@ down-line-or-local-history() {
 zle -N down-line-or-local-history
 
 # fix <ALT>arrow combinations
-bindkey ";3D" emacs-backward-word
-bindkey ";3C" emacs-forward-word
+bindkey "^[[1;3D" emacs-backward-word
+bindkey "^[[1;3C" emacs-forward-word
 
 # source global aliases
 . ~/.zsh_aliases
