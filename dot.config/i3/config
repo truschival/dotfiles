@@ -183,7 +183,7 @@ mode "exit: [l]ock, [s]leep, [r]eboot, [p]oweroff" {
   bindsym l exec $screenlock
   bindsym s exec $screenlock && systemctl suspend
   bindsym r exec systemctl reboot
-  bindsym p exec systemctl shutdown
+  bindsym p exec systemctl poweroff
   bindsym Escape mode "default"
   bindsym Return mode "default"
 }

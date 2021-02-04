@@ -8,7 +8,7 @@ sudo apt install -y wget gnupg2 gnupg-agent \
      hopenpgp-tools yubikey-personalization \
      i3 i3-wm dex dmenu feh pulseaudio-utils i3lock xautolock \
      qlipper imagemagick x11-utils udiskie unclutter-xfixes xdg-utils \
-     elpa-fill-column-indicator \
+     elpa-fill-column-indicator gnutls-bin \
      git-flow zsh 
 
 ##
