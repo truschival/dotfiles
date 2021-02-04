@@ -37,14 +37,14 @@
  '(isearch-allow-scroll t)
  '(mml-secure-key-preferences
    '((OpenPGP
-      (sign)
+      (sign
+       ("thomas@ruschival.de" "67EFDAAE56716D78D8D1A307801A13F19F7ACBB9"))
       (encrypt
-       ("thomas@ruschival.de" "0C9E70FC72E0808D620311E80A22736A4AB577ED")))
+       ("thomas@ruschival.de" "67EFDAAE56716D78D8D1A307801A13F19F7ACBB9")))
      (CMS
       (sign)
       (encrypt))))
  '(mouse-wheel-mode t nil (mwheel))
- '(mu4e-view-mode-hook '(visual-line-mode fci-mode))
  '(normal-erase-is-backspace 'maybe)
  '(package-archives
    '(("melpa-stable" . "https://stable.melpa.org/packages/")
@@ -61,7 +61,7 @@
  '(uniquify-min-dir-content 1)
  '(user-mail-address "thomas@ruschival.de")
  '(words-include-escapes t))
-  
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -93,4 +93,3 @@
  '(show-paren-match ((t (:background "yellow" :foreground "black"))))
  '(show-paren-mismatch ((t (:background "red" :foreground "white" :weight bold))))
  '(whitespace-space ((t (:foreground "dark salmon")))))
-

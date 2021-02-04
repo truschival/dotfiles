@@ -184,7 +184,7 @@
 (require 'mode-mappings)
 ;; Load key-mappings
 (require 'key-mappings)
-;; Load key-mappings
+;; Load mu4e settings
 (require 'email-mu4e)
 
 

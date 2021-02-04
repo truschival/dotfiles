@@ -11,6 +11,7 @@
 ;;==============================================================================
 
 (global-set-key "\C-x\C-d" 'dired) ;; override list-directory
+(global-set-key "\C-c\C-e" 'mu4e)   ;; load email view
 (global-set-key [f1] 'shell)
 (global-set-key [f4] 'query-replace-regexp)
 (global-set-key [f5] 'revert-buffer)
