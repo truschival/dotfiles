@@ -39,16 +39,16 @@
 (setq inhibit-startup-message t)
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq frame-title-format "%b")
-(setq tab-width 4)					;; set your desired tab width
-(setq default-tab-width 4)			;; set your desired tab width
-(setq indent-tabs-mode nil)			;; may use tabs, space if nil
+(setq tab-width 4)			;; set your desired tab width
+(setq default-tab-width 4)		;; set your desired tab width
+(setq indent-tabs-mode nil)		;; may use tabs, space if nil
 (setq make-backup-files nil)		;; no backups
 
-(which-func-mode t)					;; Show function in mode-line
-(tool-bar-mode 0)					;; No tool-bar
-(ruler-mode t)						;; Ruler line on top
-(transient-mark-mode t)				;; Highlight selection
-(delete-selection-mode 1)			;; delete seleted text when typing
+(which-func-mode t)			;; Show function in mode-line
+(tool-bar-mode 0)			;; No tool-bar
+(ruler-mode t)				;; Ruler line on top
+(transient-mark-mode t)			;; Highlight selection
+(delete-selection-mode 1)		;; delete seleted text when typing
 
 ;; Show matching parens (mixed style)
 (show-paren-mode t)
@@ -184,6 +184,8 @@
 (require 'mode-mappings)
 ;; Load key-mappings
 (require 'key-mappings)
+;; Load key-mappings
+(require 'email-mu4e)
 
 
 ;; Pull in individual customizations for modes etc. each in a separate file

@@ -35,14 +35,23 @@
  '(frame-background-mode 'dark)
  '(global-font-lock-mode t nil (font-lock))
  '(isearch-allow-scroll t)
+ '(mml-secure-key-preferences
+   '((OpenPGP
+      (sign)
+      (encrypt
+       ("thomas@ruschival.de" "0C9E70FC72E0808D620311E80A22736A4AB577ED")))
+     (CMS
+      (sign)
+      (encrypt))))
  '(mouse-wheel-mode t nil (mwheel))
+ '(mu4e-view-mode-hook '(visual-line-mode fci-mode))
  '(normal-erase-is-backspace 'maybe)
  '(package-archives
    '(("melpa-stable" . "https://stable.melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-check-signature nil)
  '(package-selected-packages
-   '(qml-mode go-dlv go-mode json-mode json-reformat json-snatcher vlf jsonnet-mode ## json json-navigator dts-mode indent-tools yaml-mode rfringe matlab-mode markdown-mode lua-mode irony gnuplot git-commit-mode fill-column-indicator elpy cmake-ide))
+   '(mu4e-overview qml-mode go-dlv go-mode json-mode json-reformat json-snatcher vlf jsonnet-mode ## json json-navigator dts-mode indent-tools yaml-mode rfringe matlab-mode markdown-mode lua-mode irony gnuplot git-commit-mode fill-column-indicator elpy cmake-ide))
  '(ring-bell-function 'ignore)
  '(select-enable-clipboard t)
  '(show-paren-mode t)
