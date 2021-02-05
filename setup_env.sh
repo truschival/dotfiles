@@ -2,109 +2,68 @@
 
 # set -x
 # set -e
+VERBOSITY=6
 
+# Source util functions
+[ -e ./setupfuncs.sh ] && . ./setupfuncs.sh
+
+# Install packages
+log_info "Installing packages"
 sudo apt update && sudo apt install -y wget gnupg2 gnupg-agent \
      dirmngr cryptsetup scdaemon pcscd secure-delete \
      hopenpgp-tools yubikey-personalization \
      i3 i3-wm dex dmenu feh pulseaudio-utils i3lock xautolock \
      qlipper imagemagick x11-utils udiskie unclutter-xfixes xdg-utils \
      elpa-fill-column-indicator mu4e isync gnutls-bin \
-     git-flow zsh 
+     git-flow zsh
 
-##
-# Create a link and ask if link exists and call was not forced
-##
-function create_link() {
-    local target=$1
-    local link=$2
-
-    echo "LINK: $2 --> $1 "
-
-    if [ -e $link ] && [ -z $FORCE_LINK ] ;
-    then
-	read -p "File $link exists, overwrite? [N|y] " -n 1 -r
-	echo # new line
-	if [[ $REPLY =~ ^[Yy]$ ]]
-	then
-	    ln -sf $target $link
-	fi
-    else
-	ln -s $FORCE_LINK $target $link
-    fi
-}
 
 ################################################################################
-
-##
-# Find files local to src_dir and check if there is a corresponding file in
-# work environment
-##
-function setup_dot_links(){
-    local src_dir=$1
-    local target_dir=$2
-
-    for file in $(find $src_dir -maxdepth 1 -type f -name dot\* )
-    do
-	local dotfile=$(basename $file)
-	local link_name=${dotfile/dot/}
-
-	if [ ! -z $WS_OVERRIDE ] && [ -e $WS_OVERRIDE/$dotfile ]
-	then
-	    echo "Using override $WS_OVERRIDE/$dotfile for $file"
-	    local src_root=$(realpath $WS_OVERRIDE)
-	else
-	    local src_root=$(realpath $src_dir)
-	fi
-	create_link ${src_root}/${dotfile} $target_dir/$link_name
-    done
-}
-
-################################################################################
-
-##
-# Find directories in src_dir, check if corresponding dir in WE exists
-# Setup target directory structure and create link
-##
-function setup_links_in_subdir(){
-    local src_dir=$1
-    local target_dir=$2
-
-    mkdir -p $target_dir
-
-    # only take subdirectories, not $src_dir
-    for file in $(find $src_dir -mindepth 1 -type f )
-    do
-	local confdir_name=$(dirname $file)
-	local link_name=${confdir_name/dot/}
-
-	if [ ! -z $WS_OVERRIDE ] && [ -e $WS_OVERRIDE/$confdir_name ]
-	then
-	    echo "Using override $WS_OVERRIDE/$confdir for $confdir"
-	    local src_root=$(realpath $WS_OVERRIDE)
-	else
-	    local src_root=$(realpath $confdir_name)
-	fi
-
-	create_link ${src_root}  $target_dir/$link_name
-    done
-}
-
-################################################################################
-
 function gnupg_setup(){
+    log_info "setup gnupg config"
+    read -p  " continue? [Y|y] ?" -n 1 -r
+    echo # new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+	return
+    fi
 
-    mkdir -p $HOME/.config/systemd/user/
-    cp /usr/share/doc/gnupg/examples/systemd-user/*  $HOME/.config/systemd/user/
-
-    # use the ssh-agent enabled gpg-agent.service file
-    cp $SCRIPT_DIR/dot.config/gpg-agent.service $HOME/.config/systemd/user/
     # gnupg - copy conf-files ! no not link
-    mkdir -p $HOME/.gnupg
-    chmod 700 $HOME/.gnupg
-    cp -i dot.gnupg/* $HOME/.gnupg
+    mkdir -p $NEW_HOME/.gnupg
+    chmod 700 $NEW_HOME/.gnupg
+    cp -i dot.gnupg/* $NEW_HOME/.gnupg
+    chmod 600 $NEW_HOME/.gnupg/*
     # Setup systemd user config
     systemctl --user enable gpg-agent.socket gpg-agent-ssh.socket
     systemctl --user enable dirmngr.socket
+
+    gpg --import $SCRIPT_DIR/0x0A22736A4AB577ED.pub.asc
+    gpg --import $SCRIPT_DIR/0x801A13F19F7ACBB9.pub.asc
+}
+
+################################################################################
+function mail_setup(){
+    mkdir -p $NEW_HOME/Maildir
+    log_info "setup local mail"
+    read -p  " skip? [N|y] ?" -n 1 -r
+    echo # new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+	return
+    fi
+
+    log_info "Creating $NEW_HOME/.mailpass.gpg for encrypted IMAP password"
+    read -p "enter password followed by ENTER" -s -r
+    echo $REPLY > $NEW_HOME/.mailpass
+    unset $REPLY
+    gpg -e -r 0x801A13F19F7ACBB9  $NEW_HOME/.mailpass
+    shred -u $NEW_HOME/.mailpass
+
+    log_info "synching mail"
+    [ -e /usr/bin/mbsync ] && /usr/bin/mbsync -a -V
+    log_info "Disabling systemd user services mbsync.timer mbsync.service"
+    systemctl --user disable mbsync.timer
+    systemctl --user disable mbsync.service
 }
 
 ################################################################################
@@ -113,11 +72,6 @@ function scale_lockscreen(){
     convert -scale $screensize .wallpapers/lockscreen.png \
 	    .wallpapers/lockscreen-scaled.png
 
-}
-
-################################################################################
-function i3_conf_fixup(){
-    echo fixup
 }
 
 ################################################################################
@@ -147,8 +101,11 @@ EOF
 
 
 ################################################################################
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# use NEW_HOME for testing purposes usually it points to HOME
+NEW_HOME=$HOME
 
-while getopts w:hf option
+while getopts w:hnf option
 do
     case "${option}"
     in
@@ -158,31 +115,46 @@ do
 	f)
 	    FORCE_LINK="-f"
 	    ;;
+	n)
+	    DRYRUN=1
+	    NEW_HOME=/tmp/
+	    ;;
 	*)
 	    print_help $0
 	    ;;
     esac
 done
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-# install ohmyzsh https://github.com/ohmyzsh/ohmyzsh
+install ohmyzsh https://github.com/ohmyzsh/ohmyzsh
 sh -c "$(wget -O- \
    https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Create local overrides
-touch $HOME/.zshenv.local
-touch $HOME/.zsh_aliases.local
+touch $NEW_HOME/.zshenv.local
+touch $NEW_HOME/.zsh_aliases.local
 
 # create config folder if not setup
-[ -d $HOME/.config ] || mkdir $HOME/.config
+[ -d $NEW_HOME/.config ] || mkdir $NEW_HOME/.config
 
 # link wallpapers
-ln -s  $SCRIPT_DIR/wallpapers $HOME/.wallpapers
+ln -s  $SCRIPT_DIR/wallpapers $NEW_HOME/.wallpapers
 scale_lockscreen
-# all files flat in directory
-setup_dot_links $SCRIPT_DIR $HOME
+
+# all configfiles located in $NEW_HOME e.g. ~/.xsessionrc, ~/.gitconfig
+log_info "Creating links in $NEW_HOME"
+setup_dot_links $SCRIPT_DIR $NEW_HOME
+
 # Setup sub folder directories
-setup_links_in_subdir dot.config $HOME
+log_info "Creating links in .config and subdirectories"
+setup_links_in_subdir dot.config $NEW_HOME
+log_info "Creating links in .emacs.d and subdirectories"
+setup_links_in_subdir dot.emacs.d $NEW_HOME
+
 # Setup gnupg
 gnupg_setup
+
+# Setup mail
+mail_setup
+
+systemctl --user daemon-reload

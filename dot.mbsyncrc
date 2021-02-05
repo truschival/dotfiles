@@ -1,0 +1,37 @@
+###
+# Ruschival.de
+###
+
+IMAPAccount ruschival.de
+Host mail.rolf-dv.de
+# Port
+User thomas@ruschival.de
+# Pass ***************
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
+# Use SSL
+# SSLVersions TLSv1.2
+SSLType IMAPS
+
+IMAPStore ruschival-remote
+Account ruschival.de
+
+MaildirStore ruschival-local
+# The trailing "/" is important
+Path  ~/Maildir/ruschival.de/
+Inbox ~/Maildir/ruschival.de/INBOX
+SubFolders Verbatim
+
+Channel ruschival.de
+Master :ruschival-remote:
+Slave :ruschival-local:
+# Exclude everything under the internal folder, except the interesting folders
+# Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+# Or include everything
+Patterns *
+# Automatically create missing mailboxes, both locally and on the server
+Create Slave
+Expunge Both
+# Save the synchronization state files in the relevant directory
+SyncState *
+Sync All
+
