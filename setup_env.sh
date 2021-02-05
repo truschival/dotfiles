@@ -2,7 +2,13 @@
 
 # set -x
 # set -e
+
 VERBOSITY=6
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# use NEW_HOME for testing purposes usually it points to HOME
+NEW_HOME=$HOME
+DRYRUN=''
+
 
 # Source util functions
 [ -e ./setupfuncs.sh ] && . ./setupfuncs.sh
@@ -101,10 +107,6 @@ EOF
 
 
 ################################################################################
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-# use NEW_HOME for testing purposes usually it points to HOME
-NEW_HOME=$HOME
-
 while getopts w:hnf option
 do
     case "${option}"
@@ -116,7 +118,7 @@ do
 	    FORCE_LINK="-f"
 	    ;;
 	n)
-	    DRYRUN=1
+	    DRYRUN="DRYRUN"
 	    NEW_HOME=/tmp/
 	    ;;
 	*)
