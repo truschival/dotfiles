@@ -12,8 +12,14 @@ function log_debug() {
 }
 
 function log_info() {
-    if [ $VERBOSITY -ge 5 ]; then
+    if [ $VERBOSITY -ge 6 ]; then
 	echo -e $GREEN "$@" $RES_ATTRS
+    fi
+}
+
+function log_notice() {
+    if [ $VERBOSITY -ge 5 ]; then
+	echo -e $BLUE "$@" $RES_ATTRS
     fi
 }
 
@@ -35,13 +41,14 @@ function log_error() {
 function create_link() {
     local target=$1
     local link=$2
+    log_info "creating link: $2 --> $1 "
 
     if [ -e $link ] ;
     then
 	if [ ! -z $FORCE_LINK ] ;
 	then
-	    log_warn "link $link exists, overwrite forced"
-	    [ ! -z $DRYRUN ] && ln -sf $target $link
+	    log_notice "link $link exists, overwrite forced"
+	    [ -z $DRYRUN ] && ln -sf $target $link
 	    return
 	fi
 
@@ -49,15 +56,13 @@ function create_link() {
 	read -p  " overwrite? [N|y] ?" -n 1 -r
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
-	    log_debug "LINK: $2 --> $1 "
-	    [ ! -z $DRYRUN ] && ln -sf $target $link
+	    [ -z $DRYRUN ] && ln -sf $target $link
 	else
-	    log_info "Link $2 skipped"
+	    log_dbg " Link $2 skipped"
 	fi
 
     else # Link did not exist
-	log_info "creating link: $2 --> $1 "
-	[ ! -z $DRYRUN ] && ln -s $target $link
+	[ -z $DRYRUN ] && ln -s $target $link
     fi
 }
 
@@ -78,7 +83,7 @@ function setup_dot_links(){
 	local link_name=${dotfile#dot}
 	if [ ! -z $WS_OVERRIDE ] && [ -e $WS_OVERRIDE/$dotfile ]
 	then
-	    log_info "Using override $WS_OVERRIDE/$dotfile for $file"
+	    log_notice "Using override $WS_OVERRIDE/$dotfile for $file"
 	    local src_root=$(realpath $WS_OVERRIDE)
 	else
 	    [ ! -z $WS_OVERRIDE ] &&
@@ -102,7 +107,6 @@ function setup_links_in_subdir(){
     # only take subdirectories, not $src_dir
     for file in $(find $src_dir -mindepth 1 -type f )
     do
-	log_debug "--"
 	local local_dirname=$(dirname $file)
 	local confdir_name=dot.${local_dirname#*dot.}
 	local source_file=$(basename $file)
@@ -113,12 +117,15 @@ function setup_links_in_subdir(){
 	# that matches the name and relative path
 	# If so take this file as link source
 	##
-	if [ ! -z $WS_OVERRIDE ] && [ -e $WS_OVERRIDE/$confdir_name/$source_file ]
+	local override_file=$WS_OVERRIDE/$confdir_name/$source_file
+
+	if [ ! -z $WS_OVERRIDE ] && [ -e $override_file ]
 	then
-    	    local link_source=$(realpath $WS_OVERRIDE/$confdir_name/$source_file)
-	    log_warn "Using $WS_OVERRIDE/$confdir_name/$source_file for $source_file"
+    	    local link_source=$(realpath $override_file)
+	    log_notice "Using override file $override_file"
 	else
-	    log_info "$WS_OVERRIDE/$dotfile does not exist"
+	    [ ! -z $WS_OVERRIDE ] &&
+		log_info "No override file $override_file found"
 	    local link_source=$(realpath $file)
 	fi
 
@@ -129,7 +136,7 @@ function setup_links_in_subdir(){
 	target_dir="$target_root/.$target_dir"
 	log_debug "Full target_dir: $target_dir"
 
-	[ ! -z $DRYRUN ] && mkdir -p $target_dir
+	[ -z $DRYRUN ] && mkdir -p $target_dir
 	create_link $link_source $target_dir/$source_file
     done
 }

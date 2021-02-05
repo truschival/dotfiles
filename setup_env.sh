@@ -3,18 +3,17 @@
 # set -x
 # set -e
 
-VERBOSITY=6
+VERBOSITY=5
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # use NEW_HOME for testing purposes usually it points to HOME
 NEW_HOME=$HOME
 DRYRUN=''
 
-
 # Source util functions
 [ -e ./setupfuncs.sh ] && . ./setupfuncs.sh
 
 # Install packages
-log_info "Installing packages"
+log_notice "Installing packages"
 sudo apt update && sudo apt install -y wget gnupg2 gnupg-agent \
      dirmngr cryptsetup scdaemon pcscd secure-delete \
      hopenpgp-tools yubikey-personalization \
@@ -26,8 +25,8 @@ sudo apt update && sudo apt install -y wget gnupg2 gnupg-agent \
 
 ################################################################################
 function gnupg_setup(){
-    log_info "setup gnupg config"
-    read -p  " continue? [Y|y] ?" -n 1 -r
+    log_notice "setup gnupg config"
+    read -p  " skip? [N|y] ?" -n 1 -r
     echo # new line
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
@@ -49,10 +48,9 @@ function gnupg_setup(){
 
 ################################################################################
 function mail_setup(){
-    mkdir -p $NEW_HOME/Maildir
-    log_info "setup local mail"
+    mkdir -p $NEW_HOME/Maildir/ruschival.de
+    log_notice "setup local mail"
     read -p  " skip? [N|y] ?" -n 1 -r
-    echo # new line
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
 	return
@@ -70,6 +68,8 @@ function mail_setup(){
     log_info "Disabling systemd user services mbsync.timer mbsync.service"
     systemctl --user disable mbsync.timer
     systemctl --user disable mbsync.service
+
+    mu init --my-address=thomas@ruschival.de --my-address=t.ruschival@gmail.com
 }
 
 ################################################################################
@@ -101,6 +101,7 @@ options:
 	-f force link creation !WARNING: overwrites your config file(s) in $HOME!
 	-w work environment refers to a folder with local overrides/extensions for
 	   config
+	-n dry-run, don't create (all links) - mail and gpg setup runs anyway   
 	-h print this help
 EOF
 }
@@ -119,7 +120,7 @@ do
 	    ;;
 	n)
 	    DRYRUN="DRYRUN"
-	    NEW_HOME=/tmp/
+#	    NEW_HOME=/tmp/
 	    ;;
 	*)
 	    print_help $0
@@ -128,9 +129,14 @@ do
 done
 
 
-install ohmyzsh https://github.com/ohmyzsh/ohmyzsh
-sh -c "$(wget -O- \
-   https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# install ohmyzsh https://github.com/ohmyzsh/ohmyzsh
+log_notice "Install Zsh"
+read -p  " install? [N|y] ?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    sh -c "$(wget -O- \
+   	https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
 
 # Create local overrides
 touch $NEW_HOME/.zshenv.local
@@ -144,13 +150,13 @@ ln -s  $SCRIPT_DIR/wallpapers $NEW_HOME/.wallpapers
 scale_lockscreen
 
 # all configfiles located in $NEW_HOME e.g. ~/.xsessionrc, ~/.gitconfig
-log_info "Creating links in $NEW_HOME"
+log_notice "Creating links in $NEW_HOME"
 setup_dot_links $SCRIPT_DIR $NEW_HOME
 
 # Setup sub folder directories
-log_info "Creating links in .config and subdirectories"
+log_notice "Creating links in .config and subdirectories"
 setup_links_in_subdir dot.config $NEW_HOME
-log_info "Creating links in .emacs.d and subdirectories"
+log_notice "Creating links in .emacs.d and subdirectories"
 setup_links_in_subdir dot.emacs.d $NEW_HOME
 
 # Setup gnupg
