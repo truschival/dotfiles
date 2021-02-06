@@ -73,10 +73,12 @@ function mail_setup(){
 }
 
 ################################################################################
-function scale_lockscreen(){
+function wallpaper_setup(){
+    ln -s $SCRIPT_DIR/wallpapers $NEW_HOME/.wallpapers
+
     screensize=$(xdpyinfo | awk '/dimensions/{print $2}')
-    convert -scale $screensize .wallpapers/lockscreen.png \
-	    .wallpapers/lockscreen-scaled.png
+    convert -scale $screensize $NEW_HOME/.wallpapers/lockscreen.png \
+	    $NEW_HOME/.wallpapers/lockscreen-scaled.png
 
 }
 
@@ -146,8 +148,7 @@ touch $NEW_HOME/.zsh_aliases.local
 [ -d $NEW_HOME/.config ] || mkdir $NEW_HOME/.config
 
 # link wallpapers
-ln -s  $SCRIPT_DIR/wallpapers $NEW_HOME/.wallpapers
-scale_lockscreen
+wallpaper_setup
 
 # all configfiles located in $NEW_HOME e.g. ~/.xsessionrc, ~/.gitconfig
 log_notice "Creating links in $NEW_HOME"
