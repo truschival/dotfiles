@@ -1,8 +1,6 @@
 ;; mu4e configurations after loading mu4e
 (with-eval-after-load 'mu4e
   (setq mail-user-agent 'mu4e-user-agent)
-  (setq mu4e-view-mode-hook '(visual-line-mode fci-mode))
-  (setq mu4e-view-use-gnus t)
 
   ;; the next are relative to the root maildir
   ;; (see `mu info`).
@@ -23,17 +21,23 @@
    mu4e-compose-signature-auto-include nil;; no signature per default
    mu4e-change-filenames-when-moving t	;; needed for mbsync
    mu4e-update-interval 180		;; update mail every 3 min
-   mu4e-decryption-policy t		;; decrypt all msgs (nil,ask) 
+   mu4e-decryption-policy t		;; decrypt all msgs (nil,ask)
    message-kill-buffer-on-exit t	;; don't keep message buffers around
    mu4e-compose-dont-reply-to-self t	;;
-   mu4e-view-prefer-html nil            ;; 
+   mu4e-view-prefer-html nil            ;;
    mu4e-attachment-dir  (expand-file-name "~/Downloads/")	;; attachments go here
    )
 
+  ;; Use gnus as mail reader, capable of decoding inline PGP
+  ;; (setq mu4e-view-use-gnus t)
+
+  ;; Some magic to show html mail
+  ;; (setq mu4e-html2text-command "w3m -dump -T text/html")
   (setq mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum)
-  
+
+  ;; Break lines at frame end
   (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
-  (setq mu4e-html2text-command "w3m -dump -T text/html")
+
   ;; the headers to show in the headers list -- a pair of a field
   ;; and its width, with `nil' meaning 'unlimited'
   ;; (better only use that for the last field.
@@ -80,4 +84,3 @@
   ;; (mu4e-maildirs-extension)
   )
 (provide 'email-mu4e)
-
