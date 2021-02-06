@@ -58,7 +58,7 @@ function create_link() {
 	then
 	    [ -z $DRYRUN ] && ln -sf $target $link
 	else
-	    log_dbg " Link $2 skipped"
+	    log_debug " Link $2 skipped"
 	fi
 
     else # Link did not exist
