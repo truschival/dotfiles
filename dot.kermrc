@@ -1,0 +1,26 @@
+#set line  /dev/ttyACM0
+set line  /dev/ttyUSB0
+
+set speed 115200 #57600 #115200 
+set carrier-watch off
+
+# Linefeed for arduino
+set TERMINAL lf-display CRLF 
+
+set handshake none      # 
+set parity none		# default=none	   even,mark,none,odd,space
+set flow-control none   # default=xon/xoff keep,none,rts/cts
+
+robust			# keine Ahnung??? 
+set file name literal	# name ist ascii
+set file type binary	# inhalt wahrscheinlich ein Blob
+
+set rec pack 1000
+set send pack 1000
+set window 5		# Windowsize for file transfer 1-31
+
+set file incomplete keep
+
+# log packets	~/tmp/kermit.packets.log
+# log session	~/tmp/kermit.session.log # strings like CONNECT 14400/V42bis
+# log transaction	~/tmp/kermit.transaction.log
