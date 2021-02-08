@@ -3,7 +3,7 @@
 # set -x
 # set -e
 
-VERBOSITY=5
+VERBOSITY=7
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # use NEW_HOME for testing purposes usually it points to HOME
 NEW_HOME=$HOME
@@ -13,15 +13,19 @@ DRYRUN=''
 [ -e ./setupfuncs.sh ] && . ./setupfuncs.sh
 
 # Install packages
-log_notice "Installing packages"
-sudo apt update && sudo apt install -y wget gnupg2 gnupg-agent \
-     dirmngr cryptsetup scdaemon pcscd secure-delete \
-     hopenpgp-tools yubikey-personalization \
-     i3 i3-wm dex dmenu feh pulseaudio-utils i3lock xautolock \
-     qlipper imagemagick x11-utils udiskie unclutter-xfixes xdg-utils \
-     elpa-fill-column-indicator mu4e isync gnutls-bin \
-     git-flow zsh
-
+log_notice "Install required packages"
+read -p  " install? [N|y] ?" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    sudo apt update &&
+	sudo apt install -y wget gnupg2 gnupg-agent \
+	     dirmngr cryptsetup scdaemon pcscd secure-delete \
+	     hopenpgp-tools yubikey-personalization \
+	     i3 i3-wm dex dmenu feh pulseaudio-utils i3lock xautolock \
+	     qlipper imagemagick x11-utils udiskie unclutter-xfixes xdg-utils \
+	     elpa-fill-column-indicator mu4e isync gnutls-bin \
+	     git-flow zsh
+fi
 
 ################################################################################
 function gnupg_setup(){
@@ -33,11 +37,12 @@ function gnupg_setup(){
 	return
     fi
 
-    # gnupg - copy conf-files ! no not link
     mkdir -p $NEW_HOME/.gnupg
+    setup_links_in_subdir dot.gnupg $NEW_HOME
+
     chmod 700 $NEW_HOME/.gnupg
-    cp -i dot.gnupg/* $NEW_HOME/.gnupg
     chmod 600 $NEW_HOME/.gnupg/*
+
     # Setup systemd user config
     systemctl --user enable gpg-agent.socket gpg-agent-ssh.socket
     systemctl --user enable dirmngr.socket
@@ -77,7 +82,7 @@ function wallpaper_setup(){
     ln -s $SCRIPT_DIR/wallpapers $NEW_HOME/.wallpapers
 
     screensize=$(xdpyinfo | awk '/dimensions/{print $2}')
-    convert -scale $screensize $NEW_HOME/.wallpapers/lockscreen.png \
+    convert -scale "$screensize!" $NEW_HOME/.wallpapers/lockscreen.png \
 	    $NEW_HOME/.wallpapers/lockscreen-scaled.png
 
 }
@@ -103,7 +108,7 @@ options:
 	-f force link creation !WARNING: overwrites your config file(s) in $HOME!
 	-w work environment refers to a folder with local overrides/extensions for
 	   config
-	-n dry-run, don't create (all links) - mail and gpg setup runs anyway   
+	-n dry-run, don't create (all links) - mail and gpg setup runs anyway
 	-h print this help
 EOF
 }
@@ -122,7 +127,7 @@ do
 	    ;;
 	n)
 	    DRYRUN="DRYRUN"
-#	    NEW_HOME=/tmp/
+	    #	    NEW_HOME=/tmp/
 	    ;;
 	*)
 	    print_help $0
@@ -133,7 +138,7 @@ done
 
 # install ohmyzsh https://github.com/ohmyzsh/ohmyzsh
 log_notice "Install Zsh"
-read -p  " install? [N|y] ?" -n 1 -r
+read -p  " Install oh-my-zsh? [N|y] ?" -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     sh -c "$(wget -O- \
