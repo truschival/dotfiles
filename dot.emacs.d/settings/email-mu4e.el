@@ -1,7 +1,5 @@
 ;; mu4e configurations after loading mu4e
 (with-eval-after-load 'mu4e
-  (setq mail-user-agent 'mu4e-user-agent)
-
   ;; the next are relative to the root maildir
   ;; (see `mu info`).
   ;; instead of strings, they can be functions too, see
@@ -15,17 +13,40 @@
 	  '((:maildir "/ruschival.de/INBOX"   :key ?i)
 	    (:maildir "/ruschival.de/Sent"    :key ?s)
 	    (:maildir "/ruschival.de/Drafts"  :key ?d)
+	    (:maildir "/ruschival.de/Trash"   :key ?t)
 	    ))
 
+  ;; (add-to-list 'mu4e-bookmarks
+  ;; '( :name  "emails 3days - no Mailinglist"
+  ;;    :query "NOT maildir:/ruschival.de/MailingLists/* AND date:3d.."
+  ;;    :key   ?X))
+  (setq mu4e-bookmarks
+	'(
+	  (:name "emails 3 days (no list)"
+		 :query "NOT flag:list AND date:3d.."
+		 :key ?n)
+	  (:name "unread messages (no list)"
+		 :query "flag:unread AND NOT flag:list AND NOT flag:trashed "
+		 :key ?u)
+	  (:name "mailinglists (buildroot)"
+		 :query "flag:list"
+		 :key ?l)
+	  ))
+
   (setq
+   mail-user-agent 'mu4e-user-agent
    mu4e-compose-signature-auto-include nil;; no signature per default
    mu4e-change-filenames-when-moving t	;; needed for mbsync
-   mu4e-update-interval 180		;; update mail every 3 min
+   mu4e-update-interval 300		;; update mail every 5 min
    mu4e-decryption-policy t		;; decrypt all msgs (nil,ask)
    message-kill-buffer-on-exit t	;; don't keep message buffers around
+   mu4e-compose-in-new-frame t		;; Open new frame for writing emails
+   mu4e-compose-format-flowed t		;; Soft Line-Breaks depending on client
    mu4e-compose-dont-reply-to-self t	;;
    mu4e-view-prefer-html nil            ;;
    mu4e-attachment-dir  (expand-file-name "~/Downloads/")	;; attachments go here
+   message-citation-line-function 'message-insert-formatted-citation-line
+   message-citation-line-format "On %Y-%m-%d at %R %Z, %f wrote:\n"
    )
 
   ;; Use gnus as mail reader, capable of decoding inline PGP
@@ -37,6 +58,8 @@
 
   ;; Break lines at frame end
   (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
+  (add-hook 'mu4e-view-mode-hook (lambda ()
+				   (setq show-trailing-whitespace nil)))
 
   ;; the headers to show in the headers list -- a pair of a field
   ;; and its width, with `nil' meaning 'unlimited'
