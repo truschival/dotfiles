@@ -46,12 +46,13 @@
       (encrypt))))
  '(mouse-wheel-mode t nil (mwheel))
  '(normal-erase-is-backspace 'maybe)
+ '(org-agenda-files '("~/ownCloud/org/"))
  '(package-archives
    '(("melpa-stable" . "https://stable.melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-check-signature nil)
  '(package-selected-packages
-   '(mu4e-overview qml-mode go-dlv go-mode json-mode json-reformat json-snatcher vlf jsonnet-mode ## json json-navigator dts-mode indent-tools yaml-mode rfringe matlab-mode markdown-mode lua-mode gnuplot git-commit-mode fill-column-indicator elpy cmake-ide))
+   '(mu4e-overview qml-mode go-dlv go-mode json-mode json-reformat json-snatcher vlf jsonnet-mode ## json json-navigator dts-mode indent-tools yaml-mode matlab-mode markdown-mode fill-column-indicator elpy cmake-ide))
  '(ring-bell-function 'ignore)
  '(select-enable-clipboard t)
  '(show-paren-mode t)
@@ -67,23 +68,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default (
-	    (t (:inherit nil
-			 :stipple nil
-			 :background "Black"
-			 :foreground "White"
-			 :inverse-video nil
-			 :box nil
-			 :strike-through nil
-			 :overline nil
-			 :underline nil
-			 :slant normal
-			 :weight normal
-			 :height 120
-			 :width normal
-			 :foundry "1ASC"
-			 :family "Liberation Mono"))))
- 
+ '(default ((t (:inherit nil :stipple nil :background "Black" :foreground "White" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "1ASC" :family "Liberation Mono"))))
  '(cursor ((t (:background "khaki"))))
  '(font-lock-builtin-face ((((class color) (background dark)) (:foreground "Turquoise"))))
  '(font-lock-comment-face ((t (:foreground "wheat"))))

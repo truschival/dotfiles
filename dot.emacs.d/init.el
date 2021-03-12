@@ -9,6 +9,9 @@
 (setq settings-dir
 	  (expand-file-name "settings" user-emacs-directory))
 
+(setq custom-theme-directory
+      (expand-file-name "themes" user-emacs-directory))
+
 ;;==============================================================================
 ;; Other customizations
 ;;==============================================================================
@@ -27,9 +30,10 @@
 (prefer-coding-system 'utf-8)
 
 (normal-erase-is-backspace-mode 0)
+
+;; Fix ^H / Delete keybinding issues
 (when (window-system)
 	  (normal-erase-is-backspace-mode t))
-
 ;; Always start Server if not running
 (load "server")
  (unless (server-running-p) (server-start))
@@ -54,6 +58,9 @@
 (show-paren-mode t)
 (setq show-paren-delay 0.0)
 (setq show-paren-style 'parenthesis)
+
+;; Initialize windmove default to Shift-<arrow> keys
+(windmove-default-keybindings )
 
 ;;==============================================================================
 ;; Completion of buffer names in switching
@@ -186,7 +193,6 @@
 (require 'key-mappings)
 ;; Load mu4e settings
 (require 'email-mu4e)
-
 
 ;; Pull in individual customizations for modes etc. each in a separate file
 ;;(when (file-exists-p user-settings-dir)
