@@ -29,7 +29,7 @@
 		 :query "flag:unread AND NOT flag:list AND NOT flag:trashed "
 		 :key ?u)
 	  (:name "mailinglists (buildroot)"
-		 :query "flag:list"
+		 :query "to:buildroot@busybox.net OR  to:buildroot@uclibc.org"
 		 :key ?l)
 	  ))
 
@@ -37,11 +37,11 @@
    mail-user-agent 'mu4e-user-agent
    mu4e-compose-signature-auto-include nil;; no signature per default
    mu4e-change-filenames-when-moving t	;; needed for mbsync
-   mu4e-update-interval 300		;; update mail every 5 min
+   mu4e-update-interval 600		;; update mail every 10 min
    mu4e-decryption-policy t		;; decrypt all msgs (nil,ask)
    message-kill-buffer-on-exit t	;; don't keep message buffers around
-   mu4e-compose-in-new-frame t		;; Open new frame for writing emails
-   mu4e-compose-format-flowed t		;; Soft Line-Breaks depending on client
+   mu4e-compose-in-new-frame nil	;; Open new frame for writing emails
+   mu4e-compose-format-flowed nil	;; Soft Line-Breaks depending on client
    mu4e-compose-dont-reply-to-self t	;;
    mu4e-view-prefer-html nil            ;;
    mu4e-attachment-dir  (expand-file-name "~/Downloads/")	;; attachments go here
@@ -56,19 +56,36 @@
   ;; (setq mu4e-html2text-command "w3m -dump -T text/html")
   (setq mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum)
 
-  ;; Break lines at frame end
-  (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
-  (add-hook 'mu4e-view-mode-hook (lambda ()
-				   (setq show-trailing-whitespace nil)))
+  (add-hook 'mu4e-view-mode-hook
+	    (
+	     lambda ()
+	     (message "mu4e-view-mode-hook" )
+	     ;; no trailing whitespace highlight for messages
+	     (setq show-trailing-whitespace nil)
+	     (turn-off-fci-mode)
+	     ;; break lines at end of window
+	     (setq visual-line-mode t)
+	     ;; No line number side bar in header view or message view
+	     (linum-mode -1)
+	     )
+	    )
+  ;; No line number side bar in header view or message view
+  (add-hook 'mu4e-headers-mode-hook (lambda ()
+				      (linum-mode -1)))
+
+  ;; Sign message before sending
+  (setq mm-sign-option 'guided)
+  (add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime)
 
   ;; the headers to show in the headers list -- a pair of a field
   ;; and its width, with `nil' meaning 'unlimited'
   ;; (better only use that for the last field.
   ;; These are the defaults:
   (setq mu4e-headers-fields
-	'( (:date          .  25)    ;; alternatively, use :human-date
+	'( (:human-date    .  20)    ;; alternatively, use :human-date
 	   (:flags         .   6)
-	   (:from          .  22)
+	   (:size          .   6)
+	   (:from-or-to    .  22)
 	   (:subject       .  nil))) ;; alternatively, use :thread-subject
 
   ;; program to get mail; alternatives are 'fetchmail', 'getmail'
