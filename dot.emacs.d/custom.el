@@ -11,11 +11,11 @@
  '(TeX-view-program-list '(("Okular" "okular --unique %o#src:%n%b")))
  '(TeX-view-program-selection
    '((output-pdf "Okular")
-     ((output-dvi style-pstricks)
-      "dvips and gv")
-     (output-dvi "xdvi")
-     (output-pdf "xpdf")
-     (output-html "xdg-open")))
+	 ((output-dvi style-pstricks)
+	  "dvips and gv")
+	 (output-dvi "xdvi")
+	 (output-pdf "xpdf")
+	 (output-html "xdg-open")))
  '(a2ps-switches
    '("-b" "-l 90" "-T 4" "-M A4" "--colums=1" "-R" "--line-numbers=1") t)
  '(auto-image-file-mode t nil (image-file))
@@ -23,7 +23,7 @@
  '(c-report-syntactic-errors t)
  '(c-syntactic-indentation nil)
  '(case-fold-search t)
- '(clang-format-executable "clang-format-10")
+ '(clang-format-executable "clang-format")
  '(column-number-mode t)
  '(current-language-environment "German")
  '(custom-safe-themes
@@ -37,22 +37,22 @@
  '(isearch-allow-scroll t)
  '(mml-secure-key-preferences
    '((OpenPGP
-      (sign
-       ("thomas@ruschival.de" "67EFDAAE56716D78D8D1A307801A13F19F7ACBB9"))
-      (encrypt
-       ("thomas@ruschival.de" "67EFDAAE56716D78D8D1A307801A13F19F7ACBB9")))
-     (CMS
-      (sign)
-      (encrypt))))
+	  (sign
+	   ("thomas@ruschival.de" "67EFDAAE56716D78D8D1A307801A13F19F7ACBB9"))
+	  (encrypt
+	   ("thomas@ruschival.de" "67EFDAAE56716D78D8D1A307801A13F19F7ACBB9")))
+	 (CMS
+	  (sign)
+	  (encrypt))))
  '(mouse-wheel-mode t nil (mwheel))
  '(normal-erase-is-backspace 'maybe)
  '(org-agenda-files '("~/ownCloud/org/"))
  '(package-archives
    '(("melpa-stable" . "https://stable.melpa.org/packages/")
-     ("gnu" . "https://elpa.gnu.org/packages/")))
+	 ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-check-signature nil)
  '(package-selected-packages
-   '(mu4e-overview qml-mode go-dlv go-mode json-mode json-reformat json-snatcher vlf jsonnet-mode ## json json-navigator dts-mode indent-tools yaml-mode matlab-mode markdown-mode fill-column-indicator elpy cmake-ide))
+   '(kubernetes mu4e-overview qml-mode go-dlv go-mode json-mode json-reformat json-snatcher vlf jsonnet-mode ## json json-navigator dts-mode indent-tools yaml-mode matlab-mode markdown-mode fill-column-indicator elpy cmake-ide))
  '(ring-bell-function 'ignore)
  '(select-enable-clipboard t)
  '(show-paren-mode t)
@@ -63,6 +63,8 @@
  '(user-mail-address "thomas@ruschival.de")
  '(words-include-escapes t))
 
+
+(load-theme 'tsdh-dark t)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
