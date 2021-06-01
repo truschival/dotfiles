@@ -22,8 +22,8 @@
   ;;    :key   ?X))
   (setq mu4e-bookmarks
 	'(
-	  (:name "emails 3 days (no list)"
-		 :query "NOT flag:list AND date:3d.."
+	  (:name "last 7 days (no list)"
+		 :query "NOT flag:list AND date:7d.."
 		 :key ?n)
 	  (:name "unread messages (no list)"
 		 :query "flag:unread AND NOT flag:list AND NOT flag:trashed "
@@ -112,7 +112,6 @@
    smtpmail-default-smtp-server "mail.rolf-dv.de"
    smtpmail-smtp-server "mail.rolf-dv.de"
    smtpmail-smtp-service 587
-
    ;; if you need offline mode, set these -- and create the queue dir
    ;; with 'mu mkdir', i.e.. mu mkdir /home/user/Maildir/queue
    smtpmail-queue-mail  nil
