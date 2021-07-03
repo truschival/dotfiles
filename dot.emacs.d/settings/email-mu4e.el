@@ -23,7 +23,7 @@
   (setq mu4e-bookmarks
 	'(
 	  (:name "last 7 days (no list)"
-		 :query "NOT flag:list AND date:7d.."
+		 :query "NOT flag:list AND date:15d.."
 		 :key ?n)
 	  (:name "unread messages (no list)"
 		 :query "flag:unread AND NOT flag:list AND NOT flag:trashed "
@@ -73,9 +73,7 @@
   (add-hook 'mu4e-headers-mode-hook (lambda ()
 				      (linum-mode -1)))
 
-  ;; Sign message before sending
-  (setq mm-sign-option 'guided)
-  (add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime)
+  ;; (add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime)
 
   ;; the headers to show in the headers list -- a pair of a field
   ;; and its width, with `nil' meaning 'unlimited'
