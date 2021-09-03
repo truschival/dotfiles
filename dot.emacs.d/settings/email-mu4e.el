@@ -29,7 +29,7 @@
 		 :query "flag:unread AND NOT flag:list AND NOT flag:trashed "
 		 :key ?u)
 	  (:name "mailinglists (buildroot)"
-		 :query "to:buildroot@busybox.net OR  to:buildroot@uclibc.org"
+		 :query "v:buildroot.lists.buildroot.org"
 		 :key ?l)
 	  ))
 
