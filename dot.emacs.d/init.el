@@ -165,9 +165,11 @@
 (defun my-c-hook()
   (load "clang-format.el")
   (global-set-key [C-M-f] 'clang-format-region)
+  (global-set-key [f6] 'clang-format-buffer)
+
   (setq-default c-basic-offset 4
-				tab-width 4
-				indent-tabs-mode t)
+		tab-width 4
+		indent-tabs-mode t)
   (setq tab-width 4)
   )
 (add-hook 'c-mode-hook 'my-c-hook)
