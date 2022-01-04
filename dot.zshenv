@@ -1,6 +1,6 @@
 export LS_OPTIONS="--color=auto"
 export TERM=xterm-256color
-export EDITOR="emacs --no-window-system"
+export EDITOR="/usr/bin/emacs -nw"
 
 # History
 export HISTSIZE=10000
