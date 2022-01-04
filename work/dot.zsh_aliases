@@ -1,6 +1,5 @@
-alias  emacs='emacs --no-window-system --quick'
 alias  ls='ls $LS_OPTIONS'
-alias  ll='ls -l $LS_OPTIONS'
+alias  ll='ls -lh $LS_OPTIONS'
 alias  la='ls -lah $LS_OPTIONS'
 alias  grep='grep --color=auto -n '
 
