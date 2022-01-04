@@ -29,7 +29,7 @@
 		 :query "flag:unread AND NOT flag:list AND NOT flag:trashed "
 		 :key ?u)
 	  (:name "mailinglists (buildroot)"
-		 :query "v:buildroot.lists.buildroot.org"
+		 :query "v:buildroot.buildroot.org"
 		 :key ?l)
 	  ))
 
@@ -49,14 +49,15 @@
    message-citation-line-format "On %Y-%m-%d at %R %Z, %f wrote:\n"
    )
 
+  
   ;; Use gnus as mail reader, capable of decoding inline PGP
-  ;; (setq mu4e-view-use-gnus t)
-
+  ;;(setq mu4e-view-use-gnus t)
   ;; Some magic to show html mail
-  ;; (setq mu4e-html2text-command "w3m -dump -T text/html")
+  (setq mu4e-html2text-command "html2text -utf8 -width 72")
   (setq mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum)
+  (setq shr-color-visible-luminance-min 80)
 
-  (add-hook 'mu4e-view-mode-hook
+(add-hook 'mu4e-view-mode-hook
 	    (
 	     lambda ()
 	     (message "mu4e-view-mode-hook" )
