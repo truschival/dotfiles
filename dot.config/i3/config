@@ -264,6 +264,8 @@ $execnsid /usr/bin/unclutter --timeout 5 --jitter 2
 $execnsid /usr/bin/qlipper
 # USB volume notifier / automounter (-A = do not automount)
 $execnsid /usr/bin/udiskie -Ans
+# Bluetooth Applet
+$execnsid /usr/bin/blueman-applet
 
 # Kmail2
 # $execnsid dex /usr/share/applications/org.kde.kmail2.desktop
