@@ -90,8 +90,10 @@
 ;;==============================================================================
 ;; Line numbers
 ;;==============================================================================
-(global-linum-mode 1)
-(setq linum-format "%4d|")
+;; before 26.0.50 use linum-mode
+;; (global-linum-mode 1)
+;; (setq linum-format "%4d|")
+(global-display-line-numbers-mode)
 
 ;;==============================================================================
 ;; Fill column Indicator

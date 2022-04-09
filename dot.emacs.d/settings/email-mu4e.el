@@ -67,12 +67,12 @@
 	     ;; break lines at end of window
 	     (setq visual-line-mode t)
 	     ;; No line number side bar in header view or message view
-	     (linum-mode -1)
+	     (display-line-numbers-mode -1)
 	     )
 	    )
   ;; No line number side bar in header view or message view
   (add-hook 'mu4e-headers-mode-hook (lambda ()
-				      (linum-mode -1)))
+				      (display-line-numbers-mode -1)))
 
   ;; (add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime)
 
