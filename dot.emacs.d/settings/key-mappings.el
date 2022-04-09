@@ -22,5 +22,6 @@
 (global-set-key "\M-g" 'goto-line)
 (global-set-key "\C-v" 'nil) ;; I DON't want C-v (Windows paste) mess here
 (global-set-key "\M-v" 'nil) ;; I don't want M-v shouldn't do anything either
+(global-set-key "\C-l" 'org-store-link)
 
 (provide 'key-mappings)

@@ -29,9 +29,11 @@
 (setq file-name-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
-(normal-erase-is-backspace-mode 0)
+;; Garbage collection at 20MB
+(setq gc-cons-threshold 20000000)
 
 ;; Fix ^H / Delete keybinding issues
+(normal-erase-is-backspace-mode 0)
 (when (window-system)
 	  (normal-erase-is-backspace-mode t))
 ;; Always start Server if not running
@@ -46,18 +48,25 @@
 (setq tab-width 4)			;; set your desired tab width
 (setq default-tab-width 4)		;; set your desired tab width
 (setq indent-tabs-mode nil)		;; may use tabs, space if nil
-(setq make-backup-files nil)		;; no backups
 
 (which-func-mode t)			;; Show function in mode-line
 (tool-bar-mode 0)			;; No tool-bar
-(ruler-mode t)				;; Ruler line on top
+(ruler-mode 0)				;; Ruler line on top
 (transient-mark-mode t)			;; Highlight selection
 (delete-selection-mode 1)		;; delete seleted text when typing
+(display-time-mode t)
 
 ;; Show matching parens (mixed style)
 (show-paren-mode t)
 (setq show-paren-delay 0.0)
 (setq show-paren-style 'parenthesis)
+
+;; backup files in /tmp
+(setq make-backup-files nil)		;; no backups
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 
 ;; Initialize windmove default to Shift-<arrow> keys
 (windmove-default-keybindings )
@@ -99,12 +108,14 @@
 ;; Fill column Indicator
 ;;==============================================================================
 (require 'fill-column-indicator)
-(setq fci-rule-color "#FFAA00")
-(setq fci-rule-width 1)
-(setq fci-rule-use-dashes t)
-(setq fci-dash-pattern 0.6)
+(setq
+ fci-rule-color "#FFAA00"
+ fci-rule-width 1
+ fci-rule-use-dashes t
+ fci-dash-pattern 0.7)
 (setq-default fill-column 80)
-(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
+(define-globalized-minor-mode global-fci-mode fci-mode
+  (lambda () (fci-mode 1)))
 (global-fci-mode 1)
 
 ;;============
@@ -163,7 +174,6 @@
 ;;==============================================================================
 ;; CC-Mode and hooks
 ;;==============================================================================
-
 (defun my-c-hook()
   (load "clang-format.el")
   (global-set-key [C-M-f] 'clang-format-region)
