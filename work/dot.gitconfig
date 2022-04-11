@@ -1,9 +1,11 @@
-[http]
-	sslVerify = false
 [user]
 	name = Thomas Ruschival
 	email = thomas.ruschival@festo.com
 	signingkey = 0x8995DBA76AAA3B0C
+[pull]
+	rebase = true
+[commit]
+	gpgsign = false
 [alias]
 	llog = !git --no-pager log --name-only --abbrev-commit -n15 HEAD
 	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
@@ -21,12 +23,13 @@
 [diff]
 	tool = kdiff3
 [core]
-	excludesFile = /home/me/.gitignore.local
+	excludesFile = ~/.gitignore.local
 	autocrlf = input
 	pager = less -FRSX
-	editor = /usr/bin/emacs -nw --quick
+	editor = /usr/bin/emacs --no-window-system
 [help]
 	autocorrect = 0
-
+[http]
+	sslVerify = false
 [credential]
 	helper = cache --timeout 900
