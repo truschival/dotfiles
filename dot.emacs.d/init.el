@@ -35,10 +35,10 @@
 ;; Fix ^H / Delete keybinding issues
 (normal-erase-is-backspace-mode 0)
 (when (window-system)
-	  (normal-erase-is-backspace-mode t))
+  (normal-erase-is-backspace-mode t))
 ;; Always start Server if not running
 (load "server")
- (unless (server-running-p) (server-start))
+(unless (server-running-p) (server-start))
 
 ;; Don't insert instructions in the *scratch* buffer
 (setq initial-scratch-message nil)
@@ -49,7 +49,6 @@
 (setq default-tab-width 4)		;; set your desired tab width
 (setq indent-tabs-mode nil)		;; may use tabs, space if nil
 
-(which-func-mode t)			;; Show function in mode-line
 (tool-bar-mode 0)			;; No tool-bar
 (ruler-mode 0)				;; Ruler line on top
 (transient-mark-mode t)			;; Highlight selection
@@ -67,6 +66,9 @@
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+
+;; Open file in dired buffer and kill previous
+(put 'dired-find-alternate-file 'disabled nil)
 
 ;; Initialize windmove default to Shift-<arrow> keys
 (windmove-default-keybindings )
@@ -103,6 +105,19 @@
 ;; (global-linum-mode 1)
 ;; (setq linum-format "%4d|")
 (global-display-line-numbers-mode)
+
+;;==============================================================================
+;; org-mode settings
+;;==============================================================================
+(setq org-ctrl-k-protect-subtree t) ;; avoid killing subtrees
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "STARTED(s)" "BLOCKED(b)"  "|" "DONE" "INVALID")))
+(setq org-completion-use-ido t)
+(defun my-org-startup-hook()
+  (turn-off-fci-mode)
+  (setq visual-line-mode 1)
+  )
+(add-hook 'org-mode-hook 'my-org-startup-hook)
 
 ;;==============================================================================
 ;; Fill column Indicator
@@ -186,7 +201,6 @@
   )
 (add-hook 'c-mode-hook 'my-c-hook)
 (add-hook 'c++-mode-hook 'my-c-hook)
-
 
 ;;============
 ;; Ctags
