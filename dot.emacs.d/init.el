@@ -22,12 +22,14 @@
 (add-to-list 'load-path settings-dir)
 (add-to-list 'load-path "~/.emacs.d/local")
 
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(setq file-name-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
+(set-language-environment "UTF-8")
+
+;; (setq locale-coding-system 'utf-8)
+;; (setq file-name-coding-system 'utf-8)
+;; (set-terminal-coding-system 'utf-8)
+;; (set-keyboard-coding-system 'utf-8)
+;; (set-selection-coding-system 'utf-8)
+;; (prefer-coding-system 'utf-8)
 
 ;; Garbage collection at 20MB
 (setq gc-cons-threshold 20000000)
