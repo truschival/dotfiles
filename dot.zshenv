@@ -2,6 +2,9 @@ export LS_OPTIONS="--color=auto"
 export TERM=xterm-256color
 export EDITOR="/usr/bin/emacs -nw"
 
+# Don't clear terminal when leaving pager
+export LESS="-FRX"
+
 # History
 export HISTSIZE=10000
 
