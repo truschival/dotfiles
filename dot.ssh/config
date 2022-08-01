@@ -1,10 +1,9 @@
 Host 192.168.*.*
-  StrictHostKeyChecking no
-  UserKnownHostsFile=/dev/null
-  ControlMaster auto
-  ControlPath ~/.ssh/control-%r@%h:%p
-  ControlPersist 300
-
+ StrictHostKeyChecking no
+ UserKnownHostsFile=/dev/null
+ ControlMaster no
+ ControlPath ~/.ssh/control-%r@%h:%p
+ ControlPersist 0
 
 Host 172.21.*.*
     StrictHostKeyChecking no
