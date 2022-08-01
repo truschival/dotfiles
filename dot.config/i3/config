@@ -266,10 +266,13 @@ $execnsid /usr/bin/qlipper
 $execnsid /usr/bin/udiskie -Ans
 # Bluetooth Applet
 $execnsid /usr/bin/blueman-applet
+# PulseAudio Applet (/usr/share/applications/pasystray.desktop)
+$execnsid /usr/bin/pasystray
+# NextCloud Applet - needs access to keepassxc for auth
+# $execnsid dex /usr/share/applications/com.nextcloud.desktopclient.nextcloud.desktop
+
+
 
 # Kmail2
 # $execnsid dex /usr/share/applications/org.kde.kmail2.desktop
-
-# owncloud
-# $execnsid dex /home/ruschi/.config/autostart/ownCloud.desktop
 
