@@ -101,4 +101,4 @@ else
 	hostinfo=""
 fi
 
-PROMPT=$'${hostinfo}%{$limegreen%} ~ %{$reset_color%}$(ruby_prompt_info " with%{$fg[red]%} " v g "%{$reset_color%}")$vcs_info_msg_0_%{$white%}%#%{$reset_color%} '
+PROMPT=$'${hostinfo}%{$limegreen%} %~ %{$reset_color%}$(ruby_prompt_info " with%{$fg[red]%} " v g "%{$reset_color%}")$vcs_info_msg_0_%{$white%}%#%{$reset_color%} '

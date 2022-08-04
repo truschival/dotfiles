@@ -51,7 +51,8 @@
    )
 
   ;; Use gnus as mail reader, capable of decoding inline PGP
-  ;;(setq mu4e-view-use-gnus t)
+  ;; (setq mu4e-view-use-gnus t)
+  ;; (setq gnus-blocked-images "http")
   ;; Some magic to show html mail
   (setq mu4e-html2text-command "html2text -utf8 -width 72")
   (setq mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum)
