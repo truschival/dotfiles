@@ -19,9 +19,6 @@
  '(a2ps-switches
    '("-b" "-l 90" "-T 4" "-M A4" "--colums=1" "-R" "--line-numbers=1") t)
  '(auto-image-file-mode t nil (image-file))
- '(c-echo-syntactic-information-p nil)
- '(c-report-syntactic-errors t)
- '(c-syntactic-indentation nil)
  '(case-fold-search t)
  '(clang-format-executable "clang-format")
  '(column-number-mode t)
@@ -35,19 +32,7 @@
  '(frame-background-mode 'dark)
  '(global-font-lock-mode t nil (font-lock))
  '(isearch-allow-scroll t)
- '(mm-sign-option 'guided)
- '(mml-secure-key-preferences
-   '((OpenPGP
-      (sign
-       ("thomas@ruschival.de" "67EFDAAE56716D78D8D1A307801A13F19F7ACBB9"))
-      (encrypt
-       ("thomas@ruschival.de" "67EFDAAE56716D78D8D1A307801A13F19F7ACBB9")))
-     (CMS
-      (sign)
-      (encrypt))))
  '(mouse-wheel-mode t nil (mwheel))
- '(normal-erase-is-backspace 'maybe)
- '(org-agenda-files nil)
  '(package-archives
    '(("melpa-stable" . "https://stable.melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
@@ -63,7 +48,6 @@
  '(uniquify-min-dir-content 1)
  '(user-mail-address "thomas@ruschival.de")
  '(words-include-escapes t))
-
 
 (load-theme 'tsdh-dark t)
 (custom-set-faces

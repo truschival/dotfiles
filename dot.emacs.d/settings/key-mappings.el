@@ -21,5 +21,6 @@
 (global-set-key "\M-v" 'nil) ;; I don't want M-v shouldn't do anything either
 (global-set-key "\C-l" 'org-store-link)
 (global-set-key "\C-H" 'delete-backward-char) ;; also delete with shift-held
+(global-set-key "\C-x?" 'help-command)
 
 (provide 'key-mappings)

@@ -34,6 +34,19 @@
 		 :key ?l)
 	  ))
 
+  ;; Default encryption and sign keys
+  (setq
+   mm-sign-option nil
+   mml-secure-key-preferences
+   '((OpenPGP
+      (sign
+       ("thomas@ruschival.de" "67EFDAAE56716D78D8D1A307801A13F19F7ACBB9"))
+      (encrypt
+       ("thomas@ruschival.de" "67EFDAAE56716D78D8D1A307801A13F19F7ACBB9")))
+     (CMS
+      (sign)
+      (encrypt))))
+
   (setq
    mail-user-agent 'mu4e-user-agent
    mu4e-compose-signature-auto-include nil;; no signature per default
@@ -116,14 +129,14 @@
 
   (setq ok/message-attachment-regexp
 	(regexp-opt '("[Ww]e send"
-                      "[Ii] send"
-                      "attach"
-                      "[aA]ngehängt"
-                      "[aA]nhang"
-                      "[sS]chicke"
-                      "angehaengt"
-                      "haenge"
-                      "hänge")))
+		      "[Ii] send"
+		      "attach"
+		      "[aA]ngehängt"
+		      "[aA]nhang"
+		      "[sS]chicke"
+		      "angehaengt"
+		      "haenge"
+		      "hänge")))
 
   (defun ok/message-warn-if-no-attachments ()
     "Check if there is an attachment in the message if I claim it."

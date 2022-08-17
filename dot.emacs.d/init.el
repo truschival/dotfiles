@@ -34,10 +34,6 @@
 ;; Garbage collection at 20MB
 (setq gc-cons-threshold 20000000)
 
-;; Fix ^H / Delete keybinding issues
-(normal-erase-is-backspace-mode 0)
-(when (window-system)
-  (normal-erase-is-backspace-mode t))
 ;; Always start Server if not running
 (load "server")
 (unless (server-running-p) (server-start))
