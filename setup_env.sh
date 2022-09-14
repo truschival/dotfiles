@@ -165,6 +165,7 @@ log_notice "Creating links in .config and subdirectories"
 setup_links_in_subdir dot.config $NEW_HOME
 log_notice "Creating links in .emacs.d and subdirectories"
 setup_links_in_subdir dot.emacs.d $NEW_HOME
+systemctl enable --user emacs
 
 # Setup gnupg
 gnupg_setup

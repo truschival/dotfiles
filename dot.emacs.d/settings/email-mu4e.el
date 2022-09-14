@@ -27,11 +27,14 @@
 		 :query "NOT flag:list AND date:15d.."
 		 :key ?n)
 	  (:name "unread messages (no list)"
-		 :query "flag:unread AND NOT flag:list AND NOT flag:trashed "
+		 :query "flag:unread AND NOT flag:list "
 		 :key ?u)
 	  (:name "mailinglists (buildroot)"
 		 :query "v:buildroot.buildroot.org"
 		 :key ?l)
+	  (:name "Flag Trashed"
+		 :query "flag:trashed "
+		 :key ?t)
 	  ))
 
   ;; Default encryption and sign keys
