@@ -1,0 +1,8 @@
+[Desktop Entry]
+Exec=/usr/bin/emacs -f mu4e
+Name=Email (Emacs mu4e)
+NoDisplay=false
+StartupNotify=true
+Terminal=false
+Type=Application
+
