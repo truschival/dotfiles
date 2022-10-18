@@ -181,9 +181,9 @@ bindsym $mod+r mode "resize"
 # Special Exit mode
 mode "exit: [l]ock, [s]leep, [r]eboot, [p]oweroff" {
   bindsym l exec $screenlock
-  bindsym s exec $screenlock && systemctl suspend
-  bindsym r exec systemctl reboot
-  bindsym p exec systemctl poweroff
+  bindsym s exec dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Suspend" boolean:true
+  bindsym r exec dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Reboot" boolean:true
+  bindsym p exec dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.PowerOff" boolean:true 
   bindsym Escape mode "default"
   bindsym Return mode "default"
 }
