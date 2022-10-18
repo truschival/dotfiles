@@ -63,7 +63,7 @@ function mail_setup(){
     fi
 
     log_info "Creating $NEW_HOME/.mailpass.gpg for encrypted IMAP password"
-    read -p "enter password followed by ENTER" -s -r
+    read -p "enter IMAP password followed by ENTER" -s -r
     echo $REPLY > $NEW_HOME/.mailpass
     unset $REPLY
     gpg -e -r 0x801A13F19F7ACBB9  $NEW_HOME/.mailpass
