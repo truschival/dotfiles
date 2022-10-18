@@ -29,7 +29,9 @@
  '(default-input-method "german-postfix")
  '(display-time-24hr-format t)
  '(display-time-day-and-date t)
+ '(display-time-mode t)
  '(frame-background-mode 'dark)
+ '(global-display-line-numbers-mode t)
  '(global-font-lock-mode t nil (font-lock))
  '(isearch-allow-scroll t)
  '(mouse-wheel-mode t nil (mwheel))
@@ -55,7 +57,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "Black" :foreground "White" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "1ASC" :family "Liberation Mono"))))
+ '(default ((t (:inherit nil :stipple nil :background "Black" :foreground "White" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 122 :width normal :foundry "SRC" :family "Hack"))))
  '(cursor ((t (:background "khaki"))))
  '(font-lock-builtin-face ((((class color) (background dark)) (:foreground "Turquoise"))))
  '(font-lock-comment-face ((t (:foreground "wheat"))))

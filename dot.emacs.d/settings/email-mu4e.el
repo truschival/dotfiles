@@ -24,10 +24,10 @@
   (setq mu4e-bookmarks
 	'(
 	  (:name "last 7 days (no list)"
-		 :query "NOT flag:list AND date:15d.."
+		 :query "NOT v:buildroot.buildroot.org AND date:15d.."
 		 :key ?n)
 	  (:name "unread messages (no list)"
-		 :query "flag:unread AND NOT flag:list "
+		 :query "flag:unread AND NOT v:buildroot.buildroot.org "
 		 :key ?u)
 	  (:name "mailinglists (buildroot)"
 		 :query "v:buildroot.buildroot.org"
