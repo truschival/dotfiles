@@ -1,7 +1,7 @@
 [user]
 	name = Thomas Ruschival
 	email = thomas@ruschival.de
-	signingkey = 0xE2F6F51E71DC97B1
+	signingkey = 8995DBA76AAA3B0C
 [core]
 	autocrlf = input
 	pager = less -FRX
