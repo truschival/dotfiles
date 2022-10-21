@@ -1,9 +1,12 @@
-Host 192.168.*.*
+Host 192.168.*.* villastraylight Villastraylight
+ User ruschi
  StrictHostKeyChecking no
  UserKnownHostsFile=/dev/null
  ControlMaster no
  ControlPath ~/.ssh/control-%r@%h:%p
  ControlPersist 0
+ ForwardX11 yes
+ ForwardX11Trusted yes
 
 Host 172.21.*.*
     StrictHostKeyChecking no
