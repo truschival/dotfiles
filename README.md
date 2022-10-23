@@ -45,3 +45,28 @@ repository. Other files, like keys will remain on the machine.
 
 *  ``-n`` Dry run. Do not create links. **This still sets up mail and gpg - USE
    WITH CARE**
+
+-----
+
+## Notes on sway/wayland
+
+Wayland is not X11 hence sway does not read ``.xsessionrc``. It also behave
+differently in some other points I haven't fully understood yet.
+
+1.  Environment variables. I have no idea why ``.zshenv`` is sourced in sway but
+    it is. according to docs it should not because programs are not started by a
+    shell. The way to go should be ``.config/environment.d/xx-yy.conf``. But it
+    seems these file(s) are not used at all.
+2.  D-Bus environment variable. For unknown reason ``pinentry`` for gpg stopped
+    working with the error "No Gcr System Prompter available". The workaround was
+    to add ``dbus-update-activation-environment --systemd DISPLAY`` to the sway
+    startup file.
+3.  SSH agent authentication using gpg agent stopped working at some
+    point. Something caused ``SSH_AUTH_SOCK`` to be wrong/empty. The workaround was to add
+	```
+	export SSH_AGENT_PID=
+	export SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh
+	```
+	to ``.zshenv.local``
+4.  If the package ``xdg-desktop-portal-*`` is installed. Firefox, waybar etc
+    are dead slow in starting up.
