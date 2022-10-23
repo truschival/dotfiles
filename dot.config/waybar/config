@@ -1,30 +1,29 @@
 {
-    "layer": "top", // Waybar at top layer
-    "position": "bottom", // Waybar position (top|bottom|left|right)
-    // "height": 30, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    "spacing": 10, // Gaps between modules (4px)
+    "layer": "top",		// top layer (over windows)
+    "position": "bottom", 	// position (top|bottom|left|right)
+    "height": 22, 		// height (to be removed for auto height)
+    "spacing": 10, 		// Gaps between modules (4px)
+
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
+    "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["idle_inhibitor", "pulseaudio",
+    "modules-right": ["idle_inhibitor",  "pulseaudio", "custom/weather",
     		      "network", "cpu", "memory", "temperature",
 		      "backlight", "keyboard-state",
 		      "battery", "clock", "tray"],
-
-    // Modules configuration
 
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
         "format": "{name}: {icon}",
-        "format-icons": {
+
+	"format-icons": {
             "1": "",
             "2": "",
             "8": "",
-            "urgent": "",
-            "focused": "",
-            "default": ""
+            "urgent":  "<span color='#e85c5c'></span>",
+            "focused": "<span color='#8af0f0'></span>",
+            "default": "<span color='#b8b8b8'></span>"
         }
     },
 
@@ -40,7 +39,7 @@
 
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
-    },
+	},
 
     "sway/scratchpad": {
         "format": "{icon} {count}",
@@ -53,8 +52,10 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
+           // "activated": "",
+           // "deactivated": ""
+	     "activated": "📀🎞",
+	     "deactivated": "😴🛌"
         }
     },
 
@@ -64,11 +65,11 @@
     },
 
     "clock": {
-        "timezones": ["Europe/Berlin", "America/New_York" ],
+        //"timezones": ["Europe/Berlin", "America/New_York" ],
 	"timezone" : "Europe/Berlin",
 	"format" : "{:%H:%M  %a %d.%m.%y %Z}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d (%W)}",
+        //"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        //"format-alt": "{:%Y-%m-%d (%W)}",
 	"interval": 20
 	},
 
@@ -138,5 +139,13 @@
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
+    },
+    
+    "custom/weather": {
+        "format": "{}",
+    	"tooltip": true,
+    	"interval": 3600,
+    	"exec": "waybar-wttr.py",
+    	"return-type": "json"
     }
 }

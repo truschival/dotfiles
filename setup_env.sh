@@ -151,7 +151,10 @@ touch $NEW_HOME/.zshenv.local
 touch $NEW_HOME/.zsh_aliases.local
 
 # create config folder if not setup
-[ -d $NEW_HOME/.config ] || mkdir $NEW_HOME/.config
+[ -d $NEW_HOME/.config ] || mkdir -p $NEW_HOME/.config
+
+# create config folder if not setup
+[ -d $NEW_HOME/.local/bin ] || mkdir -p $NEW_HOME/.local/bin
 
 # link wallpapers
 wallpaper_setup

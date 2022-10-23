@@ -1,7 +1,5 @@
-#5f2c3437
-
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# `.zshrc' is sourced in interactive shells.
+# It should contain commands to set up aliases, functions, options, etc. 
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -28,7 +26,7 @@ ZSH_THEME=".mytheme"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -53,7 +51,7 @@ ZSH_CUSTOM=~/
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(gitfast git-flow)
+plugins=(gitfast git-flow emacs)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -74,8 +72,9 @@ export LESS="-FRX"
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=5000
+SAVEHIST=$HISTSIZE
+setopt hist_ignore_all_dups
 setopt appendhistory
 setopt extendedglob
 setopt notify
