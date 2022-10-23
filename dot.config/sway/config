@@ -30,6 +30,18 @@ hide_edge_borders smart
 floating_modifier $mod
 
 #-------------------------------------------------------------------------------
+# US-Intl with deadkeys
+#-------------------------------------------------------------------------------
+input * {
+  xkb_model "pc105"
+  # xkb_model "thinkpadz60"
+  xkb_layout "us"
+  xkb_variant "altgr-intl"
+  # xkb_layout "us(altgr-intl)"
+  xkb_options "lv3:ralt_switch,terminate:ctrl_alt_bksp"
+}
+
+#-------------------------------------------------------------------------------
 # variables
 #-------------------------------------------------------------------------------
 # Variable for Screenlocker
@@ -65,14 +77,14 @@ set $tofiopts_menu \
 set $tofiopts_clip \
     $tofiopts \
     --result-spacing=8 \
-    --prompt-text="Clipboad"
+    --prompt-text="Clipboard"
 
 #-------------------------------------------------------------------------------
 # Keybindings
 #-------------------------------------------------------------------------------
-
 # Launch menu using tofi
-bindsym $mod+d exec tofi-drun $tofiopts_menu | xargs swaymsg exec
+#bindsym $mod+d exec tofi-drun $tofiopts_menu | xargs swaymsg exec
+bindsym $mod+d exec j4-dmenu-desktop --dmenu="tofi $tofiopts_menu" --usage-log=$HOME/.j4cache 
 
 # switch to urgent window
 bindsym $mod+g [urgent=latest] focus
