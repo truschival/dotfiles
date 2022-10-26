@@ -22,6 +22,7 @@ then
 	     dirmngr cryptsetup scdaemon pcscd secure-delete \
 	     hopenpgp-tools yubikey-personalization \
 	     i3 i3-wm dex dmenu feh pulseaudio-utils i3lock xautolock \
+	     sway sway-backgrounds swaybg swayidle swaylock tofi waybar wayland-protocols \
 	     qlipper imagemagick x11-utils udiskie unclutter-xfixes xdg-utils \
 	     elpa-fill-column-indicator mu4e isync gnutls-bin \
 	     fonts-hack fonts-symbola \

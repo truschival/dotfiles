@@ -7,9 +7,17 @@
 
 #Charset & language
 export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8
+export LANGUAGE=
+export LC_TIME=en_DE.UTF-8
+export LC_NUMERIC=en_DE.UTF-8
+export LC_ALL=
+
+if [[ $XDG_SESSION_TYPE == "wayland" ]];
+then
+   export MOZ_ENABLE_WAYLAND=1
+   export QT_QPA_PLATFORM=wayland-egl
+#   export QT_WAYLAND_FORCE_DPI=physical
+fi
 
 # Source additional workstation dependend settings
 source ~/.zshenv.local

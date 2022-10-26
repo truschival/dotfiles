@@ -48,6 +48,13 @@ repository. Other files, like keys will remain on the machine.
 
 -----
 
+## Systemd notes
+
+*  The i3lock service can be executed before suspend by systemd.
+   copy `./i3lock@.service` to ``/etc/systemd/system/i3lock@.service`` and
+   enable it for the user: ``systemctl enable i3lock@ruschi.service``
+
+
 ## Notes on sway/wayland
 
 Wayland is not X11 hence sway does not read ``.xsessionrc``. It also behave
