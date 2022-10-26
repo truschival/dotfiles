@@ -60,7 +60,6 @@
    mu4e-compose-in-new-frame nil	;; Open new frame for writing emails
    mu4e-compose-format-flowed nil	;; Soft Line-Breaks depending on client
    mu4e-compose-dont-reply-to-self t	;;
-   mu4e-view-prefer-html nil            ;;
    mu4e-attachment-dir  (expand-file-name "~/Downloads/")	;; attachments go here
    message-citation-line-function 'message-insert-formatted-citation-line
    message-citation-line-format "On %Y-%m-%d at %R %Z, %f wrote:\n"
@@ -70,10 +69,14 @@
   ;; (setq mu4e-view-use-gnus t)
   ;; (setq gnus-blocked-images "http")
   ;; Some magic to show html mail
-  (setq mu4e-html2text-command "html2text -utf8 -width 72")
-  (setq mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum)
-  (setq shr-color-visible-luminance-min 60)
+  ;; (setq mu4e-view-prefer-html nil)
+  ;; (setq mu4e-html2text-command "html2text -utf8 -width 72")
+  ;; (setq mu4e-html2text-command "python3 -m html2text --no-wrap-links")
+  ;; (setq mu4e-view-html-plaintext-ratio-heuristic 10000)
+  (setq mm-discouraged-alternatives '("text/html" "image/.*"))
+  (setq shr-color-visible-luminance-min 40)
   (setq shr-use-colors t)
+  (setq mu4e-headers-report-render-time t)
 
   (add-hook 'mu4e-view-mode-hook(
 	     lambda ()
@@ -85,11 +88,16 @@
 	     (setq visual-line-mode t)
 	     ;; No line number side bar in header view or message view
 	     (display-line-numbers-mode -1)
+	     ;; local key binding for view actions
+	     (local-set-key (kbd "v") 'mu4e-view-action)
 	     )
 	    )
   ;; No line number side bar in header view or message view
   (add-hook 'mu4e-headers-mode-hook (lambda ()
-				      (display-line-numbers-mode -1)))
+				      (display-line-numbers-mode -1)
+				      ;; local key binding for view actions
+			      	      (local-set-key (kbd "v") 'mu4e-view-action)
+				      ))
 
   (setq mu4e-compose-crypto-reply-plain-policy 'sign)
   ;; (add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime)
