@@ -28,6 +28,10 @@ force_display_urgency_hint 500 ms
 hide_edge_borders smart
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
+tiling_drag enable
+popup_during_fullscreen smart
+# selecting same workspace again will bring me back to the previous workspace
+workspace_auto_back_and_forth yes
 
 #-------------------------------------------------------------------------------
 # US-Intl with deadkeys
@@ -84,12 +88,11 @@ set $tofiopts_clip \
 #-------------------------------------------------------------------------------
 # Launch menu using tofi
 #bindsym $mod+d exec tofi-drun $tofiopts_menu | xargs swaymsg exec
-bindsym $mod+d exec j4-dmenu-desktop --dmenu="tofi $tofiopts_menu" --usage-log=$HOME/.j4cache 
+bindsym $mod+d exec j4-dmenu-desktop --no-generic --dmenu="tofi $tofiopts_menu"
 
 # switch to urgent window
 bindsym $mod+g [urgent=latest] focus
-# selecting same workspace again will bring me back to the previous workspace
-# workspace_auto_back_and_forth yes
+
 bindsym Mod1+Tab workspace back_and_forth
 
 # kill focused window
@@ -229,6 +232,8 @@ for_window [class="[pP]inentry"] floating enable
 for_window [title="Receiving file.*"] floating enable
 for_window [class="^[pP]avucontrol"] floating enable border normal 2
 for_window [class="DigitalRooster"] floating enable
+for_window [title=".*PolicyKit1.*"] floating enable
+
 
 # Steam config
 for_window [class="^Steam$" title="^Friends$"] floating enable
