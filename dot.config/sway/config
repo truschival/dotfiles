@@ -12,12 +12,17 @@ font pango: DejaVu Sans 8
 #initial wallpaper
 output "*" bg  ~/.wallpapers/SGI-purple.jpg fill
 # class                 border  backgr. text    indicator child_border
-client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+client.focused          #00bfff #285577 #ffffff #2e9ef4   #00bfff
 client.focused_inactive #404050 #404050 #ffffff #484e50   #5f676a
 client.unfocused        #404050 #404050 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
+
+#Hide window title bar
+default_border pixel 2
+default_floating_border pixel 2
+# for_window [class="^.*"] border pixel 1
 
 # do not follow mouse (option yes|no)
 focus_follows_mouse no
