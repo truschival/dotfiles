@@ -21,7 +21,7 @@ client.background       #ffffff
 
 #Hide window title bar
 default_border pixel 2
-default_floating_border pixel 2
+default_floating_border normal 2
 # for_window [class="^.*"] border pixel 1
 
 # do not follow mouse (option yes|no)
@@ -74,6 +74,7 @@ set $tofiopts \
 # Tofi application menu option
 set $tofiopts_menu \
     $tofiopts \
+    --drun-launch=true \
     --selection-padding=12 \
     --result-spacing=20 \
     --anchor=top \
@@ -92,8 +93,8 @@ set $tofiopts_clip \
 # Keybindings
 #-------------------------------------------------------------------------------
 # Launch menu using tofi
-#bindsym $mod+d exec tofi-drun $tofiopts_menu | xargs swaymsg exec
-bindsym $mod+d exec j4-dmenu-desktop --no-generic --dmenu="tofi $tofiopts_menu"
+bindsym $mod+d exec tofi-drun $tofiopts_menu 
+# bindsym $mod+d exec j4-dmenu-desktop --no-generic --dmenu="tofi $tofiopts_menu"
 
 # switch to urgent window
 bindsym $mod+g [urgent=latest] focus
@@ -231,7 +232,7 @@ bar {
 #-------------------------------------------------------------------------------
 
 # KDE stuff / floating windows
-for_window [class="apt-listchanges*"] floating enable
+for_window [class="apt-listchanges.*"] floating enable
 for_window [class="[dD]olphin" title="(Copying.*)|(Moving.*)|(Progress Dialog)"] floating enable
 for_window [class="[pP]inentry"] floating enable
 for_window [title="Receiving file.*"] floating enable
