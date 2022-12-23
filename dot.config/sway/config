@@ -231,15 +231,17 @@ bar {
 # Window properties and workspaces
 #-------------------------------------------------------------------------------
 
-# KDE stuff / floating windows
-for_window [class="apt-listchanges.*"] floating enable
+# force floating windows
+for_window [title="KeePassXC - Browser Access Request"] floating enable
+for_window [title="apt-listchanges.*"] floating enable
+
+# KDE stuff
 for_window [class="[dD]olphin" title="(Copying.*)|(Moving.*)|(Progress Dialog)"] floating enable
 for_window [class="[pP]inentry"] floating enable
 for_window [title="Receiving file.*"] floating enable
 for_window [class="^[pP]avucontrol"] floating enable border normal 2
 for_window [class="DigitalRooster"] floating enable
 for_window [title=".*PolicyKit1.*"] floating enable
-
 
 # Steam config
 for_window [class="^Steam$" title="^Friends$"] floating enable
@@ -294,7 +296,7 @@ exec dbus-update-activation-environment --all
 exec dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
 
 # KeepassXC serves also as freedesktop secret provider
-exec /usr/bin/keepassxc  /home/ruschi/NextCloud/keepassxc.kdbx
+exec /usr/bin/keepassxc  /home/ruschi/NextCloud/keepassxc_no_yubi.kdbx
 
 # unclutter hides Mouse pointer after 5s
 exec /usr/bin/unclutter --timeout 5 --jitter 2
