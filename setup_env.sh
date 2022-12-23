@@ -21,6 +21,7 @@ then
 	sudo apt install -y wget gnupg2 gnupg-agent \
 	     dirmngr cryptsetup scdaemon pcscd secure-delete \
 	     hopenpgp-tools yubikey-personalization \
+	     libsecret-tools \
 	     i3 i3-wm dex dmenu feh pulseaudio-utils i3lock xautolock \
 	     sway sway-backgrounds swaybg swayidle swaylock tofi waybar wayland-protocols \
 	     qlipper imagemagick x11-utils udiskie unclutter-xfixes xdg-utils \
@@ -136,7 +137,6 @@ do
 	    ;;
     esac
 done
-
 
 # install ohmyzsh https://github.com/ohmyzsh/ohmyzsh
 log_notice "Install Zsh"

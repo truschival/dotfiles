@@ -7,7 +7,12 @@ Host mail.rolf-dv.de
 # Port
 User thomas@ruschival.de
 # Pass ***************
-PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
+#Setup for pgp protected password file (key can be on yubikey or file)
+# PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
+# Password lookup using freedesktop secret api
+# a) Keepassxc entry needs to be exposed (group freedesktop secrets)
+# b) entry needs an attribute named MBSYNC with value MBSYNC
+PassCmd "secret-tool lookup MBSYNC MBSYNC"
 # Use SSL
 # SSLVersions TLSv1.2
 SSLType IMAPS
@@ -22,8 +27,8 @@ Inbox ~/Maildir/ruschival.de/INBOX
 SubFolders Verbatim
 
 Channel ruschival.de
-Master :ruschival-remote:
-Slave :ruschival-local:
+Far :ruschival-remote:
+Near :ruschival-local:
 # Exclude everything under the internal folder, except the interesting folders
 # Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
 # Or include everything
