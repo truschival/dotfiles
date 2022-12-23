@@ -7,10 +7,10 @@
 
 #Charset & language
 export LANG=en_US.UTF-8
-export LANGUAGE=
-export LC_TIME=en_DE.UTF-8
-export LC_NUMERIC=en_DE.UTF-8
-export LC_ALL=
+export LANGUAGE=en_US.UTF-8
+export LC_TIME=de_DE.UTF-8
+export LC_NUMERIC=de_DE.UTF-8
+# export LC_ALL=
 
 if [[ $XDG_SESSION_TYPE == "wayland" ]];
 then
