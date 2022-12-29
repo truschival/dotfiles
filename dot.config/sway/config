@@ -260,7 +260,7 @@ assign [class="^Signal"] workspace 8
 #-------------------------------------------------------------------------------
 # Hotkeys for programs
 #-------------------------------------------------------------------------------
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec /usr/bin/alacritty
 bindsym $mod+Print exec /usr/bin/spectacle
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
@@ -296,7 +296,7 @@ exec dbus-update-activation-environment --all
 exec dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
 
 # KeepassXC serves also as freedesktop secret provider
-exec /usr/bin/keepassxc  /home/ruschi/NextCloud/keepassxc_no_yubi.kdbx
+exec /usr/bin/keepassxc  /home/ruschi/Nextcloud/keepassxc_no_yubi.kdbx
 
 # unclutter hides Mouse pointer after 5s
 exec /usr/bin/unclutter --timeout 5 --jitter 2
