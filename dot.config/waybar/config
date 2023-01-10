@@ -1,16 +1,15 @@
 {
-    "layer": "top",		// top layer (over windows)
-    "position": "bottom", 	// position (top|bottom|left|right)
-    "height": 29, 		// height (to be removed for auto height)
-    "spacing": 10, 		// Gaps between modules (4px)
+    "layer": "top",
+    "position": "bottom",
+    "height": 29, 		
+    "spacing": 10, 		
 
-    // Choose the order of the modules
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
     "modules-right": ["custom/weather",
     		      "cpu", "memory", "temperature", "backlight",
 		      "battery", "pulseaudio", "network",
-		      "clock", "idle_inhibitor", "tray"],
+		      "clock", "idle_inhibitor", "tray", "custom/notification"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -51,10 +50,8 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-           // "activated": "",
-           // "deactivated": ""
-	     "activated": "📀🎞",
-	     "deactivated": "😴🛌"
+           "activated": "",
+           "deactivated": ""
         }
     },
 
@@ -64,10 +61,8 @@
     },
 
     "clock": {
-        //"timezones": ["Europe/Berlin", "America/New_York" ],
-	"timezone" : "Europe/Berlin",
+        "timezones": ["Europe/Berlin", "America/New_York" ],
 	"format" : "{:%H:%M  %a %d.%m.%y %Z}",
-        //"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d (%W)}",
 	"interval": 20
 	},
@@ -82,8 +77,7 @@
     },
 
     "temperature": {
-        "thermal-zone": 2,
-        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "hwmon-path": "/sys/class/hwmon/hwmon5/temp1_input",
         "critical-threshold": 70,
         "format-critical": "{temperatureC}°C {icon}",
         "format": "{temperatureC}°C {icon}",
@@ -97,7 +91,7 @@
 
     "battery": {
         "states": {
-            // "good": 95,
+            "good": 95,
             "warning": 30,
             "critical": 15
         },
@@ -105,13 +99,10 @@
         "format-charging": "{capacity}% 🔋",
         "format-plugged": "{capacity}% ",
         "format-alt": "{time} {icon}",
-        // "format-good": "", // An empty format will hide the module
-        // "format-full": "",
         "format-icons": ["", "", "", "", ""]
     },
 
     "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{ifname} via {gwaddr}",
@@ -121,7 +112,6 @@
     },
 
     "pulseaudio": {
-        // "scroll-step": 5, // %, can be a float
         "format": "{volume}% {icon} {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": "🔇 {icon} {format_source}",
@@ -146,5 +136,22 @@
     	"interval": 3600,
     	"exec": "waybar-wttr.py",
     	"return-type": "json"
-    }
+    },
+
+"custom/notification": {
+"tooltip": false,
+"format": "{icon}",
+"format-icons": {
+"notification": "<span foreground='red'><sup></sup></span>",
+"none": "",
+"dnd-notification": "<span foreground='red'><sup></sup></span>",
+"dnd-none": ""
+},
+"return-type": "json",
+"exec-if": "which swaync-client",
+"exec": "swaync-client -swb",
+"on-click": "swaync-client -t -sw",
+"on-click-right": "swaync-client -d -sw",
+"escape": true
+}
 }
