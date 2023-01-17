@@ -83,7 +83,7 @@
 	     (message "mu4e-view-mode-hook" )
 	     ;; no trailing whitespace highlight for messages
 	     (setq show-trailing-whitespace nil)
-	     (turn-off-fci-mode)
+	     ;;(turn-off-fci-mode)
 	     ;; break lines at end of window
 	     (setq visual-line-mode t)
 	     ;; No line number side bar in header view or message view

@@ -23,11 +23,16 @@ then
 	     hopenpgp-tools yubikey-personalization \
 	     libsecret-tools \
 	     i3 i3-wm dex dmenu feh pulseaudio-utils i3lock xautolock \
-	     sway sway-backgrounds swaybg swayidle swaylock tofi waybar wayland-protocols \
+	     sway sway-backgrounds swaybg swayidle swaylock sway-notification-center \
+	     tofi waybar wayland-protocols \
 	     qlipper imagemagick x11-utils udiskie unclutter-xfixes xdg-utils \
-	     elpa-fill-column-indicator mu4e isync gnutls-bin \
+	     mu4e isync gnutls-bin \
 	     fonts-hack fonts-symbola \
-	     git-flow zsh
+	     git-flow zsh \
+	     python3-pipenv
+	     # python3-autopep8 python3-flake8  \
+	     # python3-importmagic python3-yapf \
+	     # python3-ipython
 fi
 
 ################################################################################
