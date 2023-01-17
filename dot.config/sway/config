@@ -99,7 +99,7 @@ bindsym $mod+d exec tofi-drun $tofiopts_menu
 # switch to urgent window
 bindsym $mod+g [urgent=latest] focus
 
-bindsym Mod1+Tab workspace back_and_forth
+bindsym $mod+Tab workspace back_and_forth
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -289,7 +289,8 @@ exec swayidle \
 # Autostart
 #-------------------------------------------------------------------------------
 # update dbus environment
-# dbus-update-activation-environment --systemd DISPLAY
+# exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+# exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec dbus-update-activation-environment --all
 
 # Policy Kit authenticator (for pkexec dialogs e.g. synaptic)
@@ -297,6 +298,9 @@ exec dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
 
 # KeepassXC serves also as freedesktop secret provider
 exec /usr/bin/keepassxc  /home/ruschi/Nextcloud/keepassxc_no_yubi.kdbx
+
+# sway notification daemon
+exec /usr/bin/swaync
 
 # unclutter hides Mouse pointer after 5s
 exec /usr/bin/unclutter --timeout 5 --jitter 2
@@ -309,3 +313,4 @@ exec /usr/bin/blueman-applet
 
 # network-manager
 exec /usr/bin/nm-tray
+
