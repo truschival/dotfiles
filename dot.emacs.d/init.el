@@ -16,7 +16,7 @@
 (make-directory elpa-dir :parents)
 
 (let ((default-directory elpa-dir))
-    (normal-top-level-add-subdirs-to-load-path))
+  (normal-top-level-add-subdirs-to-load-path))
 
 ;; Set up load path
 (add-to-list 'load-path settings-dir)
@@ -31,27 +31,26 @@
        package-enable-at-startup nil)
 (package-initialize)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 (when (not package-archive-contents)
   (package-refresh-contents))
 
 (setq  myPackages
        '(
          (clang-format)
-         (fill-column-indicator)
-         (markdown-mode)
-         (json-mode)
-         (terraform-mode)
-         (go-mode)
-         (pyenv-mode)
          (elpy)
-         (use-package)
+         (fill-column-indicator)
+         (go-mode)
          (helm-lsp)
          (helm-xref)
+         (json-mode)
          (lsp-mode)
          (lsp-treemacs)
          (lsp-ui)
+         (markdown-mode)
+         (terraform-mode)
          (treemacs)
+         (use-package)
          (which-key)
          )
        )
@@ -178,13 +177,22 @@
   :config
   (setq lsp-idle-delay 0.1)
   (setq lsp-prefer-flymake nil)
-  :hook ((c-mode . lsp)
-         (c++-mode . lsp)
-         (go-mode . lsp)
-         (python-mode . lsp)
-         ;; if you want which-key integration
-         ;; (lsp-mode . lsp-enable-which-key-integration)
-         )
+  (setq lsp-modeline-code-actions-segments '(count icon name))
+  (setq lsp-auto-guess-root t)
+  (setq lsp-log-io t)
+  (setq lsp-restart 'auto-restart)
+  (setq lsp-modeline-code-actions-enable t)
+  (setq lsp-modeline-diagnostics-enable t)
+  (setq lsp-semantic-tokens-enable nil)
+  (setq lsp-enable-folding t)
+  (setq lsp-enable-imenu t)
+  :hook ((c-mode
+		  c++-mode
+		  go-mode
+		  python-mode)
+         . lsp-deferred)
+  ;; if you want which-key integration
+  ;; (lsp-mode . lsp-enable-which-key-integration)
   :commands (lsp lsp-deferred)
   )
 
@@ -199,7 +207,7 @@
   :config
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 0.1)
-)
+  )
 
 (use-package helm-lsp
   :commands helm-lsp-workspace-symbol
@@ -322,17 +330,7 @@
 (use-package python
   :config
   (elpy-enable)
-  (setq python-shell-interpreter "/usr/bin/pipenv"
-        python-shell-interpreter-args " run ipython -i --simple-prompt")
   )
-
-;; (defun my-python-hook()
-;;   (elpy-enable)
-;;   (pyenv-mode)
-;;   (setq python-shell-interpreter "/usr/bin/pipenv"
-;;         python-shell-interpreter-args " run ipython -i --simple-prompt")
-;;   )
-;; (add-hook 'python-mode-hook 'my-python-hook)
 
 ;;==============================================================================
 ;; Unique Buffer Names
