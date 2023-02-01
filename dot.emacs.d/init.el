@@ -35,28 +35,9 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(setq  myPackages
-       '(
-         (clang-format)
-         (elpy)
-         (fill-column-indicator)
-         (go-mode)
-         (helm-lsp)
-         (helm-xref)
-         (json-mode)
-         (lsp-mode)
-         (lsp-treemacs)
-         (lsp-ui)
-         (markdown-mode)
-         (terraform-mode)
-         (treemacs)
-         (use-package)
-         (which-key)
-         )
-       )
-(dolist (p (mapcar 'car myPackages))
-  (unless (package-installed-p p)
-    (package-install p)))
+;; other packages are installed by use-package :ensure t)
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
 
 ;;==============================================================================
 ;; Other customizations
@@ -85,13 +66,14 @@
 (setq-default tab-width 4)      ;; set your desired tab width
 (setq default-tab-width 4)      ;; set your desired tab width
 (setq indent-tabs-mode 0)       ;; may use tabs, space if nil
-(tool-bar-mode 0)           ;; No tool-bar
-(ruler-mode 0)              ;; no ruler line on top
-(transient-mark-mode t)     ;; Highlight selection
-(delete-selection-mode 1)   ;; delete seleted text when typing
-(global-display-line-numbers-mode) ;; show line numbers everywhere
-(column-number-mode t) ;; show column in mode bar
 (setq isearch-allow-scroll t) ;; allow scroll during isearch (C-s)
+
+(tool-bar-mode 0)			;; No tool-bar
+(ruler-mode 0)				;; no ruler line on top
+(transient-mark-mode t)		;; Highlight selection
+(column-number-mode t)		;; show column in mode bar
+(delete-selection-mode 1)	;; delete seleted text when typing
+(global-display-line-numbers-mode) ;; show line numbers everywhere
 
 ;; Only show time/date in terminal mode
 (unless (display-graphic-p)
@@ -101,6 +83,13 @@
    display-time-day-and-date t
    )
   )
+
+;; Unique Buffer Names
+(use-package uniquify
+  :custom
+  (uniquify-buffer-name-style 'forward)
+  (uniquify-min-dir-content 1)			;; show at least last directory
+)
 
 ;; backup files in /tmp
 (setq make-backup-files nil)        ;; no backups
@@ -112,8 +101,11 @@
 ;; Open file in dired buffer and kill previous
 (put 'dired-find-alternate-file 'disabled nil)
 
-;; Initialize windmove default to Shift-<arrow> keys
-(windmove-default-keybindings 'shift)
+;; Ediff left<->right if frame large enough
+(setq ediff-split-window-function
+	  (if (> (frame-width) 150)
+          'split-window-horizontally
+        'split-window-vertically))
 
 ;; Pull in individual customizations for modes etc. each in a separate file
 (when (file-exists-p settings-dir)
@@ -159,6 +151,7 @@
 ;; individual package configs
 ;;==============================================================================
 (use-package paren
+  :ensure t
   :custom
   (show-paren-mode t)
   (show-paren-delay 0)
@@ -166,25 +159,27 @@
   )
 
 (use-package which-key
-  :custom
+  :ensure t
+  :config
   (which-key-mode)
+  (setq which-key-popup-type 'side-window)
   )
 
 (use-package lsp-mode
+  :ensure t
   :init
   ;;set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
   :config
   (setq lsp-idle-delay 0.1)
-  (setq lsp-prefer-flymake nil)
   (setq lsp-modeline-code-actions-segments '(count icon name))
   (setq lsp-auto-guess-root t)
-  (setq lsp-log-io t)
+  (setq lsp-log-io nil)						;; log if non-nil
+  (setq lsp-enable-snippet nil)				;; not using yasippet
   (setq lsp-restart 'auto-restart)
   (setq lsp-modeline-code-actions-enable t)
   (setq lsp-modeline-diagnostics-enable t)
-  (setq lsp-semantic-tokens-enable nil)
-  (setq lsp-enable-folding t)
+  (setq lsp-diagnostic-clean-after-change t)
   (setq lsp-enable-imenu t)
   :hook ((c-mode
 		  c++-mode
@@ -192,11 +187,25 @@
 		  python-mode)
          . lsp-deferred)
   ;; if you want which-key integration
-  ;; (lsp-mode . lsp-enable-which-key-integration)
+  (lsp-mode . lsp-enable-which-key-integration)
   :commands (lsp lsp-deferred)
   )
 
+
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-doc-delay 0.5)
+  (setq lsp-ui-sideline-enable t)
+  (setq lsp-ui-peek-enable t)
+  )
+
+
 (use-package company
+  :ensure t
   :after lsp-mode
   :hook (prog-mode . company-mode)
   :bind
@@ -210,21 +219,16 @@
   )
 
 (use-package helm-lsp
+  :ensure t
   :commands helm-lsp-workspace-symbol
   )
 
-(use-package lsp-ui
-  :commands lsp-ui-mode
-  :hook (lsp-mode . lsp-ui-mode)
-  :config
-  (setq lsp-ui-doc-enable t)
-  (setq lsp-ui-doc-delay 1.0)
-  (setq lsp-ui-sideline-enable t)
-  (setq lsp-ui-doc-position 'bottom)
-  (setq lsp-ui-peek-enable t)
+(use-package helm-xref
+  :ensure t
   )
 
 (use-package lsp-treemacs
+  :ensure t
   :after lsp
   :commands lsp-treemacs-errors-list)
 
@@ -232,6 +236,7 @@
 ;; Completion of buffer names in switching
 ;;==============================================================================
 (use-package ido
+  :ensure t
   :config
   (ido-mode 1)
   (progn (defun ido-ignore-non-user-except-ielm (name)
@@ -242,12 +247,16 @@
          )
   (setq ido-enable-flex-matching t)
   (setq ido-everywhere t)
+  (setq ido-use-filename-at-point 'guess)
+  (setq ido-use-url-at-point 0)
+  (setq ido-create-new-buffer 'always) ;; Do not ask to create new buffer
   )
 
 ;;==============================================================================
 ;; Magic parentesis and "" - "electric pair"
 ;;==============================================================================
 (use-package elec-pair
+  :ensure t
   :config
   (electric-pair-mode 1)
   (progn (defun electric-pair ()
@@ -266,6 +275,7 @@
 ;; org-mode settings
 ;;==============================================================================
 (use-package org
+  :ensure t
   :config
   (progn
     (setq org-ctrl-k-protect-subtree t) ;; avoid killing subtrees
@@ -280,13 +290,13 @@
 ;; Fill column Indicator
 ;;==============================================================================
 (use-package display-fill-column-indicator
+  :ensure t
   :config
   (setq-default fill-column 80)
   :hook
   (prog-mode . display-fill-column-indicator-mode)
   (text-mode . display-fill-column-indicator-mode)
   )
-
 
 ;;============
 ;; Aspell
@@ -295,7 +305,7 @@
 ;; Use aspell if installed
 (when (executable-find "aspell")
   (use-package flyspell
-    :ensure nil
+    :ensure t
     :custom
     (ispell-program-name "aspell")
     (flyspell-issue-message-flag nil)
@@ -306,18 +316,12 @@
     )
   )
 
-;;============
-;; Ediff
-;;============
-(setq ediff-split-window-function (if (> (frame-width) 150)
-                                      'split-window-horizontally
-                                    'split-window-vertically))
-
 ;;==============================================================================
 ;; Golang mode
 ;;==============================================================================
 (use-package go-mode
-  :bind (
+  :ensure t
+  :bind (:map go-mode-map
          ("M-." . 'godef-jump)
          ("M-," . 'pop-tag-mark))
   :hook
@@ -325,34 +329,66 @@
   )
 
 ;;==============================================================================
-;; Python
+;; CMake
 ;;==============================================================================
-(use-package python
-  :config
-  (elpy-enable)
+(use-package cmake-mode
+  :ensure t
+  :custom
+  (cmake-tab-width 4)
   )
 
 ;;==============================================================================
-;; Unique Buffer Names
+;; Terraform
 ;;==============================================================================
-(use-package uniquify
+(use-package terraform-mode
+  :ensure t
   :custom
-  (uniquify-buffer-name-style 'forward)
-  (uniquify-min-dir-content 1)
+  (terraform-indent-level 4)
+  )
+
+;;==============================================================================
+;; Markdown
+;;==============================================================================
+(use-package markdown-mode
+  :ensure t
+  )
+
+;;==============================================================================
+;; Markdown
+;;==============================================================================
+(use-package json-mode
+  :ensure t
+  )
+
+;;==============================================================================
+;; Python
+;;==============================================================================
+(use-package python
+  :ensure t
+  ;; :config
+  ;; (elpy-enable)
+  )
+
+;; load pyvenv to switch venvs and restart lsp
+(use-package pyvenv
+  :ensure t
+  :hook (python-mode . pyvenv-mode)
   )
 
 ;;==============================================================================
 ;; CC-Mode and hooks
 ;;==============================================================================
 (use-package clang-format
-  :config
-  (defun map-clang-format-keys()
-    (local-set-key (kbd "C-M-f") 'clang-format-region)
-    (local-set-key (kbd "<f6>")  'clang-format-buffer)
-    (message "loaded map-clang-format-keys")
-    )
-  :hook (
-         (c-mode . map-clang-format-keys)
-         (c++-mode . map-clang-format-keys)
-         )
+  :ensure t
+  )
+
+(use-package cc-mode
+  :bind (
+		 :map c-mode-map
+		 ("C-M-f" . 'clang-format-region)
+		 ("<f6>"  . 'clang-format-buffer)
+		 :map c++-mode-map
+		 ("C-M-f" . 'clang-format-region)
+		 ("<f6>"  . 'clang-format-buffer)
+		 )
   )
