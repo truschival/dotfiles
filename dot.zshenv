@@ -12,6 +12,8 @@ export LC_TIME=de_DE.UTF-8
 export LC_NUMERIC=de_DE.UTF-8
 # export LC_ALL=
 
+export WORKON_HOME=$HOME/.virtualenvs
+
 if [[ $XDG_SESSION_TYPE == "wayland" ]];
 then
    export MOZ_ENABLE_WAYLAND=1
@@ -21,3 +23,4 @@ fi
 
 # Source additional workstation dependend settings
 source ~/.zshenv.local
+source  /usr/share/virtualenvwrapper/virtualenvwrapper.sh

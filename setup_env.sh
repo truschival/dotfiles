@@ -20,19 +20,16 @@ then
     sudo apt update &&
 	sudo apt install -y wget gnupg2 gnupg-agent \
 	     dirmngr cryptsetup scdaemon pcscd secure-delete \
-	     hopenpgp-tools yubikey-personalization \
+	     yubikey-personalization \
 	     libsecret-tools \
-	     i3 i3-wm dex dmenu feh pulseaudio-utils i3lock xautolock \
+	     i3 i3-wm dex suckless-tools feh pulseaudio-utils i3lock xautolock \
 	     sway sway-backgrounds swaybg swayidle swaylock sway-notification-center \
 	     tofi waybar wayland-protocols \
 	     qlipper imagemagick x11-utils udiskie unclutter-xfixes xdg-utils \
 	     mu4e isync gnutls-bin \
 	     fonts-hack fonts-symbola \
-	     git-flow zsh \
-	     python3-pipenv
-	     # python3-autopep8 python3-flake8  \
-	     # python3-importmagic python3-yapf \
-	     # python3-ipython
+		 pipenv virtualenv virtualenvwrapper \
+		 git-flow zsh
 fi
 
 ################################################################################
