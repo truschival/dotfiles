@@ -9,8 +9,6 @@ set $mod Mod4
 # is used in the bar {} block below.
 font pango: DejaVu Sans 8
 
-#initial wallpaper
-output "*" bg  ~/.wallpapers/SGI-purple.jpg fill
 # class                 border  backgr. text    indicator child_border
 client.focused          #00bfff #285577 #ffffff #2e9ef4   #00bfff
 client.focused_inactive #404050 #404050 #ffffff #484e50   #5f676a
@@ -37,6 +35,31 @@ tiling_drag enable
 popup_during_fullscreen smart
 # selecting same workspace again will bring me back to the previous workspace
 workspace_auto_back_and_forth yes
+
+
+#-------------------------------------------------------------------------------
+# Multi-Monitor, External Monitor right of Laptop-Display
+# swaymsg -t get_outputs
+#-------------------------------------------------------------------------------
+
+# internal monitor 192x1080
+output eDP-1 pos 0 0
+output eDP-1 bg  ~/.wallpapers/SGI-purple.jpg fill #00CC00
+workspace 1 output eDP-1
+workspace 2 output eDP-1
+workspace 3 output eDP-1
+workspace 4 output eDP-1
+workspace 5 output eDP-1
+workspace 6 output eDP-1
+workspace 7 output eDP-1
+workspace 8 output eDP-1
+
+# external Monitor with 2 Workspaces
+output HDMI-A-1 pos 1920 0
+output HDMI-A-1 bg ~/.wallpapers/C64.jpg fill #AA0000
+workspace 9 output HDMI-A-1
+workspace 10 output HDMI-A-1
+
 
 #-------------------------------------------------------------------------------
 # US-Intl with deadkeys
@@ -93,7 +116,7 @@ set $tofiopts_clip \
 # Keybindings
 #-------------------------------------------------------------------------------
 # Launch menu using tofi
-bindsym $mod+d exec tofi-drun $tofiopts_menu 
+bindsym $mod+d exec tofi-drun $tofiopts_menu
 # bindsym $mod+d exec j4-dmenu-desktop --no-generic --dmenu="tofi $tofiopts_menu"
 
 # switch to urgent window
@@ -261,7 +284,7 @@ assign [class="^Signal"] workspace 8
 # Hotkeys for programs
 #-------------------------------------------------------------------------------
 bindsym $mod+Return exec /usr/bin/alacritty
-bindsym $mod+Print exec /usr/bin/spectacle
+bindsym $mod+Print exec slurp | grim -g - $(xdg-user-dir PICTURES)/$(date +'screenshot_%Y-%m-%d-%H%M%S.png')
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -313,4 +336,3 @@ exec /usr/bin/blueman-applet
 
 # network-manager
 exec /usr/bin/nm-tray
-
