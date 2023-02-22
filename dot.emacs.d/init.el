@@ -113,44 +113,11 @@
   (mapc 'load (directory-files settings-dir nil "^[^#].*el$")))
 
 ;;==============================================================================
-;; Themes and UI
+;; Packages
 ;;==============================================================================
-(load-theme 'tsdh-dark t)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "Black" :foreground "White" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 122 :width normal :foundry "SRC" :family "Hack"))))
- '(cursor ((t (:background "khaki"))))
- '(font-lock-builtin-face ((((class color) (background dark)) (:foreground "Turquoise"))))
- '(font-lock-comment-face ((t (:foreground "wheat"))))
- '(font-lock-constant-face ((((class color) (background dark)) (:bold t :foreground "DarkOrchid"))))
- '(font-lock-doc-face ((t (:inherit font-lock-comment-face :bold t))))
- '(font-lock-doc-string-face ((t (:foreground "green2"))))
- '(font-lock-function-name-face ((t (:foreground "SkyBlue"))))
- '(font-lock-keyword-face ((t (:bold t :foreground "CornflowerBlue"))))
- '(font-lock-preprocessor-face ((t (:italic nil :foreground "CornFlowerBlue"))))
- '(font-lock-reference-face ((t (:foreground "DodgerBlue"))))
- '(font-lock-string-face ((t (:foreground "LimeGreen"))))
- '(font-lock-type-face ((t (:foreground "CornFlowerBlue"))))
- '(font-lock-variable-name-face ((t (:foreground "PaleGreen"))))
- '(font-lock-warning-face ((((class color) (background dark)) (:foreground "yellow" :background "red"))))
- '(header-line ((((class color grayscale) (background light)) (:inherit mode-line :foreground "grey20" :box nil))))
- '(makefile-space ((t (:background "wheat"))))
- '(makefile-space-face ((t (:background "wheat"))) t)
- '(mode-line ((t (:background "dim gray"))))
- '(paren-match ((t (:background "darkseagreen4"))))
- '(quote (cursor ((t (:background "#A5F5FA")))))
- '(region ((t (:background "dark slate blue"))))
- '(scroll-bar ((t (:background "lightgrey" :foreground "black"))))
- '(show-paren-match ((t (:background "yellow" :foreground "black"))))
- '(show-paren-mismatch ((t (:background "red" :foreground "white" :weight bold))))
- '(whitespace-space ((t (:foreground "dark salmon")))))
 
-;;==============================================================================
-;; individual package configs
-;;==============================================================================
+;;-------------------------------
+;; Show matching parentheses
 (use-package paren
   :ensure t
   :custom
@@ -159,6 +126,7 @@
   (show-paren-stype 'parenthesis)
   )
 
+;;-------------------------------
 ;; Unique Buffer Names
 (use-package uniquify
   :custom
@@ -166,6 +134,8 @@
   (uniquify-min-dir-content 1)			;; show at least last directory
 )
 
+;;-------------------------------
+;; Help me by showing possible hotkey combinations
 (use-package which-key
   :ensure t
   :config
@@ -173,6 +143,78 @@
   (setq which-key-popup-type 'side-window)
   )
 
+;;-------------------------------
+;; Completion of buffer names in switching
+(use-package ido
+  :ensure t
+  :config
+  (ido-mode 1)
+  (progn (defun ido-ignore-non-user-except-ielm (name)
+           "Ignore all non-user (a.k.a. *starred*) buffers except *shell*."
+           (and (string-match "^\*" name)
+                (not (string= name "*shell*"))))
+         (setq ido-ignore-buffers '("\\` " ido-ignore-non-user-except-ielm))
+         )
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+  (setq ido-use-filename-at-point 'guess)
+  (setq ido-use-url-at-point 0)
+  (setq ido-create-new-buffer 'always) ;; Do not ask to create new buffer
+  )
+
+;;-------------------------------
+;; Smart parenthesis - significant upgrade from electric pair mode
+(use-package smartparens
+  :ensure t
+  :hook
+  (prog-mode . smartparens-mode)
+  (text-mode . smartparens-mode)
+  )
+
+;;-------------------------------
+;; Fill column Indicator
+;; Emacs >26 includes display-fill-column-indicator that superseeds fci-mode
+(use-package display-fill-column-indicator
+  :ensure t
+  :config
+  (setq-default fill-column 80)
+  :hook
+  (prog-mode . display-fill-column-indicator-mode)
+  (text-mode . display-fill-column-indicator-mode)
+  )
+
+;;-------------------------------
+;; Aspell
+;;(add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
+;; Use aspell if installed
+(when (executable-find "aspell")
+  (use-package flyspell
+    :ensure t
+    :custom
+    (ispell-program-name "aspell")
+    (flyspell-issue-message-flag nil)
+    (ispell-list-command "--list")
+    :hook
+    (text-mode . flyspell-mode)
+    (markdown-mode . flyspell-mode)
+    )
+  )
+
+;;-------------------------------
+;; Yasnippets for boilerplate code
+(use-package yasnippet
+  :ensure t
+  :hook
+  (org-mode . yas-minor-mode)
+  )
+
+(use-package yasnippet-snippets
+  :ensure t
+  )
+
+;;==============================================================================
+;; Language Server stuff
+;;==============================================================================
 (use-package lsp-mode
   :ensure t
   :init
@@ -198,7 +240,6 @@
   (lsp-mode . lsp-enable-which-key-integration)
   :commands (lsp lsp-deferred)
   )
-
 
 (use-package lsp-ui
   :ensure t
@@ -242,47 +283,11 @@
   )
 
 ;;==============================================================================
-;; Completion of buffer names in switching
+;; language/file specific major/minor modes
 ;;==============================================================================
-(use-package ido
-  :ensure t
-  :config
-  (ido-mode 1)
-  (progn (defun ido-ignore-non-user-except-ielm (name)
-           "Ignore all non-user (a.k.a. *starred*) buffers except *shell*."
-           (and (string-match "^\*" name)
-                (not (string= name "*shell*"))))
-         (setq ido-ignore-buffers '("\\` " ido-ignore-non-user-except-ielm))
-         )
-  (setq ido-enable-flex-matching t)
-  (setq ido-everywhere t)
-  (setq ido-use-filename-at-point 'guess)
-  (setq ido-use-url-at-point 0)
-  (setq ido-create-new-buffer 'always) ;; Do not ask to create new buffer
-  )
 
-;;==============================================================================
-;; Magic parentesis and "" - "electric pair"
-;;==============================================================================
-(use-package elec-pair
-  ;; :ensure t
-  :config
-  (electric-pair-mode nil)	;; Disabled by default
-  (progn (defun electric-pair ()
-           "If at end of line, insert character pair without surrounding spaces.
-    Otherwise, just insert the typed character."
-           (interactive)
-           (if (eolp)
-               (let (parens-require-spaces) (insert-pair))
-             (self-insert-command 1)
-             ))
-         )
-  :diminish
-  )
-
-;;==============================================================================
-;; org-mode settings
-;;==============================================================================
+;;-------------------------------
+;; org-mode
 (use-package org
   :ensure t
   :config
@@ -295,39 +300,8 @@
     )
   )
 
-;;==============================================================================
-;; Fill column Indicator
-;;==============================================================================
-(use-package display-fill-column-indicator
-  :ensure t
-  :config
-  (setq-default fill-column 80)
-  :hook
-  (prog-mode . display-fill-column-indicator-mode)
-  (text-mode . display-fill-column-indicator-mode)
-  )
-
-;;============
-;; Aspell
-;;============
-;;(add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
-;; Use aspell if installed
-(when (executable-find "aspell")
-  (use-package flyspell
-    :ensure t
-    :custom
-    (ispell-program-name "aspell")
-    (flyspell-issue-message-flag nil)
-    (ispell-list-command "--list")
-    :hook
-    (text-mode . flyspell-mode)
-    (markdown-mode . flyspell-mode)
-    )
-  )
-
-;;==============================================================================
+;;-------------------------------
 ;; Golang mode
-;;==============================================================================
 (use-package go-mode
   :ensure t
   :bind (:map go-mode-map
@@ -337,41 +311,36 @@
   (before-save . gofmt-before-save)
   )
 
-;;==============================================================================
+;;-------------------------------
 ;; CMake
-;;==============================================================================
 (use-package cmake-mode
   :ensure t
   :custom
   (cmake-tab-width 4)
   )
 
-;;==============================================================================
-;; Terraform
-;;==============================================================================
-(use-package terraform-mode
+;;-------------------------------
+;; Yaml
+(use-package yaml-mode
   :ensure t
   :custom
-  (terraform-indent-level 4)
+  (yaml-indent-offset 4)
   )
 
-;;==============================================================================
+;;-------------------------------
 ;; Markdown
-;;==============================================================================
 (use-package markdown-mode
   :ensure t
   )
 
-;;==============================================================================
-;; Markdown
-;;==============================================================================
+;;-------------------------------
+;; JSON-Mode
 (use-package json-mode
   :ensure t
   )
 
-;;==============================================================================
+;;-------------------------------
 ;; Python
-;;==============================================================================
 (use-package python
   :ensure t
   ;; :config
@@ -384,9 +353,8 @@
   :hook (python-mode . pyvenv-mode)
   )
 
-;;==============================================================================
-;; CC-Mode and hooks
-;;==============================================================================
+;;-------------------------------
+;; C++ Programming Mode and hooks
 (use-package clang-format
   :ensure t
   )
@@ -401,3 +369,55 @@
 		 ("<f6>"  . 'clang-format-buffer)
 		 )
   )
+
+;;==============================================================================
+;; Themes and UI
+;;==============================================================================
+(load-theme 'tsdh-dark t)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default
+	((t
+	  (:inherit nil :stipple nil :background "Black"
+				:foreground "White" :inverse-video nil :box nil
+				:strike-through nil :overline nil :underline nil
+				:slant normal :weight normal
+				:height 122 :width normal :foundry "SRC" :family "Hack"))))
+ '(cursor ((t (:background "khaki"))))
+ '(font-lock-builtin-face
+   ((((class color) (background dark)) (:foreground "Turquoise"))))
+ '(font-lock-comment-face ((t (:foreground "wheat"))))
+ '(font-lock-constant-face
+   ((((class color) (background dark)) (:bold t :foreground "DarkOrchid"))))
+ '(font-lock-doc-face ((t (:inherit font-lock-comment-face :bold t))))
+ '(font-lock-doc-string-face ((t (:foreground "green2"))))
+ '(font-lock-function-name-face ((t (:foreground "SkyBlue"))))
+ '(font-lock-keyword-face ((t (:bold t :foreground "CornflowerBlue"))))
+ '(font-lock-preprocessor-face ((t (:italic nil :foreground "CornFlowerBlue"))))
+ '(font-lock-reference-face ((t (:foreground "DodgerBlue"))))
+ '(font-lock-string-face ((t (:foreground "LimeGreen"))))
+ '(font-lock-type-face ((t (:foreground "CornFlowerBlue"))))
+ '(font-lock-variable-name-face ((t (:foreground "PaleGreen"))))
+ '(font-lock-warning-face
+   ((((class color) (background dark))
+	 (:foreground "yellow" :background "red"))))
+ '(header-line
+   ((((class color grayscale) (background light))
+	 (:inherit mode-line :foreground "grey20" :box nil))))
+ '(makefile-space ((t (:background "wheat"))))
+ '(makefile-space-face ((t (:background "wheat"))) t)
+ '(mode-line ((t (:background "dim gray"))))
+ '(paren-match ((t (:background "darkseagreen4"))))
+ '(quote (cursor ((t (:background "#A5F5FA")))))
+ '(region ((t (:background "dark slate blue"))))
+ '(scroll-bar ((t (:background "lightgrey" :foreground "black"))))
+ '(show-paren-match ((t (:background "yellow" :foreground "black"))))
+ '(show-paren-mismatch
+   ((t (:background "red" :foreground "white" :weight bold))))
+ '(whitespace-space ((t (:foreground "dark salmon")))))
+
+
+;;---------- EOF ---------- 
