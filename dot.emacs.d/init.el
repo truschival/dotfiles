@@ -27,8 +27,8 @@
 ;;==============================================================================
 (require 'package)
 ;; Initializes the package infrastructure
-(setq  package-check-signature nil
-       package-enable-at-startup nil)
+(setq package-check-signature nil
+      package-enable-at-startup nil)
 (package-initialize)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
@@ -62,17 +62,19 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq-default ring-bell-function 'ignore) ;; no visual/audible bell
 
+;; Set Frame (Window) Title
 (setq frame-title-format '("" "Emacs v" emacs-version " [%b]"))
+
 (setq-default tab-width 4)      ;; set your desired tab width
 (setq default-tab-width 4)      ;; set your desired tab width
 (setq indent-tabs-mode 0)       ;; may use tabs, space if nil
-(setq isearch-allow-scroll t) ;; allow scroll during isearch (C-s)
+(setq isearch-allow-scroll t)   ;; allow scroll during isearch (C-s)
 
-(tool-bar-mode 0)			;; No tool-bar
-(ruler-mode 0)				;; no ruler line on top
-(transient-mark-mode t)		;; Highlight selection
-(column-number-mode t)		;; show column in mode bar
-(delete-selection-mode 1)	;; delete seleted text when typing
+(tool-bar-mode 0)               ;; No tool-bar
+(ruler-mode 0)                  ;; no ruler line on top
+(transient-mark-mode t)         ;; Highlight selection
+(column-number-mode t)          ;; show column in mode bar
+(delete-selection-mode 1)       ;; delete seleted text when typing
 (global-display-line-numbers-mode) ;; show line numbers everywhere
 
 ;; Only show time/date in terminal mode
@@ -84,15 +86,14 @@
    )
   )
 
-;; Unique Buffer Names
-(use-package uniquify
-  :custom
-  (uniquify-buffer-name-style 'forward)
-  (uniquify-min-dir-content 1)			;; show at least last directory
-)
+;; please follow symlinks to git files without asking
+(setq vc-follow-symlinks t)
 
-;; backup files in /tmp
-(setq make-backup-files nil)        ;; no backups
+;; No backups, stale locks, autosaves with old content etc.
+(setq make-backup-files nil
+      auto-save-default nil
+      create-lockfiles nil)
+
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
@@ -158,6 +159,13 @@
   (show-paren-stype 'parenthesis)
   )
 
+;; Unique Buffer Names
+(use-package uniquify
+  :custom
+  (uniquify-buffer-name-style 'forward)
+  (uniquify-min-dir-content 1)			;; show at least last directory
+)
+
 (use-package which-key
   :ensure t
   :config
@@ -203,7 +211,6 @@
   (setq lsp-ui-peek-enable t)
   )
 
-
 (use-package company
   :ensure t
   :after lsp-mode
@@ -223,6 +230,7 @@
   :commands helm-lsp-workspace-symbol
   )
 
+;; Follow cross-references (defined, implementation... M-. M-, )
 (use-package helm-xref
   :ensure t
   )
@@ -230,7 +238,8 @@
 (use-package lsp-treemacs
   :ensure t
   :after lsp
-  :commands lsp-treemacs-errors-list)
+  :commands (lsp-treemacs-errors-list lsp-treemacs-symbols)
+  )
 
 ;;==============================================================================
 ;; Completion of buffer names in switching
@@ -256,9 +265,9 @@
 ;; Magic parentesis and "" - "electric pair"
 ;;==============================================================================
 (use-package elec-pair
-  :ensure t
+  ;; :ensure t
   :config
-  (electric-pair-mode 1)
+  (electric-pair-mode nil)	;; Disabled by default
   (progn (defun electric-pair ()
            "If at end of line, insert character pair without surrounding spaces.
     Otherwise, just insert the typed character."
@@ -280,7 +289,7 @@
   (progn
     (setq org-ctrl-k-protect-subtree t) ;; avoid killing subtrees
     (setq org-todo-keywords
-          '((sequence "TODO(t)" "STARTED(s)" "BLOCKED(b)"  "|" "DONE" "INVALID")))
+          '((sequence "TODO(t)" "STARTED(s)" "BLOCKED(b)" "|" "DONE" "INVALID")))
     (setq org-completion-use-ido t)
     (visual-line-mode 1)
     )
