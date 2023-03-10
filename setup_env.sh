@@ -33,6 +33,15 @@ then
 fi
 
 ################################################################################
+function cliphist_setup(){
+    log_notice "setup cliphist"
+	CLIPHIST_URL="https://github.com/sentriz/cliphist/releases/download/v0.4.0/v0.4.0-linux-amd64"
+	wget -O $NEW_HOME/.local/bin/cliphist $CLIPHIST_URL
+	chmod 755 $NEW_HOME/.local/bin/cliphist 
+}
+
+
+################################################################################
 function gnupg_setup(){
     log_notice "setup gnupg config"
     read -p  " skip? [N|y] ?" -n 1 -r
@@ -158,6 +167,9 @@ touch $NEW_HOME/.zsh_aliases.local
 
 # create config folder if not setup
 [ -d $NEW_HOME/.local/bin ] || mkdir -p $NEW_HOME/.local/bin
+
+# Download and install cliphist
+cliphist_setup
 
 # link wallpapers
 wallpaper_setup
