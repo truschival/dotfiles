@@ -76,8 +76,12 @@ input * {
 #-------------------------------------------------------------------------------
 # variables
 #-------------------------------------------------------------------------------
-# Variable for Screenlocker
-set $screenlock swaylock -i ~/.wallpapers/lockscreen-scaled.png
+
+# Screenlocker:
+#  -e  --ignore-empty-password
+#  -f  --daemonize : do not block swayidle from executing other timeout actions
+#  -i  --image
+set $screenlock /usr/bin/swaylock -f -e -i ~/.wallpapers/lockscreen-scaled.png
 
 # Tofi menu (https://github.com/philj56/tofi)
 set $tofiopts \
@@ -302,10 +306,10 @@ bindsym Mod1+Shift+v exec cliphist list | tofi $tofiopts_clip | cliphist delete
 #-------------------------------------------------------------------------------
 # Lock screen and go blank after 10 min
 # swayidle does not require a i3lock.service it can talk to systemd
-exec swayidle \
-    timeout 600 '$screenlock' \
-    timeout 630 'swaymsg "output * dpms off"' \
-    resume 'swaymsg "output * dpms on"' \
+exec swayidle -w \
+    idlehint 300 \
+    timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+    timeout 360 '$screenlock' \
     before-sleep '$screenlock'
 
 #-------------------------------------------------------------------------------
