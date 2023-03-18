@@ -15,6 +15,7 @@
 (global-set-key [f7] 'comment-region)
 (global-set-key [f8] 'uncomment-region)
 (global-set-key [f9] 'delete-trailing-whitespace)
+(global-set-key (kbd "C-S-A") 'mark-whole-buffer)
 (global-set-key "\M-g" 'goto-line)
 (global-set-key "\C-v" 'nil) ;; I DON't want C-v (Windows paste) mess here
 (global-set-key "\M-v" 'nil) ;; I don't want M-v shouldn't do anything either

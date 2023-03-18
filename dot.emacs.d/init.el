@@ -69,6 +69,7 @@
 (setq default-tab-width 4)      ;; set your desired tab width
 (setq indent-tabs-mode 0)       ;; may use tabs, space if nil
 (setq isearch-allow-scroll t)   ;; allow scroll during isearch (C-s)
+(setq-default scroll-preserve-screen-position 'always) ;; do not move cursor
 
 (tool-bar-mode 0)               ;; No tool-bar
 (ruler-mode 0)                  ;; no ruler line on top
@@ -257,6 +258,7 @@
   :after lsp-mode
   :hook (prog-mode . company-mode)
   :bind
+  ;; :bind (("<s-SPC>" . company-complete))
   (:map company-active-map
         ("<tab>" . company-complete-selection))
   (:map lsp-mode-map
@@ -264,6 +266,7 @@
   :config
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 0.1)
+  (setq company--disabled-backends '(company-dabbrev))
   )
 
 (use-package helm-lsp
