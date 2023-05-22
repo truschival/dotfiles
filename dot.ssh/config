@@ -7,6 +7,7 @@ Host 192.168.*.* villastraylight Villastraylight
  ControlPersist 0
  ForwardX11 yes
  ForwardX11Trusted yes
+ ForwardAgent yes
 
 Host 172.21.*.*
     StrictHostKeyChecking no
