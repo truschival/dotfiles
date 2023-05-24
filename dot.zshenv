@@ -1,3 +1,4 @@
+# -*- mode: shell-script; -*-
 # `.zshenv' is sourced on *all* invocations of the shell,
 # unless the -f option is set.
 # It should contain commands to set the command search path, plus other
@@ -8,8 +9,8 @@
 #Charset & language
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
-export LC_TIME=de_DE.UTF-8
-export LC_NUMERIC=de_DE.UTF-8
+#export LC_TIME=de_DE.UTF-8
+#export LC_NUMERIC=de_DE.UTF-8
 # export LC_ALL=
 
 export WORKON_HOME=$HOME/.virtualenvs
@@ -23,4 +24,4 @@ fi
 
 # Source additional workstation dependend settings
 source ~/.zshenv.local
-source  /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
