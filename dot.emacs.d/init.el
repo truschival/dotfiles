@@ -70,6 +70,10 @@
 (setq indent-tabs-mode 0)       ;; may use tabs, space if nil
 (setq isearch-allow-scroll t)   ;; allow scroll during isearch (C-s)
 (setq-default scroll-preserve-screen-position 'always) ;; do not move cursor
+;; Suppress native compile warning buffers popping up
+(setq
+ ;; native-comp-async-report-warnings-errors nil
+ warning-minimum-level :error)
 
 (tool-bar-mode 0)               ;; No tool-bar
 (ruler-mode 0)                  ;; no ruler line on top
@@ -211,6 +215,26 @@
 
 (use-package yasnippet-snippets
   :ensure t
+  )
+
+;;-------------------------------
+;; auth sources and secrets for freedesktop secrets (keepassxc) 
+(use-package auth-source
+  ;; :init
+  ;; (setq     auth-source-debug t)
+  )
+
+;; Freedesktop secrets "Secret-service-API" - the default collection is ""
+;; (secrets-list-collections)
+;; (secrets-list-items "" )
+;; (secrets-search-items "" :host "mail.rolf-dv.de" :port "587")
+;; (secrets-get-secret "" "MBSYNC")
+(use-package secrets
+  :init  (setq
+          auth-sources '(default "secrets:" )
+          auth-source-save-behavior nil
+          ;; secrets-debug t
+          )
   )
 
 ;;==============================================================================

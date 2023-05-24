@@ -69,11 +69,25 @@ differently in some other points I haven't fully understood yet.
     to add ``dbus-update-activation-environment --systemd DISPLAY`` to the sway
     startup file.
 3.  SSH agent authentication using gpg agent stopped working at some
-    point. Something caused ``SSH_AUTH_SOCK`` to be wrong/empty. The workaround was to add
+    point. Something caused ``SSH_AUTH_SOCK`` to be wrong/empty. 
+	The workaround was to add
 	```
 	export SSH_AGENT_PID=
-	export SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh
+	export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 	```
 	to ``.zshenv.local``
 4.  If the package ``xdg-desktop-portal-*`` is installed. Firefox, waybar etc
     are dead slow in starting up.
+
+
+## Secrets
+
+I try do phase out gpg. Currently KeepassXC my secrets provider of choice as it 
+can serve as ``ssh-agent`` and as freedesktop secrets provider.
+
+Emacs (mu4e and gnus-smtp) can use KeepassXC secrets. The secret is stored in
+the "default collection". To make it work I created a group which is exported
+via freedesktop and added an entry with attributes. Emacs searches for an entry
+with ``port`` and ``host`` attributes. It does not use the "UserName" from
+keepass but uses an additional attribute ``user`` for the login. The password is
+taken form the password field of the entry.

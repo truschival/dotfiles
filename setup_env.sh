@@ -58,7 +58,7 @@ function gnupg_setup(){
     chmod 600 $NEW_HOME/.gnupg/*
 
     # Setup systemd user config
-    systemctl --user enable gpg-agent.socket gpg-agent-ssh.socket
+    systemctl --user enable gpg-agent.socket
     systemctl --user enable dirmngr.socket
 
     gpg --import $SCRIPT_DIR/0x0A22736A4AB577ED.pub.asc
@@ -184,6 +184,9 @@ setup_links_in_subdir dot.config $NEW_HOME
 log_notice "Creating links in .emacs.d and subdirectories"
 setup_links_in_subdir dot.emacs.d $NEW_HOME
 systemctl enable --user emacs
+
+# Setup SSH-Agent service
+systemctl enable --user ssh-agent
 
 # Setup gnupg
 gnupg_setup

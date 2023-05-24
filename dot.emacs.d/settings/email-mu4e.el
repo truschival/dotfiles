@@ -166,20 +166,29 @@
   (setq
    message-send-mail-function 'smtpmail-send-it
    starttls-use-gnutls t
-   smtpmail-starttls-credentials '(("mail.rolf-dv.de" 587 nil nil))
-   smtpmail-auth-credentials
-   '(("mail.rolf-dv.de" 587 "thomas@ruschival.de" nil))
-   smtpmail-default-smtp-server "mail.rolf-dv.de"
    smtpmail-smtp-server "mail.rolf-dv.de"
    smtpmail-smtp-service 587
    ;; if you need offline mode, set these -- and create the queue dir
    ;; with 'mu mkdir', i.e.. mu mkdir /home/user/Maildir/queue
    smtpmail-queue-mail  nil
-   smtpmail-queue-dir  (expand-file-name "/home/ruschi/Maildir/ruschival.de/Queue")
+   smtpmail-queue-dir  (expand-file-name "~/Maildir/ruschival.de/Queue")
    )
 
   ;; Maildirs
   ;; (require 'mu4e-maildirs-extension)
   ;; (mu4e-maildirs-extension)
+
+  ;; Calendar
+  (require 'mu4e-icalendar)
+  (mu4e-icalendar-setup)
+  (setq mu4e-icalendar-diary-file "~/ownCloud/calendar/org-mode.cal")
+
+  (require 'org-agenda)
+  (setq gnus-icalendar-org-capture-file "~/ownCloud/calendar/test.org")
+  (setq gnus-icalendar-org-capture-headline '("Calendar"))
+  (gnus-icalendar-org-setup)
+
   )
 (provide 'email-mu4e)
+
+(concat (getenv "HOME") )
