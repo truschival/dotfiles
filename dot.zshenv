@@ -12,9 +12,15 @@ export LANGUAGE=en_US.UTF-8
 #export LC_TIME=de_DE.UTF-8
 #export LC_NUMERIC=de_DE.UTF-8
 # export LC_ALL=
-
-export PATH=~/.local/bin:$PATH
 export WORKON_HOME=$HOME/.virtualenvs
+
+HOME_LOCAL_BIN=$HOME/\\.local/bin
+echo $PATH | grep  -q $HOME_LOCAL_BIN
+ON_PATH=$?
+
+if [[ $ON_PATH -ne 0 && -d $HOME_LOCAL_BIN ]]  ; then
+    PATH="$HOME_LOCAL_BIN:$PATH"
+fi
 
 if [[ $XDG_SESSION_TYPE == "wayland" ]];
 then
@@ -26,3 +32,4 @@ fi
 # Source additional workstation dependend settings
 source ~/.zshenv.local
 source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
