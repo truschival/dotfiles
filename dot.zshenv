@@ -13,6 +13,7 @@ export LANGUAGE=en_US.UTF-8
 #export LC_NUMERIC=de_DE.UTF-8
 # export LC_ALL=
 
+export PATH=~/.local/bin:$PATH
 export WORKON_HOME=$HOME/.virtualenvs
 
 if [[ $XDG_SESSION_TYPE == "wayland" ]];

@@ -34,8 +34,6 @@
 	tabwidth = 4
 	boldheaders = false
 	startupmode = list
-[commit]
-	gpgsign = true
 [help]
 	autocorrect = 0
 [gui]
