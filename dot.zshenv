@@ -14,7 +14,7 @@ export LANGUAGE=en_US.UTF-8
 # export LC_ALL=
 export WORKON_HOME=$HOME/.virtualenvs
 
-HOME_LOCAL_BIN=$HOME/\\.local/bin
+HOME_LOCAL_BIN=$HOME/.local/bin
 echo $PATH | grep  -q $HOME_LOCAL_BIN
 ON_PATH=$?
 
