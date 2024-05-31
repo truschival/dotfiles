@@ -1,157 +1,179 @@
 {
-    "layer": "top",
-    "position": "bottom",
-    "height": 29, 		
-    "spacing": 10, 		
-
-    "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-center": ["sway/window"],
-    "modules-right": ["custom/weather",
-    		      "cpu", "memory", "temperature", "backlight",
-		      "battery", "pulseaudio", "network",
-		      "clock", "idle_inhibitor", "tray", "custom/notification"],
-
-    "sway/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "format": "{name}: {icon}",
-
-	"format-icons": {
-            "1": "⚿",
-            "8": "",
-            "urgent":  "<span color='#e85c5c'></span>",
-            "focused": "<span color='#8af0f0'></span>",
-            "default": "<span color='#b8b8b8'></span>"
-        }
-    },
-
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
-    },
-
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
-     },
-
-    "sway/scratchpad": {
-        "format": "{icon} {count}",
-        "show-empty": false,
-        "format-icons": ["", ""],
-        "tooltip": true,
-        "tooltip-format": "{app}: {title}"
-    },
-
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-           "activated": "",
-           "deactivated": ""
-        }
-    },
-
-    "tray": {
-        "icon-size": 21,
-        "spacing": 5
-    },
-
-    "clock": {
-        "timezones": ["Europe/Berlin", "America/New_York" ],
-	"format" : "{:%H:%M  %a %d.%m.%y %Z}",
-        "format-alt": "{:%Y-%m-%d (%W)}",
-	"interval": 20
+	"layer": "top",
+	"position": "bottom",
+	"height": 30,
+	"spacing": 10,
+	"modules-left": [
+		"sway/workspaces",
+		"sway/mode"
+	],
+	"modules-center": [
+		"sway/window"
+	],
+	"modules-right": [
+		"custom/weather",
+		"cpu",
+		"memory",
+		"temperature",
+		"backlight",
+		"battery",
+		"pulseaudio",
+		"network",
+		"clock",
+		"idle_inhibitor",
+		"tray",
+		"custom/notification"
+	],
+	"sway/workspaces": {
+		"disable-scroll": true,
+		"all-outputs": true,
+		"format": "{name}: {icon}",
+		"format-icons": {
+			"1": "⚿",
+			"8": "",
+			"urgent": "<span color='#e85c5c'></span>",
+			"focused": "<span color='#8af0f0'></span>",
+			"default": "<span color='#b8b8b8'></span>"
+		}
 	},
-
-    "cpu": {
-        "format": "{load} | {usage}%@{avg_frequency}GHz ",
-        "tooltip": false
-    },
-
-    "memory": {
-        "format": "{used:0.1f}G "
-    },
-
-    "temperature": {
-        "hwmon-path": "/sys/class/hwmon/hwmon5/temp1_input",
-        "critical-threshold": 70,
-        "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC}°C {icon}",
-        "format-icons": [""]
-    },
-
-    "backlight": {
-        "format": "{percent}% {icon}",
-        "format-icons": ["🔆"]
+	"keyboard-state": {
+		"numlock": true,
+		"capslock": true,
+		"format": "{name} {icon}",
+		"format-icons": {
+			"locked": "",
+			"unlocked": ""
+		}
 	},
-
-    "battery": {
-        "states": {
-            "good": 95,
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{capacity}% {icon}",
-        "format-charging": "{capacity}% 🔋",
-        "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""]
-    },
-
-    "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{ifname} via {gwaddr}",
-        "format-linked": "{ifname} (No IP)",
-        "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
-    },
-
-    "pulseaudio": {
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": "🔇 {icon} {format_source}",
-        "format-muted": "🔇 {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "🎧",
-            "headset": "🎧",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol"
-    },
-    
-    "custom/weather": {
-        "format": "{}",
-    	"tooltip": true,
-    	"interval": 3600,
-    	"exec": "waybar-wttr.py",
-    	"return-type": "json"
-    },
-
-"custom/notification": {
-"tooltip": false,
-"format": "{icon}",
-"format-icons": {
-"notification": "<span foreground='red'><sup></sup></span>",
-"none": "",
-"dnd-notification": "<span foreground='red'><sup></sup></span>",
-"dnd-none": ""
-},
-"return-type": "json",
-"exec-if": "which swaync-client",
-"exec": "swaync-client -swb",
-"on-click": "swaync-client -t -sw",
-"on-click-right": "swaync-client -d -sw",
-"escape": true
-}
+	"sway/mode": {
+		"format": "<span style=\"italic\">{}</span>"
+	},
+	"sway/scratchpad": {
+		"format": "{icon} {count}",
+		"show-empty": false,
+		"format-icons": [
+			"",
+			""
+		],
+		"tooltip": true,
+		"tooltip-format": "{app}: {title}"
+	},
+	"idle_inhibitor": {
+		"format": "{icon}",
+		"format-icons": {
+			"activated": "",
+			"deactivated": ""
+		}
+	},
+	"tray": {
+		"icon-size": 21,
+		"spacing": 5
+	},
+	"clock": {
+		"timezones": [
+			"Europe/Berlin",
+			"America/Manaus",
+		],
+		"format": "{:%H:%M  %a %d.%m.%y %Z}",
+		"format-alt": "{:%Y-%m-%d (%W)}",
+		"locale" : "C",
+		"interval": 20,
+		"actions" : {
+				"on-click-right": "tz_down",
+				"on-scroll-down": "tz_down"
+		}
+	},
+	"cpu": {
+		"format": "{load} | {usage}%@{avg_frequency}GHz ",
+		"tooltip": false
+	},
+	"memory": {
+		"format": "{used:0.1f}G "
+	},
+	"temperature": {
+		"hwmon-path": "/sys/class/hwmon/hwmon5/temp1_input",
+		"critical-threshold": 70,
+		"format-critical": "{temperatureC}°C {icon}",
+		"format": "{temperatureC}°C {icon}",
+		"format-icons": [
+			""
+		]
+	},
+	"backlight": {
+		"format": "{percent}% {icon}",
+		"format-icons": [
+			"🔆"
+		]
+	},
+	"battery": {
+		"states": {
+			"good": 95,
+			"warning": 30,
+			"critical": 15
+		},
+		"format": "{capacity}% {icon}",
+		"format-charging": "{capacity}% 🔋",
+		"format-plugged": "{capacity}% ",
+		"format-alt": "{time} {icon}",
+		"format-icons": [
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"network": {
+		"format-wifi": "{essid} ({signalStrength}%) ",
+		"format-ethernet": "{ipaddr}/{cidr} ",
+		"tooltip-format": "{ifname} via {gwaddr}",
+		"format-linked": "{ifname} (No IP)",
+		"format-disconnected": "Disconnected ⚠",
+		"format-alt": "{ifname}: {ipaddr}/{cidr}"
+	},
+	"pulseaudio": {
+		"format": "{volume}% {icon} {format_source}",
+		"format-bluetooth": "{volume}% {icon} {format_source}",
+		"format-bluetooth-muted": "🔇 {icon} {format_source}",
+		"format-muted": "🔇 {format_source}",
+		"format-source": "{volume}% ",
+		"format-source-muted": "",
+		"format-icons": {
+			"headphone": "",
+			"hands-free": "🎧",
+			"headset": "🎧",
+			"phone": "",
+			"portable": "",
+			"car": "",
+			"default": [
+				"",
+				"",
+				""
+			]
+		},
+		"on-click": "pavucontrol"
+	},
+	"custom/weather": {
+		"format": "{}",
+		"tooltip": true,
+		"interval": 3600,
+		"exec": "wttrbar --location Esslingen",
+		"return-type": "json"
+	},
+	"custom/notification": {
+		"tooltip": false,
+		"format": "{icon}",
+		"format-icons": {
+			"notification": "🔔",
+			"none": "",
+			"dnd-notification": "<span foreground='red'><sup></sup></span>",
+			"dnd-none": ""
+		},
+		"return-type": "json",
+		"exec-if": "which swaync-client",
+		"exec": "swaync-client -swb",
+		"on-click": "swaync-client -t -sw",
+		"on-click-right": "swaync-client -d -sw",
+		"escape": true
+	}
 }
