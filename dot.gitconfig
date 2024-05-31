@@ -2,7 +2,7 @@
 [user]
 	name = Thomas Ruschival
 	email = thomas@ruschival.de
-	signingkey = 8995DBA76AAA3B0C
+#	signingkey = 8995DBA76AAA3B0C
 [core]
 	autocrlf = input
 	pager = less -FRX
@@ -45,3 +45,5 @@
 	smtpserverport = 587
 [pull]
 	ff = only
+# [commit]
+#	gpgsign = true

@@ -249,7 +249,7 @@ $execnsid xautolock -corners 00-- -time 10 -locker ' $screenlock '
 $execnsid dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
 
 #KeepassXC serves also as freedesktop secret provider
-$execnsid /usr/bin/keepassxc  /home/ruschi/ownCloud/keepassxc.kdbx
+$execnsid /usr/bin/keepassxc  /home/ruschi/ownCloud/keepassxc_no_yubi.kdbx
 # unclutter hides Mouse pointer after 5s
 $execnsid /usr/bin/unclutter --timeout 5 --jitter 2
 
