@@ -259,10 +259,15 @@
   (setq lsp-modeline-diagnostics-enable t)
   (setq lsp-diagnostic-clean-after-change t)
   (setq lsp-enable-imenu t)
+  ;; what to use when checking on-save. "check" is default, I prefer clippy
+  (setq lsp-rust-analyzer-cargo-watch-command "clippy")
+  ;; enable / disable the hints as you prefer:
+  (setq lsp-inlay-hint-enable t)			 
   :hook ((c-mode
 		  c++-mode
 		  go-mode
-		  python-mode)
+		  python-mode
+		  rust-mode)
          . lsp-deferred)
   ;; if you want which-key integration
   (lsp-mode . lsp-enable-which-key-integration)
@@ -311,6 +316,37 @@
   :after lsp
   :commands (lsp-treemacs-errors-list lsp-treemacs-symbols)
   )
+(use-package exec-path-from-shell
+  :ensure
+  :init (exec-path-from-shell-initialize))
+
+(use-package dap-mode
+  :ensure
+  :config
+  (dap-ui-mode)
+  (dap-ui-controls-mode 1)
+  (require 'dap-cpptools)
+  (require 'dap-lldb)
+  (require 'dap-gdb-lldb)
+  ;; installs .extension/vscode
+  (dap-gdb-lldb-setup)
+  (dap-register-debug-template
+   "Rust::GDB Run Configuration"
+   (list :type "gdb"
+		 :request "launch"
+		 :name "GDB::Run"
+		 :gdbpath "rust-gdb"
+		 :target nil
+		 :cwd nil))
+  (dap-register-debug-template
+   "Rust::LLDB Run Configuration"
+   (list :type "lldb"
+         :request "launch"
+         :name "LLDB::Run"
+		 :gdbpath "rust-lldb"
+         :target nil
+         :cwd nil))
+)
 
 ;;-------------------------------
 ;; Copilot mode is special, it does not have a package at melp/elpa
