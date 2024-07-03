@@ -8,3 +8,4 @@ fi
 
 export PATH=$HOME/Tools:$PATH:/usr/sbin:/sbin:./bin
 systemctl --user set-environment DISPLAY=:0 
+SSH_AUTH_SOCK=/run/user/1000/ssh-agent.socket
