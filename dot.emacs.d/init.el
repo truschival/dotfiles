@@ -259,6 +259,7 @@
   (setq lsp-modeline-diagnostics-enable t)
   (setq lsp-diagnostic-clean-after-change t)
   (setq lsp-enable-imenu t)
+  (setq lsp-pylsp-plugins-black-enabled t)
   ;; what to use when checking on-save. "check" is default, I prefer clippy
   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
   ;; enable / disable the hints as you prefer:
@@ -281,7 +282,7 @@
   :config
   (setq lsp-ui-doc-enable t)
   (setq lsp-ui-doc-delay 0.5)
-  (setq lsp-ui-sideline-enable t)
+  (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-peek-enable t)
   )
 
@@ -319,123 +320,6 @@
 (use-package exec-path-from-shell
   :ensure
   :init (exec-path-from-shell-initialize))
-
-(use-package dap-mode
-  :ensure
-  :config
-  (dap-ui-mode)
-  (dap-ui-controls-mode 1)
-  (require 'dap-cpptools)
-  (require 'dap-lldb)
-  (require 'dap-gdb-lldb)
-  ;; installs .extension/vscode
-  (dap-gdb-lldb-setup)
-  (dap-register-debug-template
-   "Rust::GDB Run Configuration"
-   (list :type "gdb"
-		 :request "launch"
-		 :name "GDB::Run"
-		 :gdbpath "rust-gdb"
-		 :target nil
-		 :cwd nil))
-  (dap-register-debug-template
-   "Rust::LLDB Run Configuration"
-   (list :type "lldb"
-         :request "launch"
-         :name "LLDB::Run"
-		 :gdbpath "rust-lldb"
-         :target nil
-         :cwd nil))
-)
-
-;;-------------------------------
-;; Copilot mode is special, it does not have a package at melp/elpa
-
-;; (use-package copilot
-;;   :load-path (lambda ()(expand-file-name "copilot.el" local-modes-dir))
-;;   :init (company-mode)
-;;   :custom
-;;   (copilot-idle-delay 0.1)
-;; )
-;; (defun rk/no-copilot-mode ()
-;;   "Helper for `rk/no-copilot-modes'."
-;;   (copilot-mode -1))
-
-;; (defvar rk/no-copilot-modes '(shell-mode
-;;                               inferior-python-mode
-;;                               eshell-mode
-;;                               term-mode
-;;                               compilation-mode
-;;                               debugger-mode
-;;                               dired-mode-hook
-;;                               compilation-mode-hook
-;;                               minibuffer-mode-hook)
-;;   "Modes in which copilot is inconvenient.")
-
-;; (defun rk/copilot-disable-predicate ()
-;;   "When copilot should not automatically show completions."
-;;   (or rk/copilot-manual-mode
-;;       (member major-mode rk/no-copilot-modes)
-;;       (company--active-p)))
-
-;; (add-to-list 'copilot-disable-predicates #'rk/copilot-disable-predicate)
-;; (defvar rk/copilot-manual-mode nil
-;;   "When `t' will only show completions when manually triggered, e.g. via M-C-<return>.")
-
-;; (defun rk/copilot-change-activation ()
-;;   "Switch between three activation modes:
-;; - automatic: copilot will automatically overlay completions
-;; - manual: you need to press a key (M-C-<return>) to trigger completions
-;; - off: copilot is completely disabled."
-;;   (interactive)
-;;   (if (and copilot-mode rk/copilot-manual-mode)
-;;       (progn
-;;         (message "deactivating copilot")
-;;         (global-copilot-mode -1)
-;;         (setq rk/copilot-manual-mode nil))
-;;     (if copilot-mode
-;;         (progn
-;;           (message "activating copilot manual mode")
-;;           (setq rk/copilot-manual-mode t))
-;;       (message "activating copilot mode")
-;;       (global-copilot-mode))))
-
-;; (define-key global-map (kbd "M-C-<escape>") #'rk/copilot-change-activation)
-
-
-;; (defun rk/copilot-complete-or-accept ()
-;;   "Command that either triggers a completion or accepts one if one
-;; is available. Useful if you tend to hammer your keys like I do."
-;;   (interactive)
-;;   (if (copilot--overlay-visible)
-;;       (progn
-;;         (copilot-accept-completion)
-;;         (open-line 1)
-;;         (next-line))
-;;     (copilot-complete)))
-
-;; (define-key copilot-mode-map (kbd "M-C-<next>") #'copilot-next-completion)
-;; (define-key copilot-mode-map (kbd "M-C-<prior>") #'copilot-previous-completion)
-;; (define-key copilot-mode-map (kbd "M-C-<right>") #'copilot-accept-completion-by-word)
-;; (define-key copilot-mode-map (kbd "M-C-<down>") #'copilot-accept-completion-by-line)
-;; (define-key global-map (kbd "M-C-<return>") #'rk/copilot-complete-or-accept)
-;; (defun rk/copilot-quit ()
-;;   "Run `copilot-clear-overlay' or `keyboard-quit'. If copilot is
-;; cleared, make sure the overlay doesn't come back too soon."
-;;   (interactive)
-;;   (condition-case err
-;;       (when copilot--overlay
-;;         (lexical-let ((pre-copilot-disable-predicates copilot-disable-predicates))
-;;           (setq copilot-disable-predicates (list (lambda () t)))
-;;           (copilot-clear-overlay)
-;;           (run-with-idle-timer
-;;            1.0
-;;            nil
-;;            (lambda ()
-;;              (setq copilot-disable-predicates pre-copilot-disable-predicates)))))
-;;     (error handler)))
-
-;; (advice-add 'keyboard-quit :before #'rk/copilot-quit)
 
 ;;==============================================================================
 ;; language/file specific major/minor modes
@@ -479,7 +363,7 @@
 (use-package yaml-mode
   :ensure t
   :custom
-  (yaml-indent-offset 4)
+  (yaml-indent-offset 2)
   )
 
 ;;-------------------------------
@@ -495,10 +379,37 @@
   )
 
 ;;-------------------------------
+;; Rust-Mode (use rustic)
+(use-package rustic
+  :ensure
+  :bind (:map rustic-mode-map
+              ("M-j" . lsp-ui-imenu)
+              ("M-?" . lsp-find-references)
+              ("C-M-f" . 'rust-format-region)
+              ("<f6>"  . 'rust-format-buffer)
+              ("C-c C-b"  . 'rust-compile)
+              ("C-c C-c l" . flycheck-list-errors)
+              ("C-c C-c a" . lsp-execute-code-action)
+              ("C-c C-c r" . lsp-rename)
+              ("C-c C-c q" . lsp-workspace-restart)
+              ("C-c C-c Q" . lsp-workspace-shutdown)
+              ("C-c C-c s" . lsp-rust-analyzer-status))
+  :config
+  ;; (setq lsp-eldoc-hook nil)
+  ;; (setq lsp-enable-symbol-highlighting nil)
+  ;; (setq lsp-signature-auto-activate nil)
+  (setq rustic-format-on-save t)
+  (setq indent-tabs-mode nil)
+  :hook
+  (prettify-symbols-mode)
+)
+
+;;-------------------------------
 ;; Python
 (use-package python
   :ensure t
-  ;; :config
+  :config
+  (setq  fill-column 88) ;; black formatter defaults to 88
   ;; (elpy-enable)
   )
 
@@ -572,7 +483,8 @@
  '(show-paren-match ((t (:background "yellow" :foreground "black"))))
  '(show-paren-mismatch
    ((t (:background "red" :foreground "white" :weight bold))))
- '(whitespace-space ((t (:foreground "dark salmon")))))
-
+ '(whitespace-space ((t (:foreground "dark salmon"))))
+ '(lsp-inlay-hint-face ((t (:foreground "thistle4"))))
+ )
 
 ;;---------- EOF ---------- 
