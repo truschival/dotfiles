@@ -82,6 +82,6 @@ function aws_docker_login(){
 
 # Source additional workstation dependend settings
 source ~/.zshenv.local
-source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+# source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
 . "$HOME/.cargo/env"

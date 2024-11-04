@@ -20,11 +20,8 @@ then
     sudo apt update &&
 	sudo apt install -y wget gnupg2 gnupg-agent \
 	     dirmngr cryptsetup scdaemon pcscd secure-delete \
-	     yubikey-personalization \
-	     libsecret-tools \
-	     i3 i3-wm dex suckless-tools feh pulseaudio-utils i3lock xautolock \
-	     sway sway-backgrounds swaybg swayidle swaylock sway-notification-center \
-	     tofi waybar slurp grim wayland-protocols \
+		 i3 i3-wm dex suckless-tools feh pulseaudio-utils i3lock xautolock \
+	     waybar slurp grim wayland-protocols \
 	     qlipper imagemagick x11-utils udiskie unclutter-xfixes xdg-utils \
 	     mu4e isync gnutls-bin \
 	     fonts-hack fonts-symbola \
@@ -187,11 +184,4 @@ systemctl enable --user emacs
 
 # Setup SSH-Agent service
 systemctl enable --user ssh-agent
-
-# Setup gnupg
-gnupg_setup
-
-# Setup mail
-mail_setup
-
 systemctl --user daemon-reload

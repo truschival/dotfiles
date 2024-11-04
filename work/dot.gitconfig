@@ -18,6 +18,7 @@
 [cola]
 	blameviewer = git gui blame
 	tabwidth = 4
+	spellcheck = false
 [merge]
 	tool = kdiff3
 [diff]
