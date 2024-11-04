@@ -268,7 +268,7 @@
 		  c++-mode
 		  go-mode
 		  python-mode
-		  rust-mode)
+		  rustic-mode)
          . lsp-deferred)
   ;; if you want which-key integration
   (lsp-mode . lsp-enable-which-key-integration)
@@ -385,12 +385,9 @@
   :bind (:map rustic-mode-map
               ("M-j" . lsp-ui-imenu)
               ("M-?" . lsp-find-references)
-              ("C-M-f" . 'rust-format-region)
-              ("<f6>"  . 'rust-format-buffer)
-              ("C-c C-b"  . 'rust-compile)
               ("C-c C-c l" . flycheck-list-errors)
               ("C-c C-c a" . lsp-execute-code-action)
-              ("C-c C-c r" . lsp-rename)
+              ("C-c C-r" . lsp-rename)
               ("C-c C-c q" . lsp-workspace-restart)
               ("C-c C-c Q" . lsp-workspace-shutdown)
               ("C-c C-c s" . lsp-rust-analyzer-status))
@@ -484,7 +481,7 @@
  '(show-paren-mismatch
    ((t (:background "red" :foreground "white" :weight bold))))
  '(whitespace-space ((t (:foreground "dark salmon"))))
- '(lsp-inlay-hint-face ((t (:foreground "thistle4"))))
+ '(lsp-inlay-hint-face ((t (:foreground "thistle4" :slant italic))))
  )
 
 ;;---------- EOF ---------- 
