@@ -302,6 +302,16 @@
   (setq company--disabled-backends '(company-dabbrev))
   )
 
+
+(use-package helm
+  :ensure t
+  :config
+  (setq helm-M-x-fuzzy-match t)
+  :bind 
+  ("M-x" . helm-M-x)
+)
+
+		 
 (use-package helm-lsp
   :ensure t
   :commands helm-lsp-workspace-symbol
