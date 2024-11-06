@@ -25,6 +25,8 @@
 (add-to-list 'load-path settings-dir)
 (add-to-list 'load-path local-modes-dir)
 
+(add-to-list 'default-frame-alist '(width . 88))
+
 ;;==============================================================================
 ;; Automatic package installation
 ;;==============================================================================
@@ -287,7 +289,10 @@
   :config
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 0.1)
-  (setq company--disabled-backends '(company-dabbrev))
+  (setq company--disabled-backends '(company-dabbrev
+									 company-dabbrev-code
+									 company-bbdb
+									 company-capf))
   )
 
 
