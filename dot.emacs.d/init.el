@@ -209,19 +209,7 @@
   )
 
 ;;-------------------------------
-;; Yasnippets for boilerplate code
-(use-package yasnippet
-  :ensure t
-  :hook
-  (org-mode . yas-minor-mode)
-  )
-
-(use-package yasnippet-snippets
-  :ensure t
-  )
-
-;;-------------------------------
-;; auth sources and secrets for freedesktop secrets (keepassxc) 
+;; auth sources and secrets for freedesktop secrets (keepassxc)
 (use-package auth-source
   ;; :init
   ;; (setq     auth-source-debug t)
@@ -263,7 +251,7 @@
   ;; what to use when checking on-save. "check" is default, I prefer clippy
   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
   ;; enable / disable the hints as you prefer:
-  (setq lsp-inlay-hint-enable t)			 
+  (setq lsp-inlay-hint-enable t)
   :hook ((c-mode
 		  c++-mode
 		  go-mode
@@ -307,11 +295,11 @@
   :ensure t
   :config
   (setq helm-M-x-fuzzy-match t)
-  :bind 
+  :bind
   ("M-x" . helm-M-x)
 )
 
-		 
+
 (use-package helm-lsp
   :ensure t
   :commands helm-lsp-workspace-symbol
@@ -494,4 +482,4 @@
  '(lsp-inlay-hint-face ((t (:foreground "thistle4" :slant italic))))
  )
 
-;;---------- EOF ---------- 
+;;---------- EOF ----------
