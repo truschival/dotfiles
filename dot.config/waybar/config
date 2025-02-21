@@ -72,7 +72,7 @@
 	"clock": {
 		"timezones": [
 			"Europe/Berlin",
-			"America/Manaus",
+			"America/Sao_Paulo",
 		],
 		"format": "{:%H:%M  %a %d.%m.%y %Z}",
 		"format-alt": "{:%Y-%m-%d (%W)}",
