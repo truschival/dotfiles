@@ -172,6 +172,8 @@
    ;; with 'mu mkdir', i.e.. mu mkdir /home/user/Maildir/queue
    smtpmail-queue-mail  nil
    smtpmail-queue-dir  (expand-file-name "~/Maildir/ruschival.de/Queue")
+   smtpmail-debug-info t
+   smtpmail-debug-verb t
    )
 
   ;; Maildirs
@@ -181,10 +183,13 @@
   ;; Calendar
   (require 'mu4e-icalendar)
   (mu4e-icalendar-setup)
-  (setq mu4e-icalendar-diary-file "~/ownCloud/calendar/org-mode.cal")
+  (setq mu4e-icalendar-diary-file "~/Nextcloud/calendar/diary.org")
+  (setq mu4e-icalendar-trash-after-reply t)
+
 
   (require 'org-agenda)
-  (setq gnus-icalendar-org-capture-file "~/ownCloud/calendar/test.org")
+  (setq gnus-icalendar-org-capture-file "~/Nextcloud/calendar/calendar.org")
+  (setq org-agenda-files '("~/Nextcloud/calendar/"))
   (setq gnus-icalendar-org-capture-headline '("Calendar"))
   (gnus-icalendar-org-setup)
 

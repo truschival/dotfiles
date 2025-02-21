@@ -213,22 +213,56 @@
 ;;-------------------------------
 ;; auth sources and secrets for freedesktop secrets (keepassxc)
 (use-package auth-source
-  ;; :init
-  ;; (setq     auth-source-debug t)
+  :init
+  (setq     auth-source-debug nil)
   )
 
+
+(use-package secrets
+  :init
+  (setq
+   auth-sources '(default
+                  "secrets:"
+                  ;; "secrets:session"
+                  ;; "secrets:Login"
+                  )
+   auth-source-save-behavior nil
+   secrets-debug nil
+   )
+  )
+
+
+;; (let ((auth-info (car (auth-source-search :host "cloud.ruschival.de" :user "ruschi" :port 443))))
+;;   (funcall (plist-get auth-info :secret))
+;;   )
 ;; Freedesktop secrets "Secret-service-API" - the default collection is ""
 ;; (secrets-list-collections)
 ;; (secrets-list-items "" )
-;; (secrets-search-items "" :host "mail.rolf-dv.de" :port "587")
-;; (secrets-get-secret "" "MBSYNC")
-(use-package secrets
-  :init  (setq
-          auth-sources '(default "secrets:" )
-          auth-source-save-behavior nil
-          ;; secrets-debug t
-          )
+;; (secrets-search-items "" :host "cloud.ruschival.de" :port "443")
+;; (secrets-get-secret "" "ORG-CALDAV")
+
+
+;;-------------------------------
+;; Caldav-sync
+(use-package org-caldav
+  :ensure t
+  :config
+  (setq org-caldav-url "https://cloud.ruschival.de/remote.php/dav/calendars/ruschi")
+  (setq org-caldav-calendar-id "org-mode")
+  (setq org-caldav-files  '("~/Nextcloud/calendar/calendar.org") )
+  (setq org-icalendar-timezone "Europe/Berlin")
+  (setq org-caldav-debug-level 0)
+  (setq org-caldav-show-sync-results nil) ;; 0, 1 ,2
+  (setq org-caldav-disable-sync-buffer t)
+  ;; Start timer after package is loaded
+  (defun my/safe-caldav-sync ()
+  (condition-case err
+      (org-caldav-sync)
+    (error (message "Error in org-caldav-sync: %s" err))))
+  (run-at-time "1 min" (* 15 60) 'my/safe-caldav-sync)
   )
+
+
 
 ;;==============================================================================
 ;; Language Server stuff
@@ -338,7 +372,7 @@
     (setq org-todo-keywords
           '((sequence "TODO(t)" "STARTED(s)" "BLOCKED(b)" "|" "DONE" "INVALID")))
     (setq org-completion-use-ido t)
-    (visual-line-mode 1)
+	(visual-line-mode 1)
     )
   )
 
