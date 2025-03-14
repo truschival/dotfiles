@@ -246,10 +246,12 @@
 ;; Caldav-sync
 (use-package org-caldav
   :ensure t
+  :custom
+  (org-caldav-inbox "~/Nextcloud/calendar/calendar.org")
+  (org-caldav-files  '("~/Nextcloud/calendar/calendar.org") )
   :config
   (setq org-caldav-url "https://cloud.ruschival.de/remote.php/dav/calendars/ruschi")
   (setq org-caldav-calendar-id "org-mode")
-  (setq org-caldav-files  '("~/Nextcloud/calendar/calendar.org") )
   (setq org-icalendar-timezone "Europe/Berlin")
   (setq org-caldav-debug-level 0)
   (setq org-caldav-show-sync-results nil) ;; 0, 1 ,2
@@ -522,3 +524,4 @@
  )
 
 ;;---------- EOF ----------
+(put 'scroll-left 'disabled nil)
