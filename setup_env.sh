@@ -35,7 +35,7 @@ fi
 ################################################################################
 function cliphist_setup(){
     log_notice "setup cliphist"
-	CLIPHIST_URL="https://github.com/sentriz/cliphist/releases/download/v0.4.0/v0.4.0-linux-amd64"
+	CLIPHIST_URL="https://github.com/sentriz/cliphist/releases/download/v0.6.1/v0.6.1-linux-amd64"
 	wget -O $NEW_HOME/.local/bin/cliphist $CLIPHIST_URL
 	chmod 755 $NEW_HOME/.local/bin/cliphist 
 }

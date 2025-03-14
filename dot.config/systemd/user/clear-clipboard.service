@@ -1,0 +1,8 @@
+[Service]
+Type=oneshot
+RemainAfterExit=true
+StandardOutput=journal
+ExecStart=/usr/bin/true
+ExecStop=%h/.local/bin/cliphist wipe
+[Install]
+WantedBy=default.target
