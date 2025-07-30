@@ -131,25 +131,13 @@ bindsym $mod+Tab workspace back_and_forth
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
-
-# alternatively, you can use the cursor keys:
+# Select focus window
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
-
-# alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
@@ -163,20 +151,25 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
+# bindsym $mod+s layout stacking # not using stacked
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Control+semicolon floating toggle
+bindsym $mod+slash floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+# bindsym $mod+a focus parent
 # focus the child container
-bindsym $mod+z focus child
+# bindsym $mod+z focus child
+
+# Swayr Window selection
+bindsym Alt+Tab    		 exec swayr next-window all-workspaces
+bindsym Alt+Shift+Tab 	 exec swayr prev-window all-workspaces
+bindsym $mod+Shift+Tab 	 exec swayr switch-workspace-or-window
 
 # Switch workspace
 bindsym $mod+1 workspace 1
@@ -340,3 +333,7 @@ exec /usr/bin/blueman-applet
 
 # network-manager
 exec /usr/bin/nm-tray
+
+# Swayr
+# exec env RUST_BACKTRACE=1 RUST_LOG=swayr=debug swayrd > /tmp/swayrd.log 2>&1
+exec swayrd > /dev/null 2>&1
