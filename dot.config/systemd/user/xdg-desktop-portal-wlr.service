@@ -1,0 +1,12 @@
+[Unit]
+Description=XDG Desktop service (Wayland)
+After=dbus.service
+
+[Service]
+Environment=XDG_RUNTIME_DIR=%t
+Environment=WAYLAND_DISPLAY=wayland-0
+ExecStart=/usr/libexec/xdg-desktop-portal-wlr
+Restart=OnFailure
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=XDG Desktop service
+After=dbus.service
+
+[Service]
+ExecStart=/usr/libexec/xdg-desktop-portal
+Restart=OnFailure
+
+[Install]
+WantedBy=default.target

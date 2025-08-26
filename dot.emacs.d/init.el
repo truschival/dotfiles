@@ -256,12 +256,6 @@
   (setq org-caldav-debug-level 0)
   (setq org-caldav-show-sync-results nil) ;; 0, 1 ,2
   (setq org-caldav-disable-sync-buffer t)
-  ;; Start timer after package is loaded
-  (defun my/safe-caldav-sync ()
-  (condition-case err
-      (org-caldav-sync)
-    (error (message "Error in org-caldav-sync: %s" err))))
-  (run-at-time "1 min" (* 15 60) 'my/safe-caldav-sync)
   )
 
 
@@ -436,6 +430,8 @@
   ;; (setq lsp-signature-auto-activate nil)
   (setq rustic-format-on-save t)
   (setq indent-tabs-mode nil)
+  :custom
+  (rustic-rustfmt-config-alist '((edition . "2021")))
   :hook
   (prettify-symbols-mode)
 )

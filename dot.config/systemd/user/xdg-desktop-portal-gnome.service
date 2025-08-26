@@ -1,0 +1,10 @@
+[Unit]
+Description=XDG Desktop service (GNOME)
+After=dbus.service
+
+[Service]
+ExecStart=/usr/libexec/xdg-desktop-portal-gnome
+Restart=OnFailure
+
+[Install]
+WantedBy=default.target

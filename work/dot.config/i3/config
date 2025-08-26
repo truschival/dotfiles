@@ -244,6 +244,13 @@ for_window [class="^[pP]avucontrol"] floating enable border normal 2
 for_window [class="DigitalRooster"] floating enable
 
 # -------------------------------------------------------------
+
+# XDG Desktop portals for gnome/gtk apps on ubuntu
+# $execnsid /usr/libexec/xdg-desktop-portal
+# $execnsid /usr/libexec/xdg-desktop-portal-gnome
+# $execnsid /usr/libexec/xdg-desktop-portal-gtk
+
+
 # Policy Kit authenticator (kwallet)
 $execnsid dex /etc/xdg/autostart/pam_kwallet_init.desktop
 $execnsid dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
