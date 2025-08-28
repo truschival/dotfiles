@@ -436,6 +436,8 @@
   ;; (setq lsp-signature-auto-activate nil)
   (setq rustic-format-on-save t)
   (setq indent-tabs-mode nil)
+  :custom
+  (rustic-rustfmt-config-alist '((edition . "2021")))
   :hook
   (prettify-symbols-mode)
 )

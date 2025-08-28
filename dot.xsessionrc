@@ -6,6 +6,13 @@ then
 	echo "Running i3wm" > .xsession-errors 
 fi
 
-export PATH=$HOME/Tools:$PATH:/usr/sbin:/sbin:./bin
+HOME_LOCAL_BIN=$HOME/.local/bin
+echo $PATH | grep  -q $HOME_LOCAL_BIN
+ON_PATH=$?
+
+if [[ $ON_PATH -ne 0 && -d $HOME_LOCAL_BIN ]]  ; then
+   export PATH="$HOME_LOCAL_BIN:$PATH"
+fi
+
 systemctl --user set-environment DISPLAY=:0 
 SSH_AUTH_SOCK=/run/user/1000/ssh-agent.socket
