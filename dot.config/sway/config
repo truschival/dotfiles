@@ -102,7 +102,7 @@ set $tofiopts \
 set $tofiopts_menu \
     $tofiopts \
     --drun-launch=true \
-    --selection-padding=12 \
+    --selection-background-padding=12 \
     --result-spacing=20 \
     --anchor=top \
     --height=48 \
