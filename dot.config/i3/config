@@ -244,12 +244,13 @@ for_window [title="^Steam Keyboard$"] floating enable
 # 0 : Inore Corner
 # - : Do not lock screen
 $execnsid xautolock -corners 00-- -time 10 -locker ' $screenlock '
+$execnsid dunst -config $XDG_CONFIG_HOME/dunst/config
 
 # Policy Kit authenticator (for pkexec dialogs e.g. synaptic)
 $execnsid dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
 
 #KeepassXC serves also as freedesktop secret provider
-$execnsid /usr/bin/keepassxc  /home/ruschi/ownCloud/keepassxc_no_yubi.kdbx
+$execnsid /usr/bin/keepassxc  /home/ruschi/Nextcloud/keepassxc_no_yubi.kdbx
 # unclutter hides Mouse pointer after 5s
 $execnsid /usr/bin/unclutter --timeout 5 --jitter 2
 

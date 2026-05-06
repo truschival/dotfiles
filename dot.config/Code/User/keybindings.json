@@ -1,0 +1,22 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "alt+d",
+        "command": "-foam-vscode.open-daily-note"
+    },
+    {
+        "key": "alt+d",
+        "command": "deleteWordRight",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+delete",
+        "command": "-deleteWordRight",
+        "when": "textInputFocus && !editorReadonly"
+    },
+	{
+        "key": "ctrl+k",
+        "command": "",
+        "when": "terminalFocus"
+    }
+]

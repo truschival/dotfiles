@@ -22,3 +22,24 @@ Host digitalrooster
   UserKnownHostsFile=/dev/null
   User root
   IdentityFile ~/.ssh/id_digitalrooster
+
+
+Host CEPE
+  HostName 192.168.1.10
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+  User admin
+  IdentityFile ~/.ssh/id_cepe
+  ControlPersist 0
+  ControlMaster  no
+  ForwardAgent yes
+  ForwardX11Trusted yes
+  ForwardX11 yes
+
+
+Host CEPE-Python
+  HostName 127.0.0.1 
+  ProxyJump admin@192.168.1.10:22
+  User coder
+  Port 2222
+  RemoteForward 127.0.0.1:1080

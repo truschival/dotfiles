@@ -1,0 +1,75 @@
+{
+    "workbench.startupEditor": "newUntitledFile",
+    "update.mode": "none",
+    "python.analysis.typeCheckingMode": "standard",
+    "remote.SSH.useExecServer": false,
+    "remote.SSH.remotePlatform": {
+        "192.168.111.1": "linux"
+    },
+    "remote.downloadExtensionsLocally": true,
+    "remote.SSH.localServerDownload": "always",
+    "remote.SSH.remoteServerListenOnSocket": true,
+    "remote.autoForwardPortsSource": "hybrid",
+    "git.suggestSmartCommit": false,
+    "telemetry.telemetryLevel": "off",
+    "chat.instructionsFilesLocations": {
+        ".github/instructions": true
+    },
+    "cSpell.userWords": [
+        "Thomas",
+        "Ruschival",
+        "pyproject"
+    ],
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[dockercompose]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        },
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "editor.minimap.enabled": false,
+    "clionCMakeFormatter.spaceBeforeIfParentheses": false,
+    "clionCMakeFormatter.spaceBeforeForeachParentheses": false,
+    "clionCMakeFormatter.spaceBeforeWhileParentheses": false,
+    "clionCMakeFormatter.commandCase": "lowercase",
+    "clionCMakeFormatter.lineLength": 100,
+    "clionCMakeFormatter.alignMultiLineArguments": true,
+    "[cmake]": {
+        "editor.defaultFormatter": "wysaid.clion-cmake-format"
+    },
+    "[cpp]": {
+        "editor.defaultFormatter": "xaver.clang-format"
+    },
+    "json.format.enable": false,
+    "markdown.preview.breaks": true,
+    "editor.defaultFormatter": "vscode.markdown-language-features",
+    "yaml.format.printWidth": 120,
+    "workbench.tree.indent": 15,
+    "editor.rulers": [
+        80,
+        120,
+        160
+    ],
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        },
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+	},
+	"antigravity.marketplaceGalleryItemURL": "https://marketplace.visualstudio.com/items",
+	"antigravity.marketplaceExtensionGalleryServiceURL": "https://marketplace.visualstudio.com/_apis/public/gallery",
+}
