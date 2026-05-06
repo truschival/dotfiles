@@ -29,15 +29,6 @@ then
 #   export QT_WAYLAND_FORCE_DPI=physical
 fi
 
-export GITLAB_INT_TOKEN=xxxxxxxxxx
-
-# Text2action
-export AWS_ACCOUNT_ID=xxxxxx
-export AWS_ACCESS_KEY_ID=yyyyyyyyyyy
-export AWS_SECRET_ACCESS_KEY=zzzzzzzzzzz
-export AWS_DEFAULT_REGION=eu-central-1
-
-
 function log_info() {
     echo -e "[\\e[1;94mINFO\\e[0m] $*"
 }
@@ -50,9 +41,26 @@ function log_error() {
     echo -e "[\\e[1;91mERROR\\e[0m] $*"
 }
 
-function pep_version_from_git(){
-  version=$(git describe --tags --long --always | sed -E 's/^v//; s/-([0-9]+)-g([0-9a-f]+)$/\.post\1+\2/; s/-g([0-9a-f]+)$/\1/;')
-  echo $version
+## Returns the version of the package from git tags
+## Examples:
+## V1.2 -> 1.2
+## v1.2.3 -> 1.2.3
+## v1.2.3-1-g1234567 -> 1.2.3+post1-1234567
+## 1234567 -> 0.0.0+pre1234567
+##
+function pep_version_from_git() {
+    pep_version=$(git describe --tags --long --always  | sed -E '
+          s/^[vV]//;
+          # Case 1: exactly at tag (0 commits after tag)
+          s/^([0-9]+(\.[0-9]+)*(\.[0-9]+)*[a-zA-Z0-9]*)-0-g[0-9a-f]+$/\1/;
+          # Case 2: commits after tag
+          s/^([0-9]+(\.[0-9]+)*(\.[0-9]+)*[a-zA-Z0-9]*)-([1-9][0-9]*)-g([0-9a-f]+)$/\1+post\4-\5/;
+          # Case 3: no tag, just hash
+          t end;
+          s/^([0-9a-f]+)$/0.0.0+pre\1/;
+          :end
+        ')
+    echo $pep_version
 }
 
 
@@ -75,9 +83,12 @@ function build_kaniko(){
 
 }
 
-
 function aws_docker_login(){
-	aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com 
+	aws ecr get-login-password | \
+		docker login \
+			   --username AWS \
+			   --password-stdin \
+		$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com 
 }
 
 # Source additional workstation dependend settings
